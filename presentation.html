@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Health effects of OOP</title>
+<meta name="author" content="Jan Boone"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Health effects of OOP</h1><p class="subtitle"></p>
+<h2 class="author">Jan Boone</h2><h2 class="date">Work in Progress</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org26eb1aa">Introduction</a></li>
+<li><a href="#/slide-org14f6c2d">Two equations to estimate</a></li>
+<li><a href="#/slide-orgc1a8a2a">Data</a></li>
+<li><a href="#/slide-org404fb3c">Estimation</a></li>
+<li><a href="#/slide-org66a4075">Results</a></li>
+<li><a href="#/slide-org5f526ee">Conclusions</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+
+<section>
+<section id="slide-org26eb1aa">
+<h2 id="org26eb1aa">Introduction</h2>
+<div class="outline-text-2" id="text-org26eb1aa">
+</div>
+</section>
+<section id="slide-org6872e75">
+<h3 id="org6872e75">Health insurance</h3>
+<ul>
+<li>healthcare costs increase in all developed countries</li>
+<li>health insurance can cause moral hazard</li>
+<li>oop payments is one way to mitigate this</li>
+<li>if a deductible increase reduces expenditure, we view this as welfare enhancing
+<ul>
+<li>trade off: risk aversion</li>
+
+</ul></li>
+<li>what if oop cause people to postpone <i>valuable</i> treatments?</li>
+<li>can we identify this effect across countries?</li>
+
+</ul>
+
+</section>
+<section id="slide-org9d10874">
+<h3 id="org9d10874">Health effects</h3>
+<ul>
+<li>postponing/forgoing valuable care has health effects</li>
+<li>measuring health effects is not easy</li>
+<li>we use mortality per NUTS 2 region/year/age/gender in European countries</li>
+<li>fixed effects to control for non-observed variables</li>
+
+</ul>
+
+</section>
+<section id="slide-org4386cc0">
+<h3 id="org4386cc0">Insurance generosity</h3>
+<ul>
+<li>comparing insurance generosity across countries is not straightforward</li>
+<li>how to compare a system with high deductible but low coinsurance rate or many treatments exempted from oop with a low deductible system?</li>
+<li>we use variable <code>OOP</code>: % oop in total health expenditure in a country</li>
+<li>high oop is especially problematic for people on low income</li>
+<li>they could forgo valuable treatment if it is expensive</li>
+<li>if this mechanism exists: higher mortality in regions where <code>OOP</code> \(\times\) <code>Poverty</code> is high</li>
+
+</ul>
+
+</section>
+<section id="slide-org86500d7">
+<h3 id="org86500d7">NUTS 2 regions in Europe</h3>
+
+<div id="org5dbc288" class="figure">
+<p><img src="./figures/Europe_mortality_40_F_2018.png" alt="Europe_mortality_40_F_2018.png" width="500px" />
+</p>
+</div>
+
+</section>
+<section id="slide-org9732d93">
+<h3 id="org9732d93">summary</h3>
+
+<div id="org760fac7" class="figure">
+<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="800px" />
+</p>
+</div>
+
+
+
+</section>
+<section id="slide-org5f66446">
+<h3 id="org5f66446">Literature: individual level data</h3>
+<ul>
+<li>recent literature on relation oop and mortality</li>
+<li>US individual level data</li>
+<li>e.g. Miller et al. (2021) on Medicaid eligibility expansion:
+<ul>
+<li>introduced in different states at different times</li>
+
+</ul></li>
+<li>Chandra et al. (2021) Medicare part D prescription drug coverage
+<ul>
+<li>enrollment month</li>
+
+</ul></li>
+<li>behavioral hazard: Baicker et al. (2015)</li>
+
+</ul>
+
+</section>
+<section id="slide-org41d05a8">
+<h3 id="org41d05a8">This paper</h3>
+<ul>
+<li>European regional data</li>
+<li>more broad brush: cannot capture effect of 1% increase in deductible</li>
+<li>compare health insurance systems that are more/less generous</li>
+<li>more variation in <code>OOP</code> than with Dutch individual level data</li>
+<li>European health insurance more homogeneous across regions in a country</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org14f6c2d">
+<h2 id="org14f6c2d">Two equations to estimate</h2>
+<ul>
+<li>using a theoretical model we derive two equations to be estimated:
+<ul>
+<li>probability of death as a function of <code>Unmet</code> medical needs</li>
+<li>probability that someone forgoes treatment because it is too expensive as a function of <code>OOP</code> and <code>Poverty</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orga8bee35">
+<h3 id="orga8bee35">Number of deaths</h3>
+<ul>
+<li>per age, gender, year, nuts 2 region</li>
+<li>\(k\) deaths out of \(n\) population: \(\binom{n}{k} m^{k}(1-m)^{n-k}\)</li>
+
+</ul>
+<p>
+\[
+m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln \left(\frac{m_{a-1,g,2,t-1}}{\bar{m}_{a-1,g}}\right)+ \beta_{poverty}\text{Poverty}_{2t} + \beta_{unmet}\text{Unmet}_{2t}\right)}
+\]
+</p>
+
+</section>
+<section id="slide-org9fe643e">
+<h3 id="org9fe643e">Too expensive</h3>
+<ul>
+<li>one motivation for unmet medical needs is that treatment is too expensive</li>
+<li>fraction of people in a region indicating that they postponed/forgone treatment because it was too expensive:</li>
+
+</ul>
+<p>
+\[
+\text{TooExp}_{2t} = b_{0,2} + b_{0,t} + \text{OOP}_{ct} \bar{x}_{ct} \left(  b_{oop,c} + b_{interaction,c} \text{Poverty}_{2t} \right)
+\]
+</p>
+<ul>
+<li>equation is derived by varying co-insurance and deductible</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orge3ec821">
+<h3 id="orge3ec821">Relation <code>OOP</code> and <code>TooExp</code></h3>
+
+<div id="org76c1905" class="figure">
+<p><img src="./figures/Parametric3.png" alt="Parametric3.png" width="1000px" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc1a8a2a">
+<h2 id="orgc1a8a2a">Data</h2>
+<div class="outline-text-2" id="text-orgc1a8a2a">
+</div>
+</section>
+<section id="slide-orgb05458f">
+<h3 id="orgb05458f">Eurostat data: 2009-2019; ages 35-85</h3>
+<table id="org64c9f3b" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Summary statistics main variables</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">count</th>
+<th scope="col" class="org-right">mean</th>
+<th scope="col" class="org-right">std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">population</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">7491.28</td>
+<td class="org-right">4805.28</td>
+</tr>
+
+<tr>
+<td class="org-left">deaths</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">103.19</td>
+<td class="org-right">126.49</td>
+</tr>
+
+<tr>
+<td class="org-left">mortality</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">2.12</td>
+<td class="org-right">2.94</td>
+</tr>
+
+<tr>
+<td class="org-left">poverty</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">16.47</td>
+<td class="org-right">6.50</td>
+</tr>
+
+<tr>
+<td class="org-left">deprivation</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">11.23</td>
+<td class="org-right">12.78</td>
+</tr>
+
+<tr>
+<td class="org-left">too exp.</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">2.00</td>
+<td class="org-right">3.09</td>
+</tr>
+
+<tr>
+<td class="org-left">unmet</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">4.93</td>
+<td class="org-right">3.73</td>
+</tr>
+
+<tr>
+<td class="org-left">out-of-pocket</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">22.03</td>
+<td class="org-right">8.88</td>
+</tr>
+
+<tr>
+<td class="org-left">voluntary</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">3.12</td>
+<td class="org-right">3.07</td>
+</tr>
+
+<tr>
+<td class="org-left">expend. per head</td>
+<td class="org-right">52612.00</td>
+<td class="org-right">3379.56</td>
+<td class="org-right">2688.57</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org404fb3c">
+<h2 id="org404fb3c">Estimation</h2>
+<div class="outline-text-2" id="text-org404fb3c">
+</div>
+</section>
+<section id="slide-orgd7afc79">
+<h3 id="orgd7afc79">Estimation technique</h3>
+<ul>
+<li>Bayesian analysis: are we 95% sure that the following chain of effects is present:
+<ul>
+<li>higher oop leads to higher unmet needs in areas with high poverty</li>
+<li>which then leads to higher mortality</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org66a4075">
+<h2 id="org66a4075">Results</h2>
+<div class="outline-text-2" id="text-org66a4075">
+</div>
+</section>
+<section id="slide-org7953e0b">
+<h3 id="org7953e0b">Fit</h3>
+
+<div id="orga978229" class="figure">
+<p><img src="./figures/fit_baseline_model.png" alt="fit_baseline_model.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Fit of estimated and observed mortality across all observations.</p>
+</div>
+
+</section>
+<section id="slide-orgfb25d6c">
+<h3 id="orgfb25d6c">size of effects</h3>
+
+<div id="orgc7b27c4" class="figure">
+<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="800px" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-orgbdd33a5">
+<h3 id="orgbdd33a5">other causes of deaths</h3>
+<table id="orgc6fda82" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Number of people dying by cause</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">icd-10</th>
+<th scope="col" class="org-right">per 1000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Tuberculosis</td>
+<td class="org-right">0.93</td>
+</tr>
+
+<tr>
+<td class="org-left">HIV</td>
+<td class="org-right">0.72</td>
+</tr>
+
+<tr>
+<td class="org-left">Malignant melanoma of skin</td>
+<td class="org-right">4.20</td>
+</tr>
+
+<tr>
+<td class="org-left">Diseases of the blood and blood-forming organs</td>
+<td class="org-right">2.69</td>
+</tr>
+
+<tr>
+<td class="org-left">Leukaemia</td>
+<td class="org-right">10.15</td>
+</tr>
+
+<tr>
+<td class="org-left">Influenza (including swine flu)</td>
+<td class="org-right">1.18</td>
+</tr>
+
+<tr>
+<td class="org-left">Alzheimer disease</td>
+<td class="org-right">13.08</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+<section id="slide-orgef3376e">
+<h3 id="orgef3376e">Robustness analysis</h3>
+<ul>
+<li>include voluntary health insurance payments in <code>OOP</code> measure</li>
+<li>at risk of poverty as poverty measure</li>
+<li>separate effect of TooExp and other unmet medical needs on mortality</li>
+
+</ul>
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-org5f526ee">
+<h2 id="org5f526ee">Conclusions</h2>
+<div class="outline-text-2" id="text-org5f526ee">
+</div>
+</section>
+<section id="slide-orga526587">
+<h3 id="orga526587">Policy implications</h3>
+<ul>
+<li>increasing oop leads to more costs than just risk aversion</li>
+<li>doing without oop is not an option:
+<ul>
+<li>means tested oop</li>
+<li>let copayments vary with cost effectiveness of treatments</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+% Intended LaTeX compiler: pdflatex
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usetheme{Montpellier}
+\AtBeginSection[]{\begin{frame} \vfill \centering \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title} \usebeamerfont{title}\insertsectionhead\par \end{beamercolorbox} \vfill \end{frame}}
+\usetheme{default}
+\author{Jan Boone}
+\date{Work in Progress}
+\title{Health effects of OOP}
+\hypersetup{
+ pdfauthor={Jan Boone},
+ pdftitle={Health effects of OOP},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.1 (Org mode 9.5.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\end{frame}
+
+
+
+
+\section*{Introduction}
+\label{sec:orgf846528}
+
+\begin{frame}[label={sec:orgf54505e}]{Health insurance}
+\begin{itemize}
+\item healthcare costs increase in all developed countries
+\item health insurance can cause moral hazard
+\item oop payments is one way to mitigate this
+\item if a deductible increase reduces expenditure, we view this as welfare enhancing
+\begin{itemize}
+\item trade off: risk aversion
+\end{itemize}
+\item what if oop cause people to postpone \emph{valuable} treatments?
+\item can we identify this effect across countries?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org64d728d}]{Health effects}
+\begin{itemize}
+\item postponing/forgoing valuable care has health effects
+\item measuring health effects is not easy
+\item we use mortality per NUTS 2 region/year/age/gender in European countries
+\item fixed effects to control for non-observed variables
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org448556f},fragile]{Insurance generosity}
+ \begin{itemize}
+\item comparing insurance generosity across countries is not straightforward
+\item how to compare a system with high deductible but low coinsurance rate or many treatments exempted from oop with a low deductible system?
+\item we use variable \texttt{OOP}: \% oop in total health expenditure in a country
+\item high oop is especially problematic for people on low income
+\item they could forgo valuable treatment if it is expensive
+\item if this mechanism exists: higher mortality in regions where \texttt{OOP} \(\times\) \texttt{Poverty} is high
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org160bd53}]{NUTS 2 regions in Europe}
+\begin{center}
+\includegraphics[width=.6\linewidth]{./figures/Europe_mortality_40_F_2018.png}
+\label{fig:EUmap}
+\end{center}
+\end{frame}
+
+\begin{frame}[label={sec:orge81aa8a}]{summary}
+\begin{center}
+\includegraphics[width=0.6\linewidth]{./figures/change_mortality_countries_baseline.png}
+\label{fig:SummaryFigure}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}[label={sec:orgc683a04}]{Literature: individual level data}
+\begin{itemize}
+\item recent literature on relation oop and mortality
+\item US individual level data
+\item e.g. Miller et al. (2021) on Medicaid eligibility expansion:
+\begin{itemize}
+\item introduced in different states at different times
+\end{itemize}
+\item Chandra et al. (2021) Medicare part D prescription drug coverage
+\begin{itemize}
+\item enrollment month
+\end{itemize}
+\item behavioral hazard: Baicker et al. (2015)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org31d998a},fragile]{This paper}
+ \begin{itemize}
+\item European regional data
+\item more broad brush: cannot capture effect of 1\% increase in deductible
+\item compare health insurance systems that are more/less generous
+\item more variation in \texttt{OOP} than with Dutch individual level data
+\item European health insurance more homogeneous across regions in a country
+\end{itemize}
+\end{frame}
+
+\section*{Two equations to estimate}
+\label{sec:orgfaa2c2e}
+
+\begin{frame}[label={sec:org34bca97},fragile]{theory}
+ \begin{itemize}
+\item using a theoretical model we derive two equations to be estimated:
+\begin{itemize}
+\item probability of death as a function of \texttt{Unmet} medical needs
+\item probability that someone forgoes treatment because it is too expensive as a function of \texttt{OOP} and \texttt{Poverty}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgc667dc0}]{Number of deaths}
+\begin{itemize}
+\item per age, gender, year, nuts 2 region
+\item \(k\) deaths out of \(n\) population: \(\binom{n}{k} m^{k}(1-m)^{n-k}\)
+\end{itemize}
+$$
+m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln \left(\frac{m_{a-1,g,2,t-1}}{\bar{m}_{a-1,g}}\right)+ \beta_{poverty}\text{Poverty}_{2t} + \beta_{unmet}\text{Unmet}_{2t}\right)}
+$$
+\end{frame}
+
+\begin{frame}[label={sec:org7d44d9e}]{Too expensive}
+\begin{itemize}
+\item one motivation for unmet medical needs is that treatment is too expensive
+\item fraction of people in a region indicating that they postponed/forgone treatment because it was too expensive:
+\end{itemize}
+$$
+\text{TooExp}_{2t} = b_{0,2} + b_{0,t} + \text{OOP}_{ct} \bar{x}_{ct} \left(  b_{oop,c} + b_{interaction,c} \text{Poverty}_{2t} \right)
+$$
+\begin{itemize}
+\item equation is derived by varying co-insurance and deductible
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[label={sec:org0a2c46d},fragile]{Relation \texttt{OOP} and \texttt{TooExp}}
+ \begin{center}
+\includegraphics[width=.9\linewidth]{./figures/Parametric3.png}
+\label{fig:Parametric}
+\end{center}
+\end{frame}
+
+\section*{Data}
+\label{sec:orgbf3e5c9}
+
+\begin{frame}[label={sec:orgd4bfbfe}]{Eurostat data: 2009-2019; ages 35-85}
+\begin{table}[htbp]
+\caption{\label{tab:summary}Summary statistics main variables}
+\centering
+\begin{tabular}{lrrr}
+ & count & mean & std\\
+\hline
+population & 52612.00 & 7491.28 & 4805.28\\
+deaths & 52612.00 & 103.19 & 126.49\\
+mortality & 52612.00 & 2.12 & 2.94\\
+poverty & 52612.00 & 16.47 & 6.50\\
+deprivation & 52612.00 & 11.23 & 12.78\\
+too exp. & 52612.00 & 2.00 & 3.09\\
+unmet & 52612.00 & 4.93 & 3.73\\
+out-of-pocket & 52612.00 & 22.03 & 8.88\\
+voluntary & 52612.00 & 3.12 & 3.07\\
+expend. per head & 52612.00 & 3379.56 & 2688.57\\
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+
+
+\section*{Estimation}
+\label{sec:orge16d339}
+
+\begin{frame}[label={sec:org611259e}]{Estimation technique}
+\begin{itemize}
+\item Bayesian analysis: are we 95\% sure that the following chain of effects is present:
+\begin{itemize}
+\item higher oop leads to higher unmet needs in areas with high poverty
+\item which then leads to higher mortality
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section*{Results}
+\label{sec:org6ccb26c}
+
+\begin{frame}[label={sec:org671f70d}]{Fit}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\linewidth]{./figures/fit_baseline_model.png}
+\caption{\label{fig:ModelFit}Fit of estimated and observed mortality across all observations.}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org6b195c5}]{size of effects}
+\begin{center}
+\includegraphics[width=0.6\linewidth]{./figures/change_mortality_countries_baseline.png}
+\label{fig:SummaryFigure}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[label={sec:orgd8e4a92}]{other causes of deaths}
+\begin{table}[htbp]
+\caption{\label{tab:causes_death}Number of people dying by cause}
+\centering
+\begin{tabular}{lr}
+icd-10 & per 1000\\
+\hline
+Tuberculosis & 0.93\\
+HIV & 0.72\\
+Malignant melanoma of skin & 4.20\\
+Diseases of the blood and blood-forming organs & 2.69\\
+Leukaemia & 10.15\\
+Influenza (including swine flu) & 1.18\\
+Alzheimer disease & 13.08\\
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}[label={sec:orge4b05c8},fragile]{Robustness analysis}
+ \begin{itemize}
+\item include voluntary health insurance payments in \texttt{OOP} measure
+\item at risk of poverty as poverty measure
+\item separate effect of TooExp and other unmet medical needs on mortality
+\end{itemize}
+\end{frame}
+
+
+
+\section*{Conclusions}
+\label{sec:org4370ebf}
+
+\begin{frame}[label={sec:org2be6a36}]{Policy implications}
+\begin{itemize}
+\item increasing oop leads to more costs than just risk aversion
+\item doing without oop is not an option:
+\begin{itemize}
+\item means tested oop
+\item let copayments vary with cost effectiveness of treatments
+\end{itemize}
+\end{itemize}
+\end{frame}
+\end{document}
