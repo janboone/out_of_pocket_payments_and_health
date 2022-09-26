@@ -33,8 +33,8 @@
 
 ** Insurance generosity
 - comparing insurance generosity across countries is not straightforward
-- how to compare a system with high deductible but low coinsurance rate or many treatments exempted from oop with a low deductible system?
-- we use variable =OOP=: % oop in total health expenditure in a country
+- how to compare a system with high deductible but low coinsurance rate?
+- we use =OOP=: % oop in total health expenditure
 - high oop is especially problematic for people on low income
 - they could forgo valuable treatment if it is expensive
 - if this mechanism exists: higher mortality in regions where =OOP= $\times$ =Poverty= is high
@@ -49,7 +49,7 @@
 ** summary
 
 #+attr_latex: :width 0.6\linewidth
-#+attr_html: :width 700px
+#+attr_html: :width 500px
 #+name: fig:SummaryFigure
 [[./figures/change_mortality_countries_baseline.png]]
 
@@ -76,7 +76,7 @@
 
 ** theory
 
-- using a theoretical model we derive two equations to be estimated:
+- using a theoretical model we derive two equations to estimate:
   - probability of death as a function of =Unmet= medical needs
   - probability that someone forgoes treatment because it is too expensive as a function of =OOP= and =Poverty=
 
@@ -115,13 +115,10 @@ $$
 |------------------+----------+---------+---------|
 | population       | 52612.00 | 7491.28 | 4805.28 |
 | deaths           | 52612.00 |  103.19 |  126.49 |
-| mortality        | 52612.00 |    2.12 |    2.94 |
-| poverty          | 52612.00 |   16.47 |    6.50 |
 | deprivation      | 52612.00 |   11.23 |   12.78 |
 | too exp.         | 52612.00 |    2.00 |    3.09 |
 | unmet            | 52612.00 |    4.93 |    3.73 |
 | out-of-pocket    | 52612.00 |   22.03 |    8.88 |
-| voluntary        | 52612.00 |    3.12 |    3.07 |
 | expend. per head | 52612.00 | 3379.56 | 2688.57 |
 
 
@@ -141,13 +138,30 @@ $$
 
 #+caption: Fit of estimated and observed mortality across all observations.
 #+attr_latex: scale=0.75
+#+attr_html: :width 400px
 #+name: fig:ModelFit
 [[./figures/fit_baseline_model.png]]
+
+
+** NUTS 2 region per country
+
+
+#+caption: Region per country with highest fraction of material deprivation
+#+name: tab:region_per_country
+| region | country     | deprivation | too expensive |
+|--------+-------------+-------------+---------------|
+| BG33   | Bulgaria    |        0.40 |          0.08 |
+| HR04   | Croatia     |        0.13 |          0.01 |
+| DK02   | Denmark     |        0.04 |          0.00 |
+| EL63   | Greece      |        0.28 |          0.07 |
+| HU31   | Hungary     |        0.32 |          0.02 |
+| RO22   | Romania     |        0.32 |          0.11 |
+
 
 ** size of effects
 
 #+attr_latex: :width 0.6\linewidth
-#+attr_html: :width 700px
+#+attr_html: :width 400px
 #+name: fig:SummaryFigure
 [[./figures/change_mortality_countries_baseline.png]]
 
@@ -161,7 +175,6 @@ $$
 | Tuberculosis                                           |     0.93 |
 | HIV                                                    |     0.72 |
 | Malignant melanoma of skin                             |     4.20 |
-| Diseases of the blood and blood-forming organs         |     2.69 |
 | Leukaemia                                              |    10.15 |
 | Influenza (including swine flu)                        |     1.18 |
 | Alzheimer disease                                      |    13.08 |
@@ -171,7 +184,7 @@ $$
 
 - include voluntary health insurance payments in =OOP= measure
 - at risk of poverty as poverty measure
-- separate effect of TooExp and other unmet medical needs on mortality
+- separate effect of =TooExp= and other unmet medical needs on mortality
 
 
 

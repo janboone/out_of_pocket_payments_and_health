@@ -36,12 +36,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-org26eb1aa">Introduction</a></li>
-<li><a href="#/slide-org14f6c2d">Two equations to estimate</a></li>
-<li><a href="#/slide-orgc1a8a2a">Data</a></li>
-<li><a href="#/slide-org404fb3c">Estimation</a></li>
-<li><a href="#/slide-org66a4075">Results</a></li>
-<li><a href="#/slide-org5f526ee">Conclusions</a></li>
+<li><a href="#/slide-org2263d15">Introduction</a></li>
+<li><a href="#/slide-orgcb697e9">Two equations to estimate</a></li>
+<li><a href="#/slide-org0344ebe">Data</a></li>
+<li><a href="#/slide-org3b1e93e">Estimation</a></li>
+<li><a href="#/slide-org6f172e5">Results</a></li>
+<li><a href="#/slide-org357cb3c">Conclusions</a></li>
 </ul>
 </div>
 </div>
@@ -50,13 +50,13 @@
 
 
 <section>
-<section id="slide-org26eb1aa">
-<h2 id="org26eb1aa">Introduction</h2>
-<div class="outline-text-2" id="text-org26eb1aa">
+<section id="slide-org2263d15">
+<h2 id="org2263d15">Introduction</h2>
+<div class="outline-text-2" id="text-org2263d15">
 </div>
 </section>
-<section id="slide-org6872e75">
-<h3 id="org6872e75">Health insurance</h3>
+<section id="slide-org880847f">
+<h3 id="org880847f">Health insurance</h3>
 <ul>
 <li>healthcare costs increase in all developed countries</li>
 <li>health insurance can cause moral hazard</li>
@@ -72,8 +72,8 @@
 </ul>
 
 </section>
-<section id="slide-org9d10874">
-<h3 id="org9d10874">Health effects</h3>
+<section id="slide-orgcac4b08">
+<h3 id="orgcac4b08">Health effects</h3>
 <ul>
 <li>postponing/forgoing valuable care has health effects</li>
 <li>measuring health effects is not easy</li>
@@ -83,12 +83,12 @@
 </ul>
 
 </section>
-<section id="slide-org4386cc0">
-<h3 id="org4386cc0">Insurance generosity</h3>
+<section id="slide-orgcacca8b">
+<h3 id="orgcacca8b">Insurance generosity</h3>
 <ul>
 <li>comparing insurance generosity across countries is not straightforward</li>
-<li>how to compare a system with high deductible but low coinsurance rate or many treatments exempted from oop with a low deductible system?</li>
-<li>we use variable <code>OOP</code>: % oop in total health expenditure in a country</li>
+<li>how to compare a system with high deductible but low coinsurance rate?</li>
+<li>we use <code>OOP</code>: % oop in total health expenditure</li>
 <li>high oop is especially problematic for people on low income</li>
 <li>they could forgo valuable treatment if it is expensive</li>
 <li>if this mechanism exists: higher mortality in regions where <code>OOP</code> \(\times\) <code>Poverty</code> is high</li>
@@ -96,28 +96,28 @@
 </ul>
 
 </section>
-<section id="slide-org86500d7">
-<h3 id="org86500d7">NUTS 2 regions in Europe</h3>
+<section id="slide-orga2493dc">
+<h3 id="orga2493dc">NUTS 2 regions in Europe</h3>
 
-<div id="org5dbc288" class="figure">
+<div id="org056627d" class="figure">
 <p><img src="./figures/Europe_mortality_40_F_2018.png" alt="Europe_mortality_40_F_2018.png" width="500px" />
 </p>
 </div>
 
 </section>
-<section id="slide-org9732d93">
-<h3 id="org9732d93">summary</h3>
+<section id="slide-org7ff6262">
+<h3 id="org7ff6262">summary</h3>
 
-<div id="org760fac7" class="figure">
-<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="800px" />
+<div id="org9213be4" class="figure">
+<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="500px" />
 </p>
 </div>
 
 
 
 </section>
-<section id="slide-org5f66446">
-<h3 id="org5f66446">Literature: individual level data</h3>
+<section id="slide-orgad08ef3">
+<h3 id="orgad08ef3">Literature: individual level data</h3>
 <ul>
 <li>recent literature on relation oop and mortality</li>
 <li>US individual level data</li>
@@ -136,8 +136,8 @@
 </ul>
 
 </section>
-<section id="slide-org41d05a8">
-<h3 id="org41d05a8">This paper</h3>
+<section id="slide-org0f3c996">
+<h3 id="org0f3c996">This paper</h3>
 <ul>
 <li>European regional data</li>
 <li>more broad brush: cannot capture effect of 1% increase in deductible</li>
@@ -150,10 +150,15 @@
 </section>
 </section>
 <section>
-<section id="slide-org14f6c2d">
-<h2 id="org14f6c2d">Two equations to estimate</h2>
+<section id="slide-orgcb697e9">
+<h2 id="orgcb697e9">Two equations to estimate</h2>
+<div class="outline-text-2" id="text-orgcb697e9">
+</div>
+</section>
+<section id="slide-org0bed77d">
+<h3 id="org0bed77d">theory</h3>
 <ul>
-<li>using a theoretical model we derive two equations to be estimated:
+<li>using a theoretical model we derive two equations to estimate:
 <ul>
 <li>probability of death as a function of <code>Unmet</code> medical needs</li>
 <li>probability that someone forgoes treatment because it is too expensive as a function of <code>OOP</code> and <code>Poverty</code></li>
@@ -163,8 +168,8 @@
 </ul>
 
 </section>
-<section id="slide-orga8bee35">
-<h3 id="orga8bee35">Number of deaths</h3>
+<section id="slide-orga855dda">
+<h3 id="orga855dda">Number of deaths</h3>
 <ul>
 <li>per age, gender, year, nuts 2 region</li>
 <li>\(k\) deaths out of \(n\) population: \(\binom{n}{k} m^{k}(1-m)^{n-k}\)</li>
@@ -177,8 +182,8 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </p>
 
 </section>
-<section id="slide-org9fe643e">
-<h3 id="org9fe643e">Too expensive</h3>
+<section id="slide-org05749bb">
+<h3 id="org05749bb">Too expensive</h3>
 <ul>
 <li>one motivation for unmet medical needs is that treatment is too expensive</li>
 <li>fraction of people in a region indicating that they postponed/forgone treatment because it was too expensive:</li>
@@ -196,10 +201,10 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 
 
 </section>
-<section id="slide-orge3ec821">
-<h3 id="orge3ec821">Relation <code>OOP</code> and <code>TooExp</code></h3>
+<section id="slide-org5d87518">
+<h3 id="org5d87518">Relation <code>OOP</code> and <code>TooExp</code></h3>
 
-<div id="org76c1905" class="figure">
+<div id="orgbeedd50" class="figure">
 <p><img src="./figures/Parametric3.png" alt="Parametric3.png" width="1000px" />
 </p>
 </div>
@@ -207,14 +212,14 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </section>
 </section>
 <section>
-<section id="slide-orgc1a8a2a">
-<h2 id="orgc1a8a2a">Data</h2>
-<div class="outline-text-2" id="text-orgc1a8a2a">
+<section id="slide-org0344ebe">
+<h2 id="org0344ebe">Data</h2>
+<div class="outline-text-2" id="text-org0344ebe">
 </div>
 </section>
-<section id="slide-orgb05458f">
-<h3 id="orgb05458f">Eurostat data: 2009-2019; ages 35-85</h3>
-<table id="org64c9f3b" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<section id="slide-org9d166ea">
+<h3 id="org9d166ea">Eurostat data: 2009-2019; ages 35-85</h3>
+<table id="orgd4c8674" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> Summary statistics main variables</caption>
 
 <colgroup>
@@ -250,20 +255,6 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </tr>
 
 <tr>
-<td class="org-left">mortality</td>
-<td class="org-right">52612.00</td>
-<td class="org-right">2.12</td>
-<td class="org-right">2.94</td>
-</tr>
-
-<tr>
-<td class="org-left">poverty</td>
-<td class="org-right">52612.00</td>
-<td class="org-right">16.47</td>
-<td class="org-right">6.50</td>
-</tr>
-
-<tr>
 <td class="org-left">deprivation</td>
 <td class="org-right">52612.00</td>
 <td class="org-right">11.23</td>
@@ -292,13 +283,6 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </tr>
 
 <tr>
-<td class="org-left">voluntary</td>
-<td class="org-right">52612.00</td>
-<td class="org-right">3.12</td>
-<td class="org-right">3.07</td>
-</tr>
-
-<tr>
 <td class="org-left">expend. per head</td>
 <td class="org-right">52612.00</td>
 <td class="org-right">3379.56</td>
@@ -313,13 +297,13 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </section>
 </section>
 <section>
-<section id="slide-org404fb3c">
-<h2 id="org404fb3c">Estimation</h2>
-<div class="outline-text-2" id="text-org404fb3c">
+<section id="slide-org3b1e93e">
+<h2 id="org3b1e93e">Estimation</h2>
+<div class="outline-text-2" id="text-org3b1e93e">
 </div>
 </section>
-<section id="slide-orgd7afc79">
-<h3 id="orgd7afc79">Estimation technique</h3>
+<section id="slide-orga0ccf72">
+<h3 id="orga0ccf72">Estimation technique</h3>
 <ul>
 <li>Bayesian analysis: are we 95% sure that the following chain of effects is present:
 <ul>
@@ -333,35 +317,105 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </section>
 </section>
 <section>
-<section id="slide-org66a4075">
-<h2 id="org66a4075">Results</h2>
-<div class="outline-text-2" id="text-org66a4075">
+<section id="slide-org6f172e5">
+<h2 id="org6f172e5">Results</h2>
+<div class="outline-text-2" id="text-org6f172e5">
 </div>
 </section>
-<section id="slide-org7953e0b">
-<h3 id="org7953e0b">Fit</h3>
+<section id="slide-orgbac115d">
+<h3 id="orgbac115d">Fit</h3>
 
-<div id="orga978229" class="figure">
-<p><img src="./figures/fit_baseline_model.png" alt="fit_baseline_model.png" />
+<div id="org36e0ceb" class="figure">
+<p><img src="./figures/fit_baseline_model.png" alt="fit_baseline_model.png" width="400px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Fit of estimated and observed mortality across all observations.</p>
 </div>
 
-</section>
-<section id="slide-orgfb25d6c">
-<h3 id="orgfb25d6c">size of effects</h3>
 
-<div id="orgc7b27c4" class="figure">
-<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="800px" />
+</section>
+<section id="slide-org9e84804">
+<h3 id="org9e84804">NUTS 2 region per country</h3>
+<table id="orgc3c30d9" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Region per country with highest fraction of material deprivation</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">region</th>
+<th scope="col" class="org-left">country</th>
+<th scope="col" class="org-right">deprivation</th>
+<th scope="col" class="org-right">too expensive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">BG33</td>
+<td class="org-left">Bulgaria</td>
+<td class="org-right">0.40</td>
+<td class="org-right">0.08</td>
+</tr>
+
+<tr>
+<td class="org-left">HR04</td>
+<td class="org-left">Croatia</td>
+<td class="org-right">0.13</td>
+<td class="org-right">0.01</td>
+</tr>
+
+<tr>
+<td class="org-left">DK02</td>
+<td class="org-left">Denmark</td>
+<td class="org-right">0.04</td>
+<td class="org-right">0.00</td>
+</tr>
+
+<tr>
+<td class="org-left">EL63</td>
+<td class="org-left">Greece</td>
+<td class="org-right">0.28</td>
+<td class="org-right">0.07</td>
+</tr>
+
+<tr>
+<td class="org-left">HU31</td>
+<td class="org-left">Hungary</td>
+<td class="org-right">0.32</td>
+<td class="org-right">0.02</td>
+</tr>
+
+<tr>
+<td class="org-left">RO22</td>
+<td class="org-left">Romania</td>
+<td class="org-right">0.32</td>
+<td class="org-right">0.11</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+<section id="slide-org0c23cd5">
+<h3 id="org0c23cd5">size of effects</h3>
+
+<div id="orgbe76267" class="figure">
+<p><img src="./figures/change_mortality_countries_baseline.png" alt="change_mortality_countries_baseline.png" width="400px" />
 </p>
 </div>
 
 
 </section>
-<section id="slide-orgbdd33a5">
-<h3 id="orgbdd33a5">other causes of deaths</h3>
-<table id="orgc6fda82" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption class="t-above"><span class="table-number">Table 2:</span> Number of people dying by cause</caption>
+<section id="slide-orgfb202a5">
+<h3 id="orgfb202a5">other causes of deaths</h3>
+<table id="orga0fdbc8" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> Number of people dying by cause</caption>
 
 <colgroup>
 <col  class="org-left" />
@@ -391,11 +445,6 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </tr>
 
 <tr>
-<td class="org-left">Diseases of the blood and blood-forming organs</td>
-<td class="org-right">2.69</td>
-</tr>
-
-<tr>
 <td class="org-left">Leukaemia</td>
 <td class="org-right">10.15</td>
 </tr>
@@ -414,12 +463,12 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 
 
 </section>
-<section id="slide-orgef3376e">
-<h3 id="orgef3376e">Robustness analysis</h3>
+<section id="slide-org2dacdc6">
+<h3 id="org2dacdc6">Robustness analysis</h3>
 <ul>
 <li>include voluntary health insurance payments in <code>OOP</code> measure</li>
 <li>at risk of poverty as poverty measure</li>
-<li>separate effect of TooExp and other unmet medical needs on mortality</li>
+<li>separate effect of <code>TooExp</code> and other unmet medical needs on mortality</li>
 
 </ul>
 
@@ -428,13 +477,13 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 </section>
 </section>
 <section>
-<section id="slide-org5f526ee">
-<h2 id="org5f526ee">Conclusions</h2>
-<div class="outline-text-2" id="text-org5f526ee">
+<section id="slide-org357cb3c">
+<h2 id="org357cb3c">Conclusions</h2>
+<div class="outline-text-2" id="text-org357cb3c">
 </div>
 </section>
-<section id="slide-orga526587">
-<h3 id="orga526587">Policy implications</h3>
+<section id="slide-org1eff70e">
+<h3 id="org1eff70e">Policy implications</h3>
 <ul>
 <li>increasing oop leads to more costs than just risk aversion</li>
 <li>doing without oop is not an option:
