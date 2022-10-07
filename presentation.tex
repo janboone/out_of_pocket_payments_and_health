@@ -22,7 +22,7 @@
  pdftitle={Health effects of OOP},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 28.1 (Org mode 9.5.4)}, 
+ pdfcreator={Emacs 28.2 (Org mode 9.5.4)}, 
  pdflang={English}}
 \begin{document}
 
@@ -36,9 +36,9 @@
 
 
 \section*{Introduction}
-\label{sec:orgf846528}
+\label{sec:orgafef9d2}
 
-\begin{frame}[label={sec:orgf54505e}]{Health insurance}
+\begin{frame}[label={sec:orgfc622fb}]{Health insurance}
 \begin{itemize}
 \item healthcare costs increase in all developed countries
 \item health insurance can cause moral hazard
@@ -52,7 +52,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org64d728d}]{Health effects}
+\begin{frame}[label={sec:org8bc88cc}]{Health effects}
 \begin{itemize}
 \item postponing/forgoing valuable care has health effects
 \item measuring health effects is not easy
@@ -61,25 +61,25 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org448556f},fragile]{Insurance generosity}
+\begin{frame}[label={sec:orgc0e0b0f},fragile]{Insurance generosity}
  \begin{itemize}
 \item comparing insurance generosity across countries is not straightforward
-\item how to compare a system with high deductible but low coinsurance rate or many treatments exempted from oop with a low deductible system?
-\item we use variable \texttt{OOP}: \% oop in total health expenditure in a country
+\item how to compare a system with high deductible but low coinsurance rate?
+\item we use \texttt{OOP}: \% oop in total health expenditure
 \item high oop is especially problematic for people on low income
 \item they could forgo valuable treatment if it is expensive
 \item if this mechanism exists: higher mortality in regions where \texttt{OOP} \(\times\) \texttt{Poverty} is high
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org160bd53}]{NUTS 2 regions in Europe}
+\begin{frame}[label={sec:org954a2fc}]{NUTS 2 regions in Europe}
 \begin{center}
 \includegraphics[width=.6\linewidth]{./figures/Europe_mortality_40_F_2018.png}
 \label{fig:EUmap}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orge81aa8a}]{summary}
+\begin{frame}[label={sec:org58d3245}]{summary}
 \begin{center}
 \includegraphics[width=0.6\linewidth]{./figures/change_mortality_countries_baseline.png}
 \label{fig:SummaryFigure}
@@ -88,7 +88,7 @@
 
 
 
-\begin{frame}[label={sec:orgc683a04}]{Literature: individual level data}
+\begin{frame}[label={sec:org56a2b53}]{Literature: individual level data}
 \begin{itemize}
 \item recent literature on relation oop and mortality
 \item US individual level data
@@ -104,7 +104,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org31d998a},fragile]{This paper}
+\begin{frame}[label={sec:orgef8585b},fragile]{This paper}
  \begin{itemize}
 \item European regional data
 \item more broad brush: cannot capture effect of 1\% increase in deductible
@@ -115,11 +115,11 @@
 \end{frame}
 
 \section*{Two equations to estimate}
-\label{sec:orgfaa2c2e}
+\label{sec:orgba26dfa}
 
-\begin{frame}[label={sec:org34bca97},fragile]{theory}
+\begin{frame}[label={sec:orgb44f304},fragile]{theory}
  \begin{itemize}
-\item using a theoretical model we derive two equations to be estimated:
+\item using a theoretical model we derive two equations to estimate:
 \begin{itemize}
 \item probability of death as a function of \texttt{Unmet} medical needs
 \item probability that someone forgoes treatment because it is too expensive as a function of \texttt{OOP} and \texttt{Poverty}
@@ -127,7 +127,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgc667dc0}]{Number of deaths}
+\begin{frame}[label={sec:orgc03c79b}]{Number of deaths}
 \begin{itemize}
 \item per age, gender, year, nuts 2 region
 \item \(k\) deaths out of \(n\) population: \(\binom{n}{k} m^{k}(1-m)^{n-k}\)
@@ -137,7 +137,7 @@ m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln 
 $$
 \end{frame}
 
-\begin{frame}[label={sec:org7d44d9e}]{Too expensive}
+\begin{frame}[label={sec:org964dcb9}]{Too expensive}
 \begin{itemize}
 \item one motivation for unmet medical needs is that treatment is too expensive
 \item fraction of people in a region indicating that they postponed/forgone treatment because it was too expensive:
@@ -151,7 +151,7 @@ $$
 \end{frame}
 
 
-\begin{frame}[label={sec:org0a2c46d},fragile]{Relation \texttt{OOP} and \texttt{TooExp}}
+\begin{frame}[label={sec:org7aa6fc2},fragile]{Relation \texttt{OOP} and \texttt{TooExp}}
  \begin{center}
 \includegraphics[width=.9\linewidth]{./figures/Parametric3.png}
 \label{fig:Parametric}
@@ -159,9 +159,9 @@ $$
 \end{frame}
 
 \section*{Data}
-\label{sec:orgbf3e5c9}
+\label{sec:org93fd4a2}
 
-\begin{frame}[label={sec:orgd4bfbfe}]{Eurostat data: 2009-2019; ages 35-85}
+\begin{frame}[label={sec:orgbf83a76}]{Eurostat data: 2009-2019; ages 35-85}
 \begin{table}[htbp]
 \caption{\label{tab:summary}Summary statistics main variables}
 \centering
@@ -170,13 +170,10 @@ $$
 \hline
 population & 52612.00 & 7491.28 & 4805.28\\
 deaths & 52612.00 & 103.19 & 126.49\\
-mortality & 52612.00 & 2.12 & 2.94\\
-poverty & 52612.00 & 16.47 & 6.50\\
 deprivation & 52612.00 & 11.23 & 12.78\\
 too exp. & 52612.00 & 2.00 & 3.09\\
 unmet & 52612.00 & 4.93 & 3.73\\
 out-of-pocket & 52612.00 & 22.03 & 8.88\\
-voluntary & 52612.00 & 3.12 & 3.07\\
 expend. per head & 52612.00 & 3379.56 & 2688.57\\
 \end{tabular}
 \end{table}
@@ -186,9 +183,9 @@ expend. per head & 52612.00 & 3379.56 & 2688.57\\
 
 
 \section*{Estimation}
-\label{sec:orge16d339}
+\label{sec:org76e595d}
 
-\begin{frame}[label={sec:org611259e}]{Estimation technique}
+\begin{frame}[label={sec:org019dc2f}]{Estimation technique}
 \begin{itemize}
 \item Bayesian analysis: are we 95\% sure that the following chain of effects is present:
 \begin{itemize}
@@ -199,9 +196,9 @@ expend. per head & 52612.00 & 3379.56 & 2688.57\\
 \end{frame}
 
 \section*{Results}
-\label{sec:org6ccb26c}
+\label{sec:org31a59a0}
 
-\begin{frame}[label={sec:org671f70d}]{Fit}
+\begin{frame}[label={sec:org7f94455}]{Fit}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./figures/fit_baseline_model.png}
@@ -209,7 +206,26 @@ expend. per head & 52612.00 & 3379.56 & 2688.57\\
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org6b195c5}]{size of effects}
+
+\begin{frame}[label={sec:org0b50dec}]{NUTS 2 region per country}
+\begin{table}[htbp]
+\caption{\label{tab:region_per_country}Region per country with highest fraction of material deprivation}
+\centering
+\begin{tabular}{llrr}
+region & country & deprivation & too expensive\\
+\hline
+BG33 & Bulgaria & 0.40 & 0.08\\
+HR04 & Croatia & 0.13 & 0.01\\
+DK02 & Denmark & 0.04 & 0.00\\
+EL63 & Greece & 0.28 & 0.07\\
+HU31 & Hungary & 0.32 & 0.02\\
+RO22 & Romania & 0.32 & 0.11\\
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}[label={sec:org71c7657}]{size of effects}
 \begin{center}
 \includegraphics[width=0.6\linewidth]{./figures/change_mortality_countries_baseline.png}
 \label{fig:SummaryFigure}
@@ -217,39 +233,22 @@ expend. per head & 52612.00 & 3379.56 & 2688.57\\
 \end{frame}
 
 
-\begin{frame}[label={sec:orgd8e4a92}]{other causes of deaths}
-\begin{table}[htbp]
-\caption{\label{tab:causes_death}Number of people dying by cause}
-\centering
-\begin{tabular}{lr}
-icd-10 & per 1000\\
-\hline
-Tuberculosis & 0.93\\
-HIV & 0.72\\
-Malignant melanoma of skin & 4.20\\
-Diseases of the blood and blood-forming organs & 2.69\\
-Leukaemia & 10.15\\
-Influenza (including swine flu) & 1.18\\
-Alzheimer disease & 13.08\\
-\end{tabular}
-\end{table}
-\end{frame}
 
 
-\begin{frame}[label={sec:orge4b05c8},fragile]{Robustness analysis}
+\begin{frame}[label={sec:org371db78},fragile]{Robustness analysis}
  \begin{itemize}
 \item include voluntary health insurance payments in \texttt{OOP} measure
 \item at risk of poverty as poverty measure
-\item separate effect of TooExp and other unmet medical needs on mortality
+\item separate effect of \texttt{TooExp} and other unmet medical needs on mortality
 \end{itemize}
 \end{frame}
 
 
 
 \section*{Conclusions}
-\label{sec:org4370ebf}
+\label{sec:org2554fad}
 
-\begin{frame}[label={sec:org2be6a36}]{Policy implications}
+\begin{frame}[label={sec:org9e7d816}]{Policy implications}
 \begin{itemize}
 \item increasing oop leads to more costs than just risk aversion
 \item doing without oop is not an option:

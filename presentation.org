@@ -166,18 +166,6 @@ $$
 [[./figures/change_mortality_countries_baseline.png]]
 
 
-** other causes of deaths
-
-#+caption: Number of people dying by cause
-#+name: tab:causes_death
-| icd-10                                                 | per 1000 |
-|--------------------------------------------------------+----------|
-| Tuberculosis                                           |     0.93 |
-| HIV                                                    |     0.72 |
-| Malignant melanoma of skin                             |     4.20 |
-| Leukaemia                                              |    10.15 |
-| Influenza (including swine flu)                        |     1.18 |
-| Alzheimer disease                                      |    13.08 |
 
 
 ** Robustness analysis
