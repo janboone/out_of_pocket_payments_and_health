@@ -30,7 +30,7 @@ The rationale for demand side cost sharing in health insurance is to deter patie
 
 *JEL codes:* I11, I13, I18
 
-*Keywords:* out-of-pocket payments, mortality, health insurance
+*Keywords:* out-of-pocket payments, mortality, health insurance, poverty, unmet medical needs
 
 
 
@@ -140,22 +140,26 @@ len(df)
 * Introduction
 
 
-Most developed economies face rising healthcare expenditures. In many countries the healthcare sector grows faster than the economy as a whole [[citep:&oecd-2021-healt-glanc]]. One of the instruments that governments have to curb this expenditure growth is demand side cost sharing. The effect of demand side cost sharing on healthcare utilization is well known. As cost sharing increases, healthcare becomes more expensive for the individual and demand for treatments falls. It is less clear whether and to which extent demand side cost sharing induces people to forgo low value care only [[citep:&newhouse;&glied-2011-chapt-user]]. On the one hand, insurance subsidizes health consumption inducing people to get (expensive) treatments with small health benefits. Economists tend to refer to this as moral hazard. As the social costs (in contrast to an individual's out-of-pocket --oop-- expenditure) of such treatments exceed their value (utility gain), an increase in demand side cost-sharing that reduces moral hazard is seen as welfare enhancing. The traditional trade off is between this increase in efficiency (due to reduced moral hazard) and the increased oop risk faced by a risk averse agent. In this paper we focus on the trade off due to behavioral hazard which refers to the case where cost-sharing leads patients to forgo valuable treatments [[citep:&baicker-2015-behav-hazar]]. If a patient decides to skip a treatment where (utility) value exceeds costs because it is too expensive for her, social welfare is reduced.
+Most developed economies face rising healthcare expenditures. In many countries the healthcare sector grows faster than the economy as a whole [[citep:&oecd-2021-healt-glanc]]. One of the instruments that governments have to curb this expenditure growth is demand side cost sharing. The effect of demand side cost sharing on healthcare utilization is well known. As cost sharing increases, healthcare becomes more expensive for the individual and demand for treatments falls. It is less clear whether and to which extent demand side cost sharing induces people to forgo low value care only [[citep:&newhouse;&glied-2011-chapt-user]].
 
-The goal of this paper is to identify a health effect of demand side cost sharing through treatment becoming too expensive using European data. We start from the following two ideas. First, if demand side cost sharing reduces valuable healthcare by making it (too) expensive, this effect will be stronger for people on low income. Health is a normal good and people with high (enough) income invest in it even if it becomes expensive. Low income can force a patient to postpone or forgo treatment due to liquidity constraints. Second, if there is a substantial demand reduction for high value care, we should be able to detect this in aggregate mortality statistics.
+The traditional view is that insurance subsidizes health consumption thereby inducing people to get (expensive) treatments with small health benefits. Economists tend to refer to this as moral hazard. As the social costs (in contrast to an individual's out-of-pocket --oop-- expenditure) of such treatments exceed their value (utility gain), an increase in demand side cost-sharing that reduces moral hazard is seen as welfare enhancing. The traditional trade off is between this increase in efficiency (due to reduced moral hazard) and the increased oop risk faced by a risk averse agent.
+
+Here we focus on behavioral hazard which refers to the case where cost-sharing leads patients to forgo valuable treatments [[citep:&baicker-2015-behav-hazar]]. If a patient decides to skip a treatment where value (utility) exceeds costs then social welfare is reduced. We are interested in the case where people skip or postpone treatment because it is too expensive.
+
+The goal of this paper is to develop a simple model that can be estimated with aggregate data to identify whether demand side cost sharing has negative health effects. In particular, we are interested in the mechanism where demand side cost sharing reduces health because valuable treatments become too expensive. We start from the following two ideas. First, if demand side cost sharing reduces valuable healthcare by making it (too) expensive, this effect will be stronger for people on low income. Health is a normal good and people with high (enough) income invest in it even if it becomes expensive. Low income can force a patient to postpone or forgo treatment due to liquidity constraints. Second, if there is a substantial demand reduction for high value care, we should be able to detect this in aggregate mortality statistics.
 
 #+caption: Mortality in NUTS 2 regions in Europe
 #+attr_latex: scale=0.5
 #+name: fig:EUmap
 [[./figures/Europe_mortality_40_F_2018.png]]
 
-To identify the health effects of cost-sharing we use mortality statistics of Eurostat at the NUTS 2 (Nomenclature of Territorial Units for Statistics) region level. Figure ref:fig:EUmap illustrates the NUTS 2 regions used in this paper. Mortality varies by region/year/age/sex. In regions where the percentage of people on low income is high and demand side cost sharing is high, we expect to see high mortality. Since we have panel data, we control for NUTS 2 fixed effects.
+To identify the health effects of cost-sharing we use mortality statistics of Eurostat at the NUTS 2 (Nomenclature of Territorial Units for Statistics) regional level. Figure ref:fig:EUmap illustrates the NUTS 2 regions used in this paper. Mortality varies by region/year/age/sex. In regions where the percentage of people on low income is high and demand side cost sharing is high, we expect to see high mortality. Since we have panel data, we control for NUTS 2 fixed effects.
 
-Measuring how generous a health insurance system is, is non-trivial. Systems tend to combine coinsurance with health expenditure caps, like a deductible. Hence, we introduce a model that links observed variables related to mortality, poverty, oop expenditures and people forgoing treatment because it is too expensive. The combination of the model and these variables allows us to identify the mechanism from an increase in oop via poverty to people forgoing treatment thereby raising mortality.
+Measuring the generosity of a health insurance system is non-trivial. Systems tend to combine coinsurance with health expenditure caps, like a deductible. This leads to non-linearities in the oop price of healthcare. To address this, we introduce a model that links observed variables related to mortality, poverty, oop expenditures and people forgoing treatment because it is too expensive. The combination of the model and these variables allows us to identify the mechanism from reduced health insurance generosity via poverty to people forgoing treatment thereby raising mortality.
 
-Figure ref:fig:SummaryFigure summarizes our main results in the following way. For each country in our data, we consider the NUTS 2 region where poverty is highest and therefore the effect likely to be the strongest at the regional level. Using the estimated model, we simulate the effect of a 500 euro increase in oop on mortality. We report this effect as the increase in deaths (due to the increase in oop) per 1000 dead. The motivation for this measure is two-fold. First, mortality is --thankfully-- low and hence the effect of a change in oop on mortality is going to be (very) small. Reporting the increase in mortality per 1000 dead helps to interpret the numbers. Below we also present this measure for diseases that have similar orders of magnitude. Second, in our model this measure (per 1000 dead) is age-independent. That is, the number of people dying due to an increase in oop varies with age (as 25 year olds are less likely to die than 80 year olds). But the fraction of people dying due to the oop increase as a fraction of the total number of deceased is the same across age (and gender).
+Figure ref:fig:SummaryFigure summarizes our main results in the following way. For each country in our data, we consider the NUTS 2 region where poverty is highest and therefore the effect likely to be the strongest at the regional level. Using the estimated model, we simulate the effect of a 500 euro increase in oop on mortality. We report this effect as the increase in deaths (due to the increase in oop) per 1000 dead. The motivation for this measure is two-fold. First, mortality is --thankfully-- low and hence the effect of a change in oop on mortality is going to be (very) small. Reporting the increase in mortality per 1000 dead helps to interpret the numbers. Below we also present this measure for diseases that have similar orders of magnitude, like influenza. Second, in our model this measure (per 1000 dead) is age-independent. That is, the number of people dying due to an increase in oop varies with age (as 25 year olds are less likely to die than 80 year olds). But the fraction of people dying due to the oop increase as a fraction of the total number of deceased is the same across age (and gender). This formulation reduces the number of parameters that we need to estimate and fits the data rather well. 
 
-The blue bars indicate the average simulated effect of the 500 euro increase for this region within each country; the black lines indicate the 95% probability interval of the effect. The three countries with the biggest effects --Bulgaria, Greece and Romania-- have the highest poverty levels. For these countries we can easily see that the 95% probability interval of the effect is bounded away from 0. For the Scandinavian countries, Slovenia and Switzerland the effects are close to zero at the region level because poverty is very low (even in the NUTS 2 region with highest poverty per country). Another reason for small simulated effects is a government scheme targeted at the poor helping to finance healthcare expenditures. The poor then face lower oop than our country wide oop variable would suggest. Finally, the dots present the probability that the effect in the region exceeds 0.05 (per 1000 dead). For Bulgaria, Greece and Romania this probability is close to one. For Hungary this probability exceeds 0.7. For the Scandinavian countries and Switzerland the probability that the effect exceeds 0.05 is basically zero.
+The blue bars indicate the average simulated effect of the 500 euro increase for this region within each country; the black lines indicate the 95% probability interval of the effect. The four countries with the biggest effects --Bulgaria, Greece, Hungary and Romania-- have the highest poverty levels. For these countries we can easily see that the 95% probability interval of the effect is bounded away from 0. For the Scandinavian countries, Slovenia and Switzerland the effects are close to zero at the region level because poverty is very low (even in the NUTS 2 region with highest poverty level per country). Another potential reason for small simulated effects is a government scheme targeted at the poor helping to finance healthcare expenditures. The poor then face lower oop than our country wide oop variable would suggest. In this sense, the figure shows a lower bound of the effect of oop on mortality. Finally, the dots present the probability that the effect in the region exceeds 20 deaths (per 1000 dead). For Bulgaria, Greece and Romania this probability is somewhere between 80 and 100%. For the other countries, this probability is basically zero.
 
 
 #+caption: Increase in number of deaths per 1000 dead due to a 500 euro increase in oop for the region in each country where poverty is highest.
@@ -164,9 +168,9 @@ The blue bars indicate the average simulated effect of the 500 euro increase for
 [[./figures/change_mortality_countries_baseline.png]]
 
 
-The results suggest the following policy implications. An increase in oop has a measurable effect on mortality in regions where poverty is high, but the effect on the regional level is small. As we show below, if we believe this effect is (mainly) driven by the group of people indicating that they postponed treatment because it was too expensive, the effect among people in this group is an order of magnitude larger. Policies to address this include a scheme that subsidizes healthcare expenditure (on top of health insurance) for poor people; e.g. through means-tested cost-sharing. A downside of such a targeted intervention is a higher marginal tax rate at low income levels contributing to a poverty trap. Alternatively, a government can introduce co-payments that vary with the cost-effectiveness of the treatment. Treatments with high value added would then feature a low co-payment to prevent people from postponing valuable care. This can also help to reduce the mortality associated with cost sharing [[citep:&chernew-2008-impac-decreas]].
+The results suggest the following policy implications. An increase in oop has a measurable/significant effect on mortality in regions where poverty is high. Policies to address this include a scheme that subsidizes healthcare expenditure (on top of health insurance) for poor people; e.g. through means-tested cost-sharing. A downside of such a targeted intervention is a higher marginal tax rate at low income levels contributing to a poverty trap. Alternatively, a government can introduce co-payments that vary with the cost-effectiveness of the treatment. Treatments with high value added would then feature a low co-payment to prevent people from postponing valuable care. This can also help to reduce mortality associated with cost sharing [[citep:&chernew-2008-impac-decreas]].
 
-This is not the first paper to consider the effects of demand side-cost sharing on mortality. There is a string of recent papers using innovative methods to identify the causal effect of health insurance on health and mortality. There are a number of issues identifying this effect of health insurance on health and mortality using individual level data. First, mortality is a rare event at most ages. Hence, identifying the effect is difficult, especially if the changes in oop are small. Second there is the selection effect that people with low health status tend to buy (generous) health insurance (as they expect high expenditure). This can bias results in the direction that individuals with (generous) insurance have adverse health outcomes (e.g. high mortality). Moreover, cost-sharing tends to be non-linear with e.g. a cap on expenditures that have to be paid oop as with a deductible. In this case, people with high care use tend to face low (marginal) treatment prices. As low health status is likely to increase care use, people facing low marginal prices (suggesting generous insurance) are likely to experience adverse health outcomes.
+This is not the first paper to consider the effects of demand side-cost sharing on mortality. There is a string of recent papers using innovative methods to identify the causal effect of health insurance on health and mortality. There are a number of issues identifying this effect of health insurance on health and mortality using individual level data. First, mortality is a rare event at most ages. Hence, identifying the effect is difficult, especially if the changes in oop are small. Second there is the selection effect that people with low health status tend to buy (generous) health insurance (as they expect high expenditure). This can bias results in the direction that individuals with (generous) insurance have adverse health outcomes (e.g. high mortality). Moreover, cost-sharing tends to be non-linear with e.g. a cap on expenditures that have to be paid oop as with a deductible. In this case, people with high care use tend to face low (marginal) treatment prices. As low health status is likely to increase care use, people facing low marginal prices (suggesting generous insurance) are likely to have experienced adverse health outcomes.
 
 A number of papers use the Medicaid eligibility expansion of the Affordable Care Act which was introduced in different US states at different times. This allows for a diff-in-diffs identification strategy. Using individual level data, a number of papers have shown that the Medicaid expansion (more generous health insurance coverage) reduced mortality [[citep:&borgschulte-2020-did-aca;&miller-2021-medic-mortal]]. Other papers, focusing on particular causes of death, find similar results: the Medicaid expansion was associated with lower cardiovascular mortality in middle-aged adults [[citep:&khatana-2019-assoc-medic]] and lower 1-year mortality among patients with ESRD initiating dialysis [[citep:&swaminathan-2018-assoc-medic]].
 
@@ -180,26 +184,28 @@ Moreover, individual level data sets tend to be within a country not across coun
 
 Second, we show that mortality is high in regions where both oop and poverty are high. This follows the literature showing that healthcare consumption is liquidity sensitive [[citep:&gross-2020-liquid-sensit;&nyman-2003]]. People on low income tend to postpone or forgo valuable treatments if these are expensive. This focus on low incomes can imply that we under-estimate the mortality effect of cost-sharing if higher incomes also forgo valuable treatments due to oop [[citep:&brot-goldberg-2017-what-does;&chandra-2021-healt-costs]]. This is then not so much caused by liquidity problems but by behavioral hazard. In this sense, the results below are a lower bound on the mortality effects of cost-sharing.
 
-Third, we use the regional structure of the Eurostat data. We analyze the effects of the =OOP= variable times Poverty interaction on mortality per age-gender class at the NUTS 2 regional level. This helps to solve the following potential endogeneity issue. A country with a population that has low health status (across ages), decides to have, say, generous health insurance. This causal effect is in the opposite direction from the one we are interested in --from health insurance generosity to health status and mortality. We avoid this problem by considering within a country how health per region varies with oop and poverty, while using NUTS 2 fixed effects to correct for other factors affecting health. By analysing health/mortality per age cohort, our results are not affected by a country's or region's age distribution. By filtering out these other effects we mitigate power issues associated with the use of mortality data [[citep:&black-2019-simul-power]].
+Third, we use the regional structure of the Eurostat data. We analyze the effects of our oop variable times poverty interaction on mortality per age-gender class at the NUTS 2 regional level. This helps to solve the following potential endogeneity issue. A country with a population that has low health status (across ages), decides to have, say, generous health insurance. This causal effect is in the opposite direction from the one we are interested in --from health insurance generosity to health status and mortality. We avoid this problem by considering within a country how health per region varies with oop and poverty, while using NUTS 2 fixed effects to correct for other factors affecting health. By analysing health/mortality per age cohort, our results are not affected by a country's or region's age distribution. By filtering out these other effects we mitigate power issues associated with the use of mortality data at the regional level [[citep:&black-2019-simul-power]].
 
-Fourth, Eurostat variables based on the EU-SILC survey allow us to zoom in on the relevant causal mechanism. This survey asks people whether they had unmet medical needs in the past months and if so the reason for the unmet needs. One of the answers is that treatment was postponed or skipped because it was too expensive. This allows us to simultaneously estimate the fraction of people in a NUTS 2 region that forgo treatment because it is too expensive and the effect of unmet medical needs on mortality. In this way, we capture that in regions where the =OOP= $\times$ Poverty interaction is high, more people postpone treatment because it is too expensive and these unmet medical needs raise mortality in the region.
+Fourth, Eurostat variables based on the EU-SILC survey allow us to zoom in on the relevant causal mechanism. This survey asks people whether they had unmet medical needs in the past months and if so the reason for the unmet needs. One of the answers is that treatment was postponed or skipped because it was too expensive. This allows us to simultaneously estimate the fraction of people in a NUTS 2 region that forgo treatment because it is too expensive and the effect of unmet medical needs on mortality. In this way, we capture that in regions where the oop $\times$ poverty interaction is high, more people postpone treatment because it is too expensive and these unmet medical needs raise mortality in the region.
 
-Finally, our focus on the =OOP= $\times$ Poverty interaction distinguishes our paper from the literature on the effect of income and wealth on health [[citep:&chetty-2016-assoc-between;&mackenbach-2008-socioec-inequal;&semyonov-2013-where-wealt]] where papers use cross country data. This literature typically finds that lower income and wealth is associated with lower health status, although the causal mechanism is not clear [[citep:&cutler-2011-chapt-socioec]]. Two possible mechanisms are that higher income leads to more expenditure on treatments (normal good) and better health. Alternatively, healthier people are more productive and earn higher incomes. The combination of fixed effects and the use of the survey question on unmet medical needs allows us to zoom in on the mechanism where high =OOP= $\times$ Poverty interaction leads to unmet medical needs and hence to low health status and high mortality.
+Finally, our focus on the oop $\times$ poverty interaction distinguishes our paper from the literature on the effect of income and wealth on health [[citep:&chetty-2016-assoc-between;&mackenbach-2008-socioec-inequal;&semyonov-2013-where-wealt]] where papers use cross country data. This literature typically finds that lower income and wealth is associated with lower health status, although the causal mechanism is not clear [[citep:&cutler-2011-chapt-socioec]]. Two possible mechanisms are that higher income leads to more expenditure on treatments (normal good) and therefore better health. Alternatively, healthier people are more productive and earn higher incomes. The combination of fixed effects and the use of the survey question on unmet medical needs allows us to zoom in on the mechanism where high oop $\times$ poverty interaction leads to unmet medical needs and hence to low health status and high mortality.
 
-Summarizing, compared to papers using individual level data our approach is more broad brush and less precise in estimating the size of the effect of insurance generosity on mortality. To illustrate, we do not determine the mortality effect of a 1% change in a deductible. But we estimate the mortality effect of a 500 euro increase in oop. We do not have data on the oop details of each country's health insurance system, like what is the coinsurance rate for different types of treatments, which treatments are exempt from oop etc. Even if we had such detailed institutional data, it is not obvious how one would summarize the different systems in a way that makes them comparable across countries. Instead we use the fraction of oop payments in total healthcare expenditure, =OOP=, as a summary measure of a health insurance system's generosity. The theory section derives that =OOP= and the fraction of people postponing treatment because it is too expensive are parametric functions of the underlying exogenous parameters coinsurance rate and deductible level. This allows us to interpret the relation between =OOP= and mortality.
+In this way, our approach does not suffer from the endogeneity problem with individual level data discussed above where low health is correlated with generous insurance (at the margin). In our data, the unit of observation is a gender/age category at the regional level. The health status of such a unit, has (almost) no effect on our country wide oop variable.
+
+Summarizing, compared to papers using individual level data our approach is more broad brush and less precise in estimating the size of the effect of insurance generosity on mortality. To illustrate, we do not determine the mortality effect of a 1% change in a deductible. But we estimate the mortality effect of a 500 euro increase in oop. We do not have data on the oop details of each country's health insurance system, like what is the coinsurance rate for different types of treatments, which treatments are exempt from oop etc. Even if we had such detailed institutional data, it is not obvious how one would summarize the different systems in a way that makes them comparable across countries. Instead we use the fraction of oop payments in total healthcare expenditure, =OOP=, as a summary measure of a health insurance system's generosity. The theory section derives that =OOP= and the fraction of people postponing treatment because it is too expensive are parametric functions of the underlying parameters coinsurance rate and deductible level. This derivation allows us to interpret the relation between =OOP= and mortality.
 
 Although results based on aggregate data are less precise than those based on individual level data, our approach is more robust in the sense that it applies across a number of countries instead of a particular sub-population (like 65 year old Medicare users in the US). Although we do interpret our results using the size of the effect, our main goal is to establish that an increase in =OOP= in a poor region increases mortality. In particular, we quantify how sure we are that this effect is positive (bigger than 0.05 per 1000 dead in Figure ref:fig:SummaryFigure).
 
 We estimate our model to explain mortality for each age-gender category per NUTS 2 region per year. Figure ref:fig:EUmap shows mortality for 40 year old women in 2018 across Europe. For each region/year/age/gender combination we observe population size and the number of deaths. We model the number of deaths as a binomial distribution where the probability of death depends on the fraction of people with unmet medical needs in a region and control variables like age, poverty and fixed effects. Simultaneously, we model the fraction of people with unmet medical needs due to financial reasons as a function of poverty and the interaction of oop and poverty. The next section presents a model explaining the relationship between the variables mortality, poverty, =OOP= and the fraction of people forgoing treatment because it is too expensive.
 
-The rest of the paper is organized as follows. After the theory section, we describe the Eurostat data that we use. We explain the empirical model that we estimate in Section ref:sec:estimation. Estimation results are presented for the baseline model and we show that these are robust with respect to a number of our modeling choices. We conclude with a discussion of the policy implications. The appendix contains the proofs of our results and more details on our data and robustness analyses.
+The rest of the paper is organized as follows. After the theory section, we describe the Eurostat data that we use. We explain the empirical model that we estimate. Estimation results are presented for the baseline model and we show that these are robust with respect to a number of our modeling choices. We conclude with a discussion of the policy implications. The appendix contains the proofs of our results and more details on our data and robustness analyses.
 
 ** Map :code:
 :properties:
 :header-args: :session geopandas :kernel geo_env :async yes
 :END:
 
-As we use a different python kernel here from the one used in the rest of the paper, we need to import some libraries and the data again.
+As we use a different python kernel here from the one used in the rest of the paper, we need to import some libraries and the data again. We use [[https://geopandas.org/en/stable/][geopandas]] to plot the map of the NUTS 2 regions where the color indicates mortality per 100k population.
 
 #+begin_src jupyter-python
 import numpy as np
@@ -274,20 +280,20 @@ Consider a population in an EU region where a fraction $\alpha \in \langle 0,1 \
 
 Generally speaking, oop payments tend to take two forms that we want to capture: a coinsurance rate, which we denote $\xi \in [0,1]$, and a maximum expenditure, which we denote $D$ (for deductible). Some systems have a combination of the two.
 
-Conditional on falling ill, there is a probability $\zeta_i \in [0,1]$ that the patient is advised to get treatment $i$ at cost $x_i$ for $i$ in the set of "illnesses" $I$. We define $I_{\xi}$ as the subset of $I$ where $\xi x_i < D$ and $oop_i = \xi x_i$ and $I_D$ where $\xi x_i \geq D$ and $oop_i = D$. To keep things simple, we assume that $\zeta_i$ is exogenous for the patient. We model the treatment decision on the extensive margin only: accept or reject the treatment proposed by a physician. A pure coinsurance system has $\xi < 1$ and $I_{\xi}=I$. A pure deductible system $\xi=1$ and $I_D$ non-empty. A combination of the two has $\xi<1$ and there is a maximum on the oop payment. Health insurance systems in Europe tend to have such maximum oop expenditure.[fn::See question 12 in [[https://qdd.oecd.org/data/HSC]] specifying for most European countries a spending cap.] An increase in either $\xi$ or $D$ is interpreted as making health insurance less generous.
+Conditional on falling ill, there is a probability $\zeta_i \in [0,1]$ that the patient is advised to get treatment $i$ at cost $x_i$ for $i$ in the set of "illnesses" $I$. We define $I_{\xi}$ as the subset of $I$ where $\xi x_i < D$ and $oop_i = \xi x_i$ and $I_D$ where $\xi x_i \geq D$ and $oop_i = D$. To keep things simple, we assume that $\zeta_i$ is exogenous to the patient. We model the treatment decision on the extensive margin only: accept or reject the treatment proposed by a physician. A pure coinsurance system has $\xi < 1$ and $I_{\xi}=I$. A pure deductible system $\xi=1$ and $I_D$ non-empty. A combination of the two has $\xi<1$ and there is a maximum on the oop payment. Health insurance systems in Europe tend to have such maximum oop expenditure.[fn::See question 12 in [[https://qdd.oecd.org/data/HSC]] specifying for most European countries a spending cap.] An increase in either $\xi$ or $D$ is interpreted as making health insurance less generous.
 
 Whereas with individual level data one can determine whether an individual faces a positive treatment price at the margin [[citep:e.g. using the end-of-year price as in &keeler-1977-deduc-deman;&ellis-1986-ration-behav]], this is not possible with the aggregate data that we use here. Hence, we rely on an aggregate summary variable, denoted =OOP=, measured as oop payments over total healthcare expenditure. That is, the fraction of healthcare expenditure paid by patients oop. We interpret this variable as capturing the generosity of the health insurance system. To illustrate, if healthcare is free at point of service, =OOP= equals zero; if there is no health insurance at all, =OOP= equals 1. The challenge is to capture changes in $\xi$ and $D$ although we do not directly observe these variables in the data. This is what the model sets out to do.
 
-If a patient receives treatment $i \in I$, we denote her (expected) health $\sigma_i$, while without treatment (expected) health equals $\sigma_0$ with $0 \leq \sigma_0 < \sigma_i \leq 1$.[fn::To ease notation we do not let $\sigma_0$ vary with $i$.] Health is normalized at value one for a patient who does not fall ill. We simply assume that utility is multiplicative in health and consumption and we model the patient's treatment decision as:
+If a patient receives treatment $i \in I$, we denote her (expected) health $\sigma_i$, while without treatment (expected) health equals $\sigma_0$ with $0 \leq \sigma_0 < \sigma_i \leq 1$.[fn::To ease notation we do not let $\sigma_0$ vary with $i$.] Health is normalized at value one for a patient who does not fall ill. The trade off between health and oop is captured by $\sigma_0/\sigma_i <1$ and we simply assume that utility is multiplicative in health and consumption. We model the patient's treatment decision as:
 #+name: eq:1
 \begin{equation}
 \nu \sigma_i u(y^j-oop_i) > \sigma_0 u(y^j)
 \end{equation}
 where utility $u(.)$ is determined by how much money can be spent on other goods: $y^j$ minus oop in case of treatment and $y^j$ if no treatment is chosen. The utility function $u(.)$ is increasing and concave in consumption: $u(.), u'(.) >0$ and $u''(.) < 0$. Further, parameter $\nu$ captures other factors than pure financial ones affecting a patient's treatment choice.
 
-In our data, we have a variable "unmet medical needs" based on a number of motivations: treatment is too far away to travel to, there is a long waiting list, the patient is scared to undergo treatment etc. To make our point, it is enough to assume that such factors affect utility in a multiplicative way. To illustrate, if the patient has to travel far for treatment, utility is reduced by multiplying it with $\nu < 1$. The cumulative distribution function of $\nu$ is given by $G(\nu)$ and its density function by $g(\nu)$. Other factors can include travel time to treatment, belief that the condition will resolve itself without intervention, poor decision making and focus on the short term undervaluing the benefit of treatment. If inequality eqref:eq:1 holds, the agent accepts the treatment. In the proofs in the appendix we assume that $G$ is a Pareto distribution.
+In our data, we have a variable "unmet medical needs" based on a number of motivations: treatment is too far away to travel to, there is a long waiting list, the patient is scared to undergo treatment etc. To make our point, it is enough to assume that such factors affect utility in a multiplicative way. To illustrate, if the patient has to travel far for treatment, utility is reduced by multiplying it with $\nu < 1$. The cumulative distribution function of $\nu$ is given by $G(\nu)$ and its density function by $g(\nu)$. Other factors can include travel time to treatment, belief that the condition will resolve itself without intervention, poor decision making and focus on the short term undervaluing the benefit of treatment. If inequality eqref:eq:1 holds, the agent accepts the treatment. For some proofs in the appendix it is convenient to assume that $G$ is a Pareto distribution.
 
-Hence, the probability that a patient with income $y^{j}$ accepts treatment $i$ offered by a physician equals
+The probability that a patient with income $y^{j}$ accepts treatment $i$ offered by a physician equals
 #+name: eq:2
 \begin{equation}
 \delta_i^j = 1-G\left( \frac{\sigma_0}{\sigma_i} \frac{u(y^{j})}{u(y^{j}-oop_i)} \right)
@@ -299,23 +305,27 @@ The probability that a patient postpones or skips a treatment because it is too 
 \begin{equation}
 G\left( \frac{\sigma_0}{\sigma_i} \frac{u(y^{j})}{u(y^{j}-oop_{i})} \right) - G\left( \frac{\sigma_0}{\sigma_i} \right)
 \end{equation}
-These are agents $\nu$ that would have chosen treatment $i$ if it were free ($oop_{i}=0$ and $u(y^j)/u(y^j-oop_i)=1$) but who forgo treatment now that it costs $oop_{i}>0$. The probability $G(\sigma_{0}/\sigma_{i})$ captures factors like waiting lists or the patient hoping that the health problems resolve themselves without treatment. That is, reasons for postponing treatment not related to oop payments. In the proof of the lemma at the end of this section, we show that the probability of treatment is increasing in income $y^j$ and decreasing in $oop_{i}$, as one would expect.
+These are agents $\nu$ that would have chosen treatment $i$ if it were free ($oop_{i}=0$ and $u(y^j)/u(y^j-oop_i)=1$) but who forgo treatment now that it costs $oop_{i}>0$. The probability $G(\sigma_{0}/\sigma_{i})$ captures factors like waiting lists or the patient hoping that the health problems resolve themselves without treatment. That is, reasons for postponing treatment not related to oop payments. In the proof of the lemma at the end of this section, we show that the probability of treatment $\delta_i^j$ is increasing in income $y^j$ and decreasing in $oop_{i}$, as one would expect.
 
 An agent's health is affected by the probability of falling ill and then getting treatment (or not). We assume that agents' mortality is affected by health in the following way, where we define mortality $m$ as the propbability of dying in a given period.
 #+name: eq:health
 \begin{equation}
-\ln(m_{agt}) = \ln(\tilde{\eta}_{ag}) + \gamma \ln \left( \frac{m_{a-1,g,t-1}}{\bar m_{a-1,g}}\right) - (\alpha (1-\pi^l) + (1-\alpha) (1-\pi^{h})) \end{equation}
+\ln(m_{agt}) = \ln({\eta}_{ag}) + \gamma \ln \left( \frac{m_{a-1,g,t-1}}{\bar m_{a-1,g}}\right) - (\alpha (1-\pi^l) + (1-\alpha) (1-\pi^{h})) \end{equation}
 \begin{equation*}
  - \alpha \pi^l \sum_{i \in I} \zeta_i (\delta_i^l \sigma_i + (1-\delta_i^l)\sigma_0) - (1-\alpha) \pi^h \sum_{i \in I} \zeta_i (\delta_i^h \sigma_i + (1-\delta_i^h) \sigma_0)
 \end{equation*}
-where we use the following subscripts: age $a$, gender $g \in \{f,m\}$, year $t$. In words, log mortality in a region depends on the biology of age and gender, $\tilde \eta_{ag}$. As people get older, they tend to become less healthy and more likely to die. We define this effect as independent of country or year (in the period that we analyze). Then there are a number of effects that increase or decrease mortality compared to $\tilde \eta_{ag}$. The health of the age-gender cohort in the previous period: if in a NUTS 2 region there was a shock in $t-1$ --when this cohort was aged $a-1$ -- that increased mortality above the average (across years and regions) mortality for this cohort, we interpret this as a negative health shock. For the people that survived in this cohort, this health shock can affect their mortality in period $t$. This is captured by the coefficient $\gamma$.[fn::Although we think of $\gamma>0$, we allow for $\gamma<0$. The interpretation in the latter case would be that some people with low health status in cohort $a-1$ passed away early, increasing average health for people remaining in this cohort.] People who do not fall ill, have the highest health level (normalized to 1) and hence reduce mortality to the biggest extend. People who do fall ill and get treatment, get health $\sigma_i \leq 1$ and reduce mortality to a smaller extent. Finally, people falling ill but forgoing treatment lead to the smallest reduction $\sigma_0$ in mortality.
+where we use the following subscripts: age $a$, gender $g \in \{f,m\}$, calendar year $t$. In words, log mortality in a region depends on the biology of age and gender, $ \eta_{ag}$. As people get older, they tend to become less healthy and more likely to die. We define this effect as independent of country or year (in the period that we analyze). Then there are a number of effects that increase or decrease mortality compared to $ \eta_{ag}$.
+
+The health of the age-gender cohort in the previous period: if in a NUTS 2 region there was a shock in $t-1$ --when this cohort was aged $a-1$ -- that increased mortality above the average (across years and regions) mortality for this cohort, we interpret this as a negative health shock. For the people that survived in this cohort, this health shock can affect their mortality in period $t$. This is captured by the coefficient $\gamma$.[fn::Although we think of $\gamma>0$, we allow for $\gamma<0$. The interpretation in the latter case would be that some people with low health status in cohort $a-1$ passed away early, increasing average health for people remaining in this cohort.]
+
+People who do not fall ill, have the highest health level (normalized to 1) and hence reduce mortality to the biggest extend. People who do fall ill and get treatment, get health $\sigma_i \leq 1$ and reduce mortality to a smaller extent. Finally, people falling ill but forgoing treatment lead to the smallest reduction $\sigma_0$ in mortality.
 
 As we show in the proof of the lemma below, we can write the expression for log mortality as:
 #+name: eq:health2
 \begin{equation}
-\ln(m_{ag2t}) =\ln (\tilde \eta_{ag}) + \mu_2 + \gamma \ln \left( \frac{m_{a-1,2,g,t-1}}{\bar m_{a-1,g}}\right) + \beta_{poverty}\alpha_{2t} + \beta_{unmet}\text{Unmet}_{2t}
+\ln(m_{ag2t}) =\ln ( \eta_{ag}) + \mu_2 + \gamma \ln \left( \frac{m_{a-1,2,g,t-1}}{\bar m_{a-1,g}}\right) + \beta_{poverty}\alpha_{2t} + \beta_{unmet}\text{Unmet}_{2t}
 \end{equation}
-where subscript $2$ indicates that the variable varies with NUTS 2 region, $\mu_2$ denote NUTS 2 fixed effects, poverty $\alpha$ varies with NUTS 2 region and year and =Unmet= denotes the fraction of people indicating unmet medical needs in a region in year $t$. 
+where subscript $2$ indicates that the variable varies with NUTS 2 region, $\mu_2$ denote NUTS 2 fixed effects, poverty $\alpha$ varies with NUTS 2 region and calendar year and =Unmet= denotes the fraction of people indicating unmet medical needs in a region in year $t$. 
 
 In our data, the variable =Unmet= varies with NUTS 2 region and year and not by age or gender. Hence, in terms of our model, we define this variable as follows:
 #+name: eq:Unmet
@@ -345,11 +355,11 @@ Finally, using equation eqref:eq:3 our model allows us to formalize the fraction
  + (1-\alpha) \pi^h (\sum_{i \in I}\zeta_{i} \left(G\left( \frac{\sigma_0}{\sigma_i} \frac{u(y^{h})}{u(y^{h}-oop_{i})} \right) - G\left( \frac{\sigma_0}{\sigma_i} \right) \right )
 \end{equation*}
 
-In our data, =TooExp= varies with Nuts 2 region and year. The following lemma summarizes the main results from the model and presents the equations that we estimate below. The innovation is to view equations eqref:eq:OOP2 and eqref:eq:TooExp as being parametrized by $\xi$ and $D$ which are not observed in our data. We show that this leads to an equation where =TooExp= is a function of =OOP= and poverty.
+In our data, =TooExp= varies with Nuts 2 region and year. The following lemma summarizes the main results from the model and presents the equations that we estimate below. The innovation is to view equations eqref:eq:OOP2 and eqref:eq:TooExp as being parametrized by $\xi$ and $D$ which are not directly observed in our data. We show that this leads to an equation where =TooExp= is a function of =OOP= and poverty.
 
 #+name: prop:1
 #+begin_lemma
-Healthcare demand $\delta = 1-G(.)$ is increasing in income $y^j$ and decreasing in $oop_i$ ($\xi$ or $D$). We write the expression for female/male mortality of age cohort $a$ in Nuts 2 region $2$ at time $t$ as:
+Healthcare demand $\delta = 1-G(.)$ is increasing in income $y^j$ and decreasing in $oop_i$ ($\xi$ or $D$). We write the expression for gender =g= female/male mortality of age cohort $a$ in Nuts 2 region $2$ at time $t$ as:
 $$
 m_{ga2t} = \frac{e^{\beta_{ag}}}{1+e^{\beta_{ag}}} e^{\left( \mu_2 + \gamma \ln \left(\frac{m_{a-1,g,2,t-1}}{\bar{m}_{a-1,g}}\right)+ \beta_{poverty}\text{Poverty}_{2t} + \beta_{unmet}\text{Unmet}_{2t}\right)}
 $$
@@ -359,9 +369,9 @@ $$
 $$
 #+end_lemma
 
-We model $\tilde{\eta}_{ag}$ as a sigmoid of age and gender fixed effects, $\beta_{ag}$. This makes sure this part of the probability of death is between 0 and 1. We multiply this baseline probability with a multiplier taking care of other effects. In particular, NUTS 2 region fixed effects which capture regional variation in $\pi^h$. Whether this age cohort experienced a health shock in the previous period (compared to the average mortality of this cohort). Poverty level and the fraction of people with unmet medical needs in the region in year $t$. If the sum of these terms is negative, the multiplier is less than 1 and mortality for this gender/age/region/year combination is reduced compared to the baseline probability given by the sigmoid. If the sum of the terms is positive, mortality for this observation is higher than the baseline probability.
+We model ${\eta}_{ag}$ as a sigmoid of age and gender fixed effects, $\beta_{ag}$. This makes sure this part of the probability of death is between 0 and 1. We multiply this baseline probability with a multiplier taking care of other effects. In particular, NUTS 2 region fixed effects which capture regional variation in $\pi^h$. Whether this age cohort experienced a health shock in the previous period (compared to the average mortality of this cohort). Poverty level and the fraction of people with unmet medical needs in the region in year $t$. If the sum of these terms is negative, the multiplier is less than 1 and mortality for this gender/age/region/year combination is reduced compared to the baseline probability given by the sigmoid. If the sum of the terms is positive, mortality for this observation is higher than the baseline probability.
 
-We use a linear expansion of =TooExp= in terms of =OOP=. The appendix shows how we derive this relation using the exogenous variables $\xi$ and $D$ which affect =OOP= and =TooExp= simultaneously. It turns out that there is a direct effect of =OOP= on =TooExp= and an interaction effect with the fraction of people below the poverty line in a region. We show that $b_{oop},b_{interaction} > 0$: a region that lies in a country with high =OOP= tends to have high unmet needs and especially so if the region features a high poverty rate. In our estimation we want to ensure that =TooExp= is between 0 and 1. For this we assume that =TooExp= has a logit-normal distribution. That is, the log-odds of =TooExp= is normally distributed.
+We use a linear expansion of =TooExp= in terms of =OOP=. The appendix shows how we derive this relation using the exogenous variables $\xi$ and $D$ which affect =OOP= and =TooExp= simultaneously. It turns out that there is a direct effect of =OOP= on =TooExp= and an interaction effect with the fraction of people below the poverty line in a region. We show that $b_{oop},b_{interaction} > 0$: a region that lies in a country with high =OOP= tends to have high unmet needs and especially so if the region features a high poverty rate. 
 
 Figure ref:fig:Parametric illustrates this approximation of the relation between (log-odds) =TooExp= and =OOP= for simulated values in the model above. We simulate data for two countries which differ in poverty rate (see web appendix for details). As we vary $\xi$ and $D$, both =OOP= and expenditure per head vary leading to the graph in the left panel of Figure ref:fig:Parametric. As explained in the proof of the lemma, the linear expansion of =TooExp= in =OOP= and =OOP= $\times$ Poverty interaction does not determine the intercept $b_{0}$. Therefore, we allow $b_0$ to vary by region and year: $b_{0,2} + b_{0,t}$. For both sets of simulated data, the approximation where the (log odds of) fraction of people forgoing treatment because it is too expensive depends linearly on =OOP= $\times$ Poverty seems reasonable. As shown in the appendix, we need to multiply =OOP= and =OOP= $\times$ Poverty by healthcare expenditure per head because the underlying changing variable is not the endogenous =OOP= but the policy parameters $\xi$ and $D$. As illustrated in equation eqref:eq:OOP2, the relation between changes in $D$ and =OOP= is multiplied by expenditure per head: $d \text{OOP}/d D \propto 1/\bar{x}_{ct}$.
 
@@ -471,41 +481,40 @@ We use our model to simulate this parametric relation between =TooExp= and =OOP*
 
 * Data
 
-The data that we use is from [[https://ec.europa.eu/eurostat/web/regions/data/database][Eurostat's regional database]] and provides for NUTS 2 regions population size and number of deaths per age-gender category. In principle, we have data on 14 countries and 78 NUTS 2 regions for the years 2009-2019, ages 35-85 for women and men. The years 2009-2019 were chosen  because, at the time of the analysis, data on poverty was available from 2009 onward and data on the [[https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en][number of deaths]] ran till 2019. We start at age 35 because at ages below 35, mortality is so low that there is hardly a difference between mortality in regions with different poverty levels (Figure ref:fig:DifferenceMortalityData below). For ages above 85 population numbers get very low. We drop NUTS 2 region-year combinations where for an age-gender category --due to reporting issues or people moving-- the number of deaths in a year exceeds the population size at the start of the year. We focus on observations where we have complete records on mortality, the fraction of people indicating they postponed treatment because it was too expensive and oop expenditure.
+The data that we use is from [[https://ec.europa.eu/eurostat/web/regions/data/database][Eurostat's regional database]] and provides for NUTS 2 regions population size and number of deaths per age-gender category. In principle, we have data on 14 countries and 78 NUTS 2 regions for the years 2009-2019, ages 35-85 for women and men. The years 2009-2019 were chosen  because, at the time of the analysis, data on poverty was available from 2009 onward and data on the [[https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en][number of deaths]] ran till 2019. We start at age 35 because at ages below 35, mortality is so low that there is hardly a difference between mortality in regions with different poverty levels (Figure ref:fig:DifferenceMortalityData below). For ages above 85 population numbers per region get rather low. We drop NUTS 2 region-year combinations where for an age-gender category --due to reporting issues or people moving-- the number of deaths in a year exceeds the population size at the start of the year. We focus on observations where we have complete records on mortality, the fraction of people indicating they postponed treatment because it was too expensive and oop expenditure.
 
-Table ref:tab:summary shows the summary statistics for our variables. We have more than 50k observations. The average population size per region-age-gender category is about 7500 and the average number of deaths 100. Median population size per category equals 6500 and median number of deaths 56. Percentage of people dying in a NUTS 2/year/age/gender category (=mortality=) equals 2% on average with a maximum of 20%.
+Table ref:tab:summary shows the summary statistics for our variables. We have more than 50k observations. The average population size per region-age-gender category is about 7500 and the average number of deaths 100. Median population size per category equals 6500 and median number of deaths 56. Percentage of people dying in a NUTS 2/year/age/gender category (=mortality=) equals 2% on average with a maximum of 20% for some region and age combination.
 
 #+caption: Summary statistics main variables
 #+name: tab:summary
-|                  |    count |    mean |     std |    min |   median |      max |
-|------------------+----------+---------+---------+--------+----------+----------|
-| population       | 52612.00 | 7491.28 | 4805.28 | 440.00 |  6477.00 | 36117.00 |
-| deaths           | 52612.00 |  103.19 |  126.49 |   0.00 |    56.00 |  1033.00 |
-| mortality        | 52612.00 |    2.12 |    2.94 |   0.00 |     0.81 |    20.72 |
-| poverty          | 52612.00 |   16.47 |    6.50 |   2.60 |    15.30 |    36.10 |
-| deprivation      | 52612.00 |   11.23 |   12.78 |   0.00 |     3.40 |    52.30 |
-| too exp.         | 52612.00 |    2.00 |    3.09 |   0.00 |     0.60 |    16.00 |
-| unmet            | 52612.00 |    4.93 |    3.73 |   0.00 |     4.00 |    20.00 |
-| out-of-pocket    | 52612.00 |   22.03 |    8.88 |   8.83 |    19.46 |    47.74 |
-| voluntary        | 52612.00 |    3.12 |    3.07 |   0.33 |     1.59 |    15.20 |
-| expend. per head | 52612.00 | 3379.56 | 2688.57 | 307.69 |  3559.49 |  8484.88 |
+|                  |    count |    mean |     std |    min |  median |      max |
+|------------------+----------+---------+---------+--------+---------+----------|
+| population       | 52612.00 | 7491.28 | 4805.28 | 440.00 | 6477.00 | 36117.00 |
+| deaths           | 52612.00 |  103.19 |  126.49 |   0.00 |   56.00 |  1033.00 |
+| mortality        | 52612.00 |    2.12 |    2.94 |   0.00 |    0.81 |    20.72 |
+| poverty          | 52612.00 |   16.47 |    6.50 |   2.60 |   15.30 |    36.10 |
+| deprivation      | 52612.00 |   11.23 |   12.78 |   0.00 |    3.40 |    52.30 |
+| too exp.         | 52612.00 |    2.00 |    3.09 |   0.00 |    0.60 |    16.00 |
+| unmet            | 52612.00 |    4.93 |    3.73 |   0.00 |    4.00 |    20.00 |
+| out-of-pocket    | 52612.00 |   22.03 |    8.88 |   8.83 |   19.46 |    47.74 |
+| voluntary        | 52612.00 |    3.12 |    3.07 |   0.33 |    1.59 |    15.20 |
+| expend. per head | 52612.00 | 3379.56 | 2688.57 | 307.69 | 3559.49 |  8484.88 |
 
 We use two measures for poverty; each of these measures comes from the EU statistics on income and living conditions ([[https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:EU_statistics_on_income_and_living_conditions_(EU-SILC)][EU-SILC]]) survey. The first is "at-risk-of-poverty rate" that we refer to as =poverty=. This is a relative poverty measure: the share of people with disposable income after social transfers below a threshold based on the national median disposable income. The material deprivation measure (denoted =deprivation=) refers to the enforced inability to pay unexpected expenses, afford adequate heating of the home, durable goods like a washing machine etc. See the appendix for details.
 
-In our data, the (unweighted) average (across regions and years) percentage of people at risk of poverty equals 16% with a maximum of 36%. For material deprivation these numbers are 11% and 52%. These measures vary by NUTS 2 region and year but not by age or gender. We use =deprivation= in our baseline analysis because it captures more closely the idea of postponing treatment due to financial constraints. The =poverty= variable is used in a robustness check.
+In our data, the (unweighted) average (across regions and years) percentage of people at risk of poverty equals 16% with a maximum of 36%. For material deprivation the numbers are 11% and 52%. These measures vary by NUTS 2 region and year but not by age or gender. We use =deprivation= in our baseline analysis because it captures more closely the idea of postponing treatment due to financial constraints. The =poverty= variable is used in a robustness check.
 
 Also from the EU-SILC survey, we use the variable capturing unmet healthcare needs because the forgone treatment was too expensive (=too exp=). The variable =unmet= measures percentage of people that postpone or forgo treatment because it is either too expensive, the hospital is too far away, there is a waiting list for the treatment, the patient hopes that symptoms will disappear without treatment or because the patient is afraid of treatment. As explained in the model above, our analysis uses both =too exp=  and =unmet= (which includes =too exp= as reason for unmet medical needs) as variables.
 
-The measure =OOP= that we use in the baseline model, is based on household oop payments (=out-of-pocket=). In particular, this measures the percentage of healthcare expenditures paid oop. This varies by country and year.  The higher =OOP=, the less generous the healthcare system is (in terms of higher coinsurance $\xi$ or deductible $D$ in the model above). We expect that high =OOP= is especially problematic in regions with a high percentage of people in poverty.
+The measure =OOP= that we use in the baseline model, is based on household oop payments (=out-of-pocket=). In particular, this measures the percentage of healthcare expenditures paid oop. This varies by country and year. The higher =OOP=, the less generous the healthcare system is (in terms of higher coinsurance $\xi$ or deductible $D$ in the model above). We expect that high =OOP= is especially problematic in regions with a high percentage of people in poverty.
 
-
-In a robustness analysis we consider the sum of oop and payments to voluntary health insurance as a percentage of health expenditures (=voluntary=) as our =OOP= measure. The reason why we also consider the sum of expenditure on voluntary insurance and oop payments is that basic or mandatory insurance packages can differ between countries. If people are willing to spend money on voluntary insurance, it can be the case that this voluntary insurance covers treatments that people deem to be important. Put differently, a country that finances all expenditure ("free at point of service") for a very narrow set of treatments would appear generous if we only used oop payments. The narrowness of this insurance would then be signalled by people buying voluntary insurance to cover more treatments. 
+In a robustness analysis we consider the sum of oop and payments to voluntary health insurance (=voluntary=) as a percentage of health expenditures as our =OOP= measure. The reason why we also consider the sum of expenditure on voluntary insurance and oop payments is that basic or mandatory insurance packages can differ between countries. If people are willing to spend money on voluntary insurance, it can be the case that this voluntary insurance covers treatments that people deem to be important. Put differently, a country that finances all expenditure ("free at point of service") for a very narrow set of treatments would appear generous if we only used oop payments. The narrowness of this insurance would then be signalled by people buying voluntary insurance to cover more treatments. 
 
 As can be seen in Table ref:tab:summary, =out-of-pocket= is the most important component of the two =OOP= inputs. Percentage of healthcare expenditure paid oop is a multiple of the percentage financed via voluntary insurance (both in terms of the mean and of the minimum, median and maximum reported in the table). Therefore, the baseline model works with oop payments (only).
 
 Finally, as shown in Lemma ref:prop:1, healthcare expenditure per head (=expend per head=) affects how =OOP= influences the fraction of people forgoing treatment because it is too expensive. Expenditure per head is on average 3300 euro for the countries in our data. But the variation is big: minimum value of 308 euro per year and maximum value of 8500 euro.
 
-Figure ref:fig:DifferenceMortalityData (left panel) shows average mortality as a function of age for women and men. This is the pattern that one would expect: clearly increasing with age from age 40 onward and higher for men than for women (as women tend to live longer than men). Figure ref:fig:DifferenceMortalityData (middle panel) shows the effect we are interested in: mortality is higher in regions where the interaction =OOP= $\times$ Poverty is high than where it is low and this difference increases with age. Both for women and for men, we plot per age category the difference between average mortality in regions that are at least one standard deviation above the mean for =OOP= $\times$ Poverty and regions that are one standard deviation below the mean. Around age 80, this mortality difference equals approximately 1.75 percentage points. In the raw data, for 100 women, there are 1.75 additional deaths in regions with high =OOP= $\times$ Poverty compared to regions with low interaction. Note that this plot of the raw data does not correct for other factors, like the poverty level itself, and thus over-estimates the size of the effect of =OOP= $\times$ Poverty on mortality. The right panel in this figure does a similar exercise with the fraction of people reporting unmet medical needs. Mortality is higher in regions where unmet needs are at least one standard deviation above the mean compared to regions where it is one standard deviation below the mean.
+Figure ref:fig:DifferenceMortalityData (left panel) shows average mortality as a function of age for women and men. This is the pattern that one would expect: clearly increasing with age from age 40 onward and higher for men than for women (as women tend to live longer than men). Figure ref:fig:DifferenceMortalityData (middle panel) shows the effect we are interested in: mortality is higher in regions where the interaction =OOP= $\times$ Poverty is high than where it is low and this difference increases with age. Both for women and for men, we plot per age category the difference between average mortality in regions that are at least 0.5 standard deviation above the mean for =OOP= $\times$ Poverty and regions that are 0.5 standard deviation below the mean. Around age 82, this mortality difference equals approximately 4 percentage points. In the raw data, for 100 women aged 82, there are 4 additional deaths in regions with high =OOP= $\times$ Poverty compared to regions with low interaction. Note that this plot of the raw data does not correct for other factors, like the poverty level itself, and thus over-estimates the size of the effect of =OOP= $\times$ Poverty on mortality. The right panel in this figure does a similar exercise with the fraction of people reporting unmet medical needs. Mortality is higher in regions where unmet needs are at least 0.5 standard deviation above the mean compared to regions where it is 0.5 standard deviation below the mean.
 
 The observation from the figure that the difference between the two sets of regions is approximately zero for people below 35, is our motivation to include ages above 35 only in our data. Further, the difference in mortality between the regions increases with the mortality level in the left panel. This is in line with our specification in Lemma ref:prop:1 where unmet needs has a multiplicative effect on the underlying mortality rate modeled by $e^{\beta_{ag}}/(1+e^{\beta_{ag}})$.
 
@@ -558,7 +567,7 @@ print(tabulate(variables,headers,tablefmt="orgtbl",\
 
 *** standardizing data
 
-In our Bayesian estimation we work with standardized variables. Further to deal with (potential) missing values in the estimation with pymc, we use numpy's [[https://numpy.org/doc/stable/reference/maskedarray.html][masked arrays]]. To use fixed effects, we index variables by country and NUTS 2 indices, gender, year and age.
+In our Bayesian estimation we work with standardized variables. To deal with (potential) missing values in the estimation with pymc, we use numpy's [[https://numpy.org/doc/stable/reference/maskedarray.html][masked arrays]]. To use fixed effects, we index variables by country and NUTS 2 indices, gender, year and age. These indices are generated with pandas' =factorize= function.
 
 All variables representing fractions (between 0 and 1) are not (further) standardized. Population size and number of deaths are not standardized either. Health care expenditure is standardized by dividing by its standard deviation using the function =standardize_s= defined below.
 
@@ -588,7 +597,7 @@ def standardize_s(x):
 
 #+RESULTS:
 
-The following cell standardizes variables as percentage in our data into fractions and standardizes =lagged_log_mortality= and =too_exp_lo= into log-odds. As mortality and =TooExp= can be zero for some observations, we clip these variables from below. The lower bounds imply probabilities of less than 1%. Neither of these variables is close to one in our data; hence the upper-bound is not so relevant.
+The following cell standardizes variables as percentage in our data into fractions and transforms lagged mortality into logs, =lagged_log_mortality=, and fraction too expensive into log-odds, =too_exp_lo=. As mortality and =TooExp= can be zero for some observations, we clip these variables from below. The lower bounds imply probabilities of less than 1%. Neither of these variables is close to one in our data; hence the upper-bound is not relevant.
 
 
 #+begin_src jupyter-python
@@ -597,7 +606,7 @@ mortality = df.deaths.values
 population = df.population.values
 lagged_log_mortality = np.clip(\
     np.ma.masked_invalid(np.log(df['lagged_mortality_s'])),\
-                         np.log(0.001),np.log(10))
+                         np.log(0.0001),np.log(10))
 
 # nuts 2 measures
 poverty_s  = np.ma.masked_invalid(df['poverty']/100.0)
@@ -608,7 +617,7 @@ oop_e = np.ma.masked_invalid(df['HF3_PC_CHE']+df['HF2_PC_CHE'])/100.0
       # oop and voluntary insurance
 
 too_exp = (df['TOOEXP'])/100.0
-too_exp_lo = np.clip(np.log(too_exp/(1-too_exp)),-5.0,1.0)
+too_exp_lo = np.clip(np.log(too_exp/(1-too_exp)),np.log(0.0001),np.log(10))
 unmet = (df['TOOEXP']+df['TOOFAR']+df['WAITING']+\
          df['HOPING']+df['FEAR'])/100.0
 unmet_1 = (df['TOOFAR']+df['WAITING']+\
@@ -618,7 +627,7 @@ unmet_1 = (df['TOOFAR']+df['WAITING']+\
 expenditure_s = standardize_s(df['health expenditure per capita'])
 std_expenditure = np.std(df['health expenditure per capita'])
 
-female = (df.sex == 'F').astype('uint8').values
+# female = (df.sex == 'F').astype('uint8').values
 
 N = len(mortality) # total sample size
 N_years = len(year_list)
@@ -638,28 +647,48 @@ print("number of years:           {}".format(len(year_list)))
 : number of NUTS 2 regions:  78
 : number of ages:            51
 : number of years:           10
+: /home/janboone/anaconda3/envs/env_pymc/lib/python3.10/site-packages/pandas/core/arraylike.py:397: RuntimeWarning: divide by zero encountered in log
+:   result = getattr(ufunc, method)(*inputs, **kwargs)
  
 We print our total sample size, number of countries, NUTS 1 and NUTS 2 regions, number of calendar years and ages.
 
-Next, we use a =groupby= to plot average mortality by age and gender. Further, we compare regions where the interaction =OOP= $\times$ Poverty is at least one standard deviation above the mean with regions where it is at least this distance below the mean. For low (young) ages, there is hardly a difference, mortality is close to 0 for both sets of regions. But from age 40 onward, there is a clear difference which increases with age.
+*** figure with extended age range
 
-We can generate a similar figure with the (standardized) variable =unmet=: taking the difference in mortality between regions with unmet one standard deviation above the mean and one standard deviation below the mean.
+Next, we use a =groupby= to plot average mortality by age and gender. Further, we compare regions where the interaction =OOP= $\times$ Poverty is at least 0.5 standard deviation above the mean with regions where it is at least this distance below the mean. For low (young) ages, there is hardly a difference, mortality is close to 0 for both sets of regions. But from age 40 onward, there is a clear difference which increases with age.
+
+We can generate a similar figure with the (standardized) variable =unmet=: taking the difference in mortality between regions with unmet 0.5 standard deviation above the mean and 0.5 standard deviation below the mean.
 
 #+begin_src jupyter-python
-df_groupby = df[['country','age','sex','mortality']].\
+first_year = 2009
+last_year = 2019
+age_min_fig = 20
+
+df_fig = pd.read_csv('./data/data_deaths_by_age_nuts_2.csv')
+df_fig['poverty'] = df_fig['at risk of poverty']
+df_fig['deprivation'] = df_fig['percentage_material_deprivation']
+
+df_fig.dropna(subset=['deaths','population', 'TOOEXP',\
+                  'HF3_PC_CHE','lagged_mortality'],
+                    axis=0, how ='any',inplace=True)
+df_fig = df_fig[(df_fig.population > df_fig.deaths) & (df_fig.age >= age_min_fig) & \
+        (df_fig.age <= age_max) & (df_fig.year <= last_year) &\
+        (df_fig.year >= first_year)]
+df_fig['mortality'] = df_fig.deaths/df_fig.population*100 
+df_groupby = df_fig[['country','age','sex','mortality']].\
     groupby(['age','sex']).mean().reset_index()
 #+end_src
 
 #+RESULTS:
 
 #+begin_src jupyter-python :file ./figures/IncreaseMortalityInteractionData.png
+plt.style.use('Solarize_Light2')
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3,\
                         sharex=True,dpi=140,figsize=(16,6))
 fig.suptitle('Mortality across age')
-ax1.plot(np.arange(age_min,age_max+1),\
+ax1.plot(np.arange(age_min_fig,age_max+1),\
          df_groupby[df_groupby.sex=='F'].mortality,\
          label='female mortality')
-ax1.plot(np.arange(age_min,age_max+1),\
+ax1.plot(np.arange(age_min_fig,age_max+1),\
          df_groupby[df_groupby.sex=='M'].mortality,
          label='male mortality')
 ax1.legend()
@@ -669,15 +698,15 @@ ax1.set_ylabel('mortality (in %)')
 ax1.set_title(\
   'Average mortality percentage by age\naveraged across years and countries');
 
-oop_poverty = oop_s * poverty_s - np.mean(oop_s * poverty_s)
-k = 1.0 * np.std(oop_s*poverty_s)
+oop_poverty = df_fig['HF3_PC_CHE'] * df_fig['deprivation']/(100*100)
+k = 0.5
 
-mask_high_interaction = (oop_poverty > k)
-mask_low_interaction = (oop_poverty < k)
+mask_high_interaction = (oop_poverty > np.mean(oop_poverty) + k * np.std(oop_poverty))
+mask_low_interaction  = (oop_poverty < np.mean(oop_poverty) - k * np.std(oop_poverty))
 
-groupby_high = df[mask_high_interaction].\
+groupby_high = df_fig[mask_high_interaction].\
     groupby(['age','sex'])['mortality'].mean().reset_index()
-groupby_low = df[mask_low_interaction].\
+groupby_low = df_fig[mask_low_interaction].\
     groupby(['age','sex'])['mortality'].mean().reset_index()
 
 mortality_difference_0_F = (groupby_high[groupby_high['sex']=='F'].\
@@ -695,15 +724,15 @@ ax2.set_ylabel(\
 ax2.set_title(\
   'Increase in mortality due to an\nincrease in the interaction OOP $\\times$ Poverty')
 
+unmet_fig = (df_fig['TOOEXP']+df_fig['TOOFAR']+df_fig['WAITING']+\
+         df_fig['HOPING']+df_fig['FEAR'])/100.0
 
-k = 1.0
+mask_high_interaction = (unmet_fig > unmet_fig.mean() + k*unmet_fig.std())
+mask_low_interaction = (unmet_fig < unmet_fig.mean() - k*unmet_fig.std())
 
-mask_high_interaction = (unmet > unmet.mean() + k*unmet.std())
-mask_low_interaction = (unmet < unmet.mean() - k*unmet.std())
-
-groupby_high = df[mask_high_interaction].\
+groupby_high = df_fig[mask_high_interaction].\
     groupby(['age','sex'])['mortality'].mean().reset_index()
-groupby_low = df[mask_low_interaction].\
+groupby_low = df_fig[mask_low_interaction].\
     groupby(['age','sex'])['mortality'].mean().reset_index()
 
 mortality_difference_0_F = (groupby_high[groupby_high['sex']=='F'].\
@@ -734,42 +763,45 @@ fig.tight_layout();
 :END:
 @@latex:\label{sec:estimation}@@
 
-In this section, we explain the model that we estimate.
+In this section, we explain how we estimate the equations in Lemma ref:prop:1.
 
 ** Empirical model
 
-We estimate a binomial model with population size as the number of draws and deaths as the number of events. We do this for every combination of NUTS 2 region, calendar year, age and gender in our data. The probability of $k \leq n$ deaths out of a population $n$ is then given by
+First, we estimate a binomial model with population size as the number of draws and deaths as the number of events. We do this for every combination of NUTS 2 region, calendar year, age and gender in our data. The probability of $k \leq n$ deaths out of a population $n$ is then given by
 #+name: eq:binomial
 \begin{equation}
 \binom{n}{k} m^{k}(1-m)^{n-k}
 \end{equation}
-where $m$ denotes mortality, the probability of death. The advantage of modeling $k$ as a binomial distribution is that it automatically captures that the variance in the proportion of deaths will be bigger if population size $n$ is smaller. The equation that we estimate for $m_{2atg}$ is given in the Lemma ref:prop:1. The coefficient we are interested in is $\beta_{unmet}$. Once we know how =OOP= increases the fraction of people postponing treatment because it is too expensive, this increase affects =Unmet= and $\beta_{unmet}$ then gives us the increase in mortality.
+where $m$ denotes mortality, the probability of death. The advantage of modeling $k$ as a binomial distribution is that it automatically captures that the variance in the proportion of deaths will be bigger if population size $n$ is smaller. The equation that we estimate for $m_{2atg}$ is given in the lemma. The coefficient we are especially interested in is $\beta_{unmet}$. This is the coefficient through which an increase in unmet medical needs because of financial problems affects mortality.
 
-Hence, we also estimate the equation determining the fraction of people forgoing treatment because it is too expensive as specified in Lemma ref:prop:1.
+The second equation captures how an increase in =OOP= affects the fraction of people in a region that postpone or skip treatment because it is too expensive. In our estimation we want to ensure that =TooExp= is between 0 and 1. For this we assume that =TooExp= has a logit-normal distribution. That is, the log-odds of =TooExp= is normally distributed.
+
+We use the variables in Table ref:tab:summary to capture their theoretical counterparts. As mentioned, in the baseline specification we use deprivation as (absolute) poverty measure and out-of-pocket as the measure for =OOP=. In robustness checks, we use at-risk-of-poverty as (relative) poverty measure and include voluntary health insurance expenditure as part of =OOP=.
 
 ** Bayesian estimation
 
+We use Markov Chain Monte Carlo (MCMC), in particular the NUTS sampler to explore the posterior distributions of our parameters. For this sampler, we have the guarantee that the whole posterior distribution is captured as long as we have enough samples. Although this is an asymptotic result, we are confident that drawing four chains of 2000 samples (1000 samples of which are used for tuning) is enough to cover the posterior distribution. In the appendix we discuss a number of checks on this convergence.
 
-We use Markov Chain Monte Carlo (MCMC), in particular the NUTS sampler to explore the posterior distributions of our parameters. We use regularized priors on the coefficients: centered at 0 with a small standard deviation. This reduces the risk of over-fitting: a parameter only deviates from 0 if there is strong evidence for this in the data. Details on the prior can be found in the online appendix.
+It is not straightforward to put priors on the coefficients of the two equations in Lemma ref:prop:1. To illustrate, how strong is the reaction of mortality to a $0.1$ increase in the fraction of people reporting unmet medical needs? We are not aware of previous studies looking into this and have no a priori information on the strength of this effect. Therefore, we use a hierarchical model to determine the parameters of the prior distributions. Details on the priors can be found in the online appendix.
 
 ** baseline model :code:
 
 
 *** model
 
-The following function specifies our Bayesian model where the function has poverty and oop as arguments. These vary over deprivation in the baseline specification and at-risk-of-poverty in a robustness check; oop in the narrow sense of out-of-pocket payments (baseline) and the sum of oop payments and money spent on voluntary insurance for a robustness check.
+The function =build_model= specifies our Bayesian model where the function has poverty and oop as arguments. These vary over deprivation in the baseline specification and at-risk-of-poverty in a robustness check; oop in the narrow sense of out-of-pocket payments (baseline) and the sum of oop payments and money spent on voluntary insurance for a robustness check.
 
-For the coefficients =beta_lagged_log_mortality=, =beta_unmet=, =beta_poverty= we set narrow priors with a standard deviation equal to =sd_prior= which is set low. The effect of these coefficients enters the mortality equation as $e^{...}$ which gets big "very fast". To further avoid this term getting too big in sampling the posterior, we introduce an upper-bound on this term. The idea of =at.switch(at.lt(x, 0.7),at.exp(x),at.exp(0.7*(x/0.7)**0.1))= is that when sampling, high draws of =x= do not cause $m>1$ which would cause an error. Note that $e^{0.7}= 2.0$ which is not a factor which we expect: twice as high mortality (for a given age/sex category) in one region compared to another. Hence over the relevant range we expect $\lambda = e^x$ but when sampling we avoid high values for $\lambda$ while avoiding a zero derivative which =clip()= would give us. It turns out that in the posterior of =x= there are indeed very few values above 0.7. The fixed effects in the mortality equation have a higher standard deviation for their priors.
+Setting priors for the fixed effects =mu_2_too, mu_t_too, mu_2_m, beta_age= is not so sensitive in the sense that we are not particularly interested in the values of these effects. They need to be broad enough to cover relevant values. Most fixed effects are centered at 0 with the exception of =mu_2_too= and =beta_age= which are centered to roughly capture the average values of =TooExp= and mortality. To illustrate, the mean of =too_exp_lo= equals $-5.17$; hence, we choose =mu= for the region fixed effects =mu_2_too= equal to $-5.0$.
 
-In the equation for =TooExp=, the log-odds are linear in the fixed effects and =b=-coefficients. Here also we set a low standard deviation on the priors (0.5) but not as low as with the =beta=-coefficients.
+For the coefficients =b_oop, b_interaction= and =beta_lagged_log_mortality=, =beta_unmet=, =beta_poverty= where we are interested in the size of the effects, choosing a prior is more subtle. As mentioned, we have no clear idea to which extent =TooExp= or the number of deaths are determined by factors outside of our model (captured by fixed effects) or by the variables that we do model. But we do believe that these effects will be comparable for different variables and across countries (for the =TooExp= equation).
 
-These low standard deviations are regularizing priors (sometimes called "seat belt priors") which biase the coefficient toward zero unless there are clear indications in the data that the coefficient is different from zero. This reduces the risk of over-fitting. In this sense, the effect of a regularizing prior is comparable to a ridge or lasso regression.
+Hence, we introduce the hyper-parameters =sd_prior_b, sd_prior_beta= to capture this. These parameters then feed into the priors for the =b_= and =beta_= parameters.
 
-In both equations we use NUTS 2 level fixed effects.
+The =beta_= coefficients enter the mortality equation in the multiplier term as $e^{...}$ which can get big "very fast". To avoid this term getting too big in sampling the posterior, we introduce an upper-bound on this term. The idea of =at.switch(at.lt(x, 0.7),at.exp(x),at.exp(0.7*(x/0.7)**0.1))= is that when sampling, high draws of =x= do not cause $m>1$ which would cause an error. Note that $e^{0.7}= 2.0$ which is not a factor which we expect: twice as high mortality (for a given age/sex category) in one region compared to another. Hence over the relevant range we expect $\lambda = e^x$ but when sampling we avoid high values for $\lambda$ while avoiding a zero derivative which =clip()= would give us. It turns out that in the posterior of =x= there are indeed very few values above 0.7 and we work with this term as if it is $e^x$.
 
 For parameters where the model clearly implies that they are positive, like $b_{oop},b_{intercation}$, we use a =HalfNormal= distribution to specify the prior distribution.
 
-Finally, we specify $m$ as in lemma ref:prop:1. Then $m$ is the probability in our Binomial distribution explaining the number of people that die out of population size =population=. As explained in the lemma, we start from a baseline age profile $h = e^{\beta_{ag}}/(1+e^{\beta_{ag}})$ and then multiply this with a factor that varies around 1.
+Finally, we specify $m$ as in Lemma ref:prop:1. Then $m$ is the probability in our Binomial distribution explaining the number of people that die out of population size =population=. As explained in the lemma, we start from a baseline age profile $h = e^{\beta_{ag}}/(1+e^{\beta_{ag}})$ and then multiply this with a factor that varies around 1.
 
 
 #+begin_src jupyter-python
@@ -782,43 +814,50 @@ coords = {"country":country_list, "nuts2":nuts2_list,\
 
 def build_model(poverty,oop):
   with pm.Model(coords=coords) as baseline_model:
-    sd_prior = 0.05
-    sd_fixed_effects = 0.1
-    sd_age_fixed_effects = 0.5
+    sd_fixed_effects = 0.3
+    # hierarchical priors
+    sd_prior_b = pm.HalfNormal('sd_prior_b', sigma = 0.3)
+    sd_prior_beta = pm.HalfNormal('sd_prior_beta', sigma = 0.3)
 
     # Too Expensive equation
-    mu_2_too      = pm.Normal('mu_2_too', mu = -3.0,\
-                              sigma = 0.5, dims="nuts2")
-    mu_t = pm.Normal('mu_t', mu = 0.0,\
+    ## NUTS 2 regional fixed effect:
+    mu_2_too      = pm.Normal('mu_2_too', mu = -5.0,\
+                              sigma = sd_fixed_effects, dims="nuts2")
+    ## time fixed effect:
+    mu_t_too = pm.Normal('mu_t', mu = 0.0,\
                      sigma = sd_fixed_effects, dims="year")
-    b_oop         = pm.HalfNormal('b_oop', sigma = 0.5,\
+    ## coefficients of the TooExp equation:
+    b_oop         = pm.HalfNormal('b_oop', sigma = sd_prior_b,\
                                   dims="country")
     b_interaction = pm.HalfNormal('b_interaction',\
-                                  sigma = 0.5, dims="country")
+                                  sigma = sd_prior_b, dims="country")
     mu_too_exp_lo = pm.Deterministic('mu_too_exp_lo', \
-                      mu_2_too[nuts2_index] + mu_t[year] +\
+                      mu_2_too[nuts2_index] + mu_t_too[year] +\
                       expenditure_s * oop *\
                       (b_oop[country_index] +\
                        b_interaction[country_index] * poverty))
+    ## equation for the log odds of TooExp
     Too_exp_lo    = pm.Normal('Too_exp_lo', mu = mu_too_exp_lo,\
-                              sigma = 2, observed = too_exp_lo)
+                              sigma = 1, observed = too_exp_lo)
 
     # Mortality equation
-    ## age effect: h
-    mu_2_m   = pm.Normal('mu_2_m', mu = 0.0,\
-                         sigma = sd_fixed_effects, dims="nuts2")
-    beta_age = pm.Normal('beta_age', mu = -3,\
-                         sigma = sd_age_fixed_effects,\
+    ## age/gender fixed effect:
+    beta_age = pm.Normal('beta_age', mu = -3.0,\
+                         sigma = sd_fixed_effects,\
                          dims=("age","gender"),\
                          initval=-3*np.ones((N_age,2)))
     h = pm.Deterministic('h',at.sigmoid(\
                               beta_age[age_index,gender]))
 
     ## multiplier effect: x
+    ### NUTS 2 fixed effect:
+    mu_2_m   = pm.Normal('mu_2_m', mu = 0.0,\
+                         sigma = sd_fixed_effects, dims="nuts2")
+    ### coefficients of the mortality equation:
     beta_lagged_log_mortality = pm.Normal('beta_lagged_log_mortality',\
-                                          mu = 0, sigma = sd_prior)
-    beta_unmet = pm.HalfNormal('beta_unmet', sigma = sd_prior)
-    beta_poverty = pm.HalfNormal('beta_poverty', sigma = sd_prior)
+                                          mu = 0, sigma = sd_prior_beta)
+    beta_unmet = pm.HalfNormal('beta_unmet', sigma = sd_prior_beta)
+    beta_poverty = pm.HalfNormal('beta_poverty', sigma = sd_prior_beta)
     x = pm.Deterministic('x',mu_2_m[nuts2_index] +\
                              beta_unmet*unmet +\
                              beta_poverty*poverty+\
@@ -835,7 +874,7 @@ def build_model(poverty,oop):
   mortality_function = h*flat_exp
 
   with baseline_model:
-
+    ## equation binomial distribution number of deaths:
     m = pm.Deterministic('m', mortality_function)
     obs = pm.Binomial("obs", p = m,\
                       observed=mortality, n = population)
@@ -856,6 +895,28 @@ with baseline_model:
                                    extend_inferencedata=True)
 #+end_src
 
+Output of the NUTS sampler:
+
+#+begin_src
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [sd_prior_b, sd_prior_beta, mu_2_too, mu_t, b_oop, b_interaction, mu_2_m, beta_age, beta_lagged_log_mortality, beta_unmet, beta_poverty]
+
+100.00% [8000/8000 2:15:45<00:00 Sampling 4 chains, 12 divergences] 
+
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 8147 seconds.
+There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 7 divergences after tuning. Increase `target_accept` or reparameterize.
+There were 3 divergences after tuning. Increase `target_accept` or reparameterize.
+
+100.00% [4000/4000 00:31<00:00]
+#+end_src
+
+Out of 8000 samples, we have 12 divergences. This is low enough not to tune the algorithm further.
+
+We save the samples to file:
+
 #+begin_src jupyter-python
 idata_baseline.to_netcdf("./traces/baseline_model.nc")
 #+end_src
@@ -863,23 +924,21 @@ idata_baseline.to_netcdf("./traces/baseline_model.nc")
 #+RESULTS:
 : ./traces/baseline_model.nc
 
-
-
 * Results
 
 In this section we present the results of the estimation of the baseline model. Before presenting the outcome of our estimation, we present graphically two checks of our model.
 
 ** model fit
 
-First, Figure ref:fig:ModelFit gives an idea of the fit of the model in terms of predicting deaths per gender/age/region/year category and the fraction of people postponing treatment because it is too expensive.
+Figure ref:fig:ModelFit gives an idea of the fit of the model in terms of predicting deaths per gender/age/region/year category and the fraction of people postponing treatment because it is too expensive.
 
-The left panel shows observed number of deaths per category on the horizontal axis and the posterior predictive for this on the vertical axis. For each row in our data, we have observed number of deaths and a prediction of this number. In particular, the Bayesian model generates 8000 posterior samples (4 chains with 2000 samples each). In the figure, we show the average prediction of deaths across the samples. The predictions are not perfect but do follow the 45-degree line closely.
+The left panel shows observed number of deaths per category on the horizontal axis and the posterior predictive for this on the vertical axis. For each row in our data, we have observed number of deaths and a prediction of this number. In the figure, we show the average prediction of deaths across the posterior samples. The predictions are not perfect but do follow the 45-degree line closely.
 
 The right panel shows the (log odds of the) fraction of people per region/year indicating they went without treatment (for a while) because it was too expensive. Two things are different in this panel compared to the left. First, this fraction does not vary by gender and age. Hence, we do not have a prediction for each row in our data. Second, this fraction =TooExp= is based on (EU-SILC) survey data where we do not know the number of people interviewed. Hence, we cannot model this as a binomial distribution where we predict the number of people indicating unmet medical needs because of financial constraints.
 
-Therefore, the right panel shows the observed and predicted fraction for =TooExp= per region/year. The dots indicate the average posterior prediction of this log-odds ratio and the vertical black lines indicate the 95% prediction interval.
+Therefore, the right panel shows the observed and predicted fraction for =TooExp= per region/year. The dots indicate the average posterior prediction of this log-odds ratio.
 
-A final observation is that =TooExp= equals 0 for a number of region/year combinations. To handle this numerically, we use of lower bound of $-5$ for the log-odds. This corresponds to a probability of 0.007 which is close enough to zero for our purposes. The right panel shows this bunching for a number of observations at -5.
+A final observation is that =TooExp= equals 0 for a number of region/year combinations. To handle this numerically, we use of lower bound for the log-odds. This corresponds to a probability of 0.0001 which is close enough to zero for our purposes. The right panel shows this bunching for a number of observations slightly below $-9$.
 
 Compared to the observed number of deaths, the predictions for =TooExp= seem less accurate. This is to be expected as there are a lot fewer observations for this variable compared to mortality. But all in all the fit does not seem unreasonable as the points cluster around the 45-degree line.
 
@@ -889,7 +948,7 @@ Compared to the observed number of deaths, the predictions for =TooExp= seem les
 #+name: fig:ModelFit
 [[./figures/fit_baseline_model.png]]
 
-Another way to check how well the model fits, is to see how well it captures the age profile of mortality. This we present in Figure ref:fig:Fit_mortality_by_age. The left panel shows the age profile $\tilde \eta_{ag} = e^{\beta_{ag}}/(1+e^{\beta_{ag}})$. If the other terms in equation eqref:eq:health2 equal 0, $\tilde \eta_{ag}$ gives the probability of death for category $ag$. The right panel includes for every region and calendar year the correction on $\tilde \eta_{ag}$ to yield mortality for that combination of gender/age/region/year. On average, the model captures the age profile perfectly.
+Another way to check how well the model fits, is to see how well it captures the age profile of mortality. This we present in Figure ref:fig:Fit_mortality_by_age. The left panel shows the age profile $\eta_{ag} = e^{\beta_{ag}}/(1+e^{\beta_{ag}})$. If the other terms in equation eqref:eq:health2 equal 0, $\eta_{ag}$ gives the probability of death for category $ag$. The right panel includes for every region and calendar year the correction on $\eta_{ag}$ to yield mortality for that combination of gender/age/region/year. On average, the model captures the age profile perfectly.
 
 
 #+caption: Fit of average mortality by age
@@ -900,87 +959,82 @@ Another way to check how well the model fits, is to see how well it captures the
 
 The appendix presents two further checks of the model. Figure ref:fig:Trace shows the trace plots for the parameters of interest. The figures in the left panel show the posterior distribution of the parameters in the figure. The coefficients =b_oop, b_interaction= vary by country and hence we have different colors for the distributions in these graphs. The =beta= parameters do not vary with country (or another index) and hence there is one color only. In the =beta= figures it is easy to see that there are four distributions per parameter. These correspond to the four chains that are sampled by the NUTS algorithm.
 
-The right panels show the same samples but now ordered across the horizontal axis as they were drawn. We check these plots for the following three features. First, the plot should be stationary; that is, not trending upward or downward. This implies that the posterior mean of the coefficient is (more or less) constant as we sample. Second, there should be good mixing which translates in condensed zig-zagging. In other words, the algorithm manages to draw values across the whole domain of the posterior quickly after each other. Finally, the four chains cover the same regions. All three features are satisfied in the right panel of the figure.
+The right panels show the same samples but now ordered across the horizontal axis as they were drawn. We check these plots for the following three features. First, the plot should be stationary; that is, not trending upward or downward. This implies that the posterior mean of the coefficient is (more or less) constant as we sample. Second, there should be good mixing which translates in condensed zig-zagging. In other words, the algorithm manages to draw values across the whole domain of the posterior quickly after each other. Finally, the four chains cover the same regions. All three features are satisfied for all coefficients in the right panel of the figure.
 
-Another check on the convergence of the algorithm are the r-hat values in Table ref:tab:estimated_coefficients. This table summarizes the posterior distribution for the slopes that we arte interested in. It provides the mean and standard deviation for each of these parameters, the 95% probability/credibility intervals and the number of effective samples for each parameter. As the number of these samples is clearly above 1000 for each parameter, this looks fine. The final column presents the values for r-hat for each parameter. Since these are all equal (close) to 1.00, we can be confident that the NUTS algorithm converged for these parameters.
+Another check on the convergence of the algorithm are the r-hat values in Table ref:tab:estimated_coefficients. This table summarizes the posterior distribution for the slopes that we are interested in. It provides the mean and standard deviation for each of these parameters, the 95% probability/credibility intervals and the number of effective samples for each parameter. As the number of these samples is above 1000 for each parameter, this looks fine. The final column presents the values for r-hat for each parameter. Since these are all equal (close) to one, we can be confident that the NUTS algorithm converged for these parameters.
 
 ** size of effects
 
 Table ref:tab:estimated_coefficients presents the values for each of the parameters. Here we focus on the effect we are interested in: what is the increase in mortality due to an increase in oop? As we show in the appendix, it is routine to verify that 500 euro increase in oop leads to the following increase in mortality:
+#+name: eq:change_mortality
 \begin{equation}
 \frac{dm_{ga2t}}{m_{ga2t}} = \beta_{unmet} \text{TooExp}_{2t}(1-\text{TooExp}_{2t}) 500 (b_{oop,c}+b_{interaction,c} Poverty_{2t})
 \end{equation}
-Note that this increase in the number of deaths $dm_{ga2t}$ per the number of deaths $m_{ga2t}$ is independent of age. This is due to our formulation of mortality in equation eqref:eq:health2 where we have a baseline mortality $\tilde \eta_{ag}$ and a deviation from this baseline based on poverty and unmet medical needs etc. Figure ref:fig:SummaryFigure reports the expression in the equation above multiplied by 1000. That is, we report the increase in deaths due to the oop increase per 1000 deaths.
+Note that this increase in the number of deaths $dm_{ga2t}$ per the number of deaths $m_{ga2t}$ is independent of age. This is due to our formulation of mortality in equation eqref:eq:health2 where we have a baseline mortality $\eta_{ag}$ and a deviation from this baseline based on poverty and unmet medical needs etc. Figure ref:fig:SummaryFigure reports the expression in the equation above multiplied by 1000. That is, we report the increase in deaths due to the oop increase per 1000 deaths.
 
-As the expression for $dm/m$ varies with country, year and NUTS 2 region, Figure ref:fig:SummaryFigure summarizes our main findings in the following way. For each country we focus on the region where deprivation is highest. This is the region where we expect the mortality effect to be highest as many people could have problems paying medical bills. Table ref:tab:region_per_country presents this region for each country in our data together with the value of deprivation and the fraction of people with unmet medical needs due to financial constraints.
+Note that the 500 euro change in =OOP= enters multiplicatively. In other words, dividing the effect by 10 gives the effect of a 50 euro increase in =OOP=. In this sense, the choice of 500 euro is arbitrary.
+
+As the expression for $dm/m$ varies with country, year and NUTS 2 region, Figure ref:fig:SummaryFigure summarizes our main findings in the following way. For each country we focus on the region where deprivation is highest. This is the region where we expect the mortality effect to be highest as many people could have problems paying medical bills. Table ref:tab:region_per_country presents this region for each country in our data together with the value of deprivation, the fraction of people with unmet medical needs due to financial constraints and the country's value for =OOP=. As the table illustrates, the fraction of people indicating that treatment was too expensive tends to be high when both deprivation and =OOP= are high.
 
 
-#+caption: Region per country with highest fraction of material deprivation
+#+caption: Region per country with highest fraction of material deprivation.
 #+name: tab:region_per_country
-| region | country     | deprivation | too expensive |
-|--------+-------------+-------------+---------------|
-| BG33   | Bulgaria    |        0.40 |          0.08 |
-| HR04   | Croatia     |        0.13 |          0.01 |
-| DK02   | Denmark     |        0.04 |          0.00 |
-| FI1C   | Finland     |        0.03 |          0.00 |
-| EL63   | Greece      |        0.28 |          0.07 |
-| HU31   | Hungary     |        0.32 |          0.02 |
-| IE06   | Ireland     |        0.07 |          0.02 |
-| LT02   | Lithuania   |        0.12 |          0.01 |
-| NO01   | Norway      |        0.02 |          0.00 |
-| RO22   | Romania     |        0.32 |          0.11 |
-| SK04   | Slovakia    |        0.11 |          0.01 |
-| SI03   | Slovenia    |        0.05 |          0.00 |
-| SE22   | Sweden      |        0.02 |          0.00 |
-| CH01   | Switzerland |        0.02 |          0.02 |
+| region | country     | deprivation | too expensive |  OOP |
+|--------+-------------+-------------+---------------+------|
+| BG33   | Bulgaria    |        0.40 |          0.08 | 0.43 |
+| HR04   | Croatia     |        0.13 |          0.01 | 0.11 |
+| DK02   | Denmark     |        0.04 |          0.00 | 0.14 |
+| FI1C   | Finland     |        0.03 |          0.00 | 0.18 |
+| EL63   | Greece      |        0.28 |          0.07 | 0.37 |
+| HU31   | Hungary     |        0.32 |          0.02 | 0.28 |
+| IE06   | Ireland     |        0.07 |          0.02 | 0.12 |
+| LT02   | Lithuania   |        0.12 |          0.01 | 0.32 |
+| NO01   | Norway      |        0.02 |          0.00 | 0.14 |
+| RO22   | Romania     |        0.32 |          0.11 | 0.21 |
+| SK04   | Slovakia    |        0.11 |          0.01 | 0.20 |
+| SI03   | Slovenia    |        0.05 |          0.00 | 0.12 |
+| SE22   | Sweden      |        0.02 |          0.00 | 0.15 |
+| CH01   | Switzerland |        0.02 |          0.02 | 0.26 |
 
-Substituting these values from the table into the expression for $dm/m$ we get the numbers in Figure ref:fig:SummaryFigure. As mentioned, the blue bars give the average effect of the 500 euro increase in oop on mortality. As we have the posterior distributions for each of the parameters, we also have the posterior distribution for the mortality effects per country. The black horizontal lines present the 95% intervals around the mean effect. Finally, the dots present the probability that the effect is at least 0.05 increase in deaths per 1000 dead.
+Substituting these values from the table into the expression for $dm/m$ we get the numbers in Figure ref:fig:SummaryFigure. As mentioned, the blue bars give the average effect of the 500 euro increase in oop on mortality. As we have the posterior distributions for each of the parameters, we also have the posterior distribution for the mortality effects per country. The black horizontal lines present the 95% intervals around the mean effect. Finally, the dots present the probability that the effect is at least 20 deaths per 1000 dead.
 
-The first observation is that for Bulgaria, Greece, Romania and --to a lesser extent-- Hungary the 95% probability interval is clearly bounded away from zero. For these countries we can clearly see that an increase in oop negatively affects health and increases mortality. The probability that the effect is at least 0.05 (per 1000) is close to 1.0 for the former three countries and almost 0.75 for Hungary. In this sense, for our European data we do not suffer from power issues in identifying mortality effects in aggregate (regional) data [[citep:&black-2019-simul-power]]. 
+The first observation is that for Bulgaria, Greece, Hungary and Romania the 95% probability interval is clearly bounded away from zero. For these countries we can clearly see that an increase in oop negatively affects health and increases mortality. The probability that the effect is at least 20 (per 1000) is above 80% for Bulgaria, Greece and Romania. 
 
-Why are the effects smaller for the other countries? The effects are basically zero for the Scandinavian countries, Slovenia and Switzerland. As shown in Table ref:tab:region_per_country, for these countries both deprivation and the fraction of people indicating unmet medical needs because treatment is too expensive are small. For the Scandinavian countries in the region with highest deprivation, =TooExp= is basically zero. For low income families there is enough financial support to ensure that treatments are not postponed for financial reasons.
+Why are the effects smaller for the other countries? The effects are basically zero for the Scandinavian countries, Slovenia and Switzerland. As shown in Table ref:tab:region_per_country, for these countries both deprivation and the fraction of people indicating unmet medical needs because treatment is too expensive are small. For the Scandinavian countries in the region with highest deprivation, =TooExp= is basically zero. It then follows from equation eqref:eq:change_mortality that the effect on mortality is (close to) zero.
 
-Another reason why the effects are small for some countries is that the underlying parameters =b_oop, b_interaction= are small for these countries. This can be seen in Table ref:tab:estimated_coefficients in the appendix. If countries have policies to subsidize healthcare for poor families, the effects of country wide =OOP= on these families is small as they actually pay a lower fraction of their treatments' costs oop. Indeed, these coefficients for the Scandinavian countries are relatively low. Greece in the years of the financial crisis had less scope to support low income families in this way.
+The equation also features the following positive second derivative effect. As =OOP= increases, =TooExp= increases (especially in regions with high deprivation). This increases the mortality effect of a further increase in =OOP=.[fn::Note that we use here that =TooExp= is smaller than 0.5: $d(x(1-x))/dx = 1-2x >0$ for $x<0.5$. As Table ref:tab:region_per_country shows, =TooExp= is indeed below 0.5.] Hence, the effect of an increase in =OOP= is bigger, the higher the starting point of =OOP=. Countries where =OOP= is already high, should be careful increasing it further because the health effects are stronger.
+
+Another reason why the effects are small for some countries is that the underlying parameters =b_oop, b_interaction= are small for these countries. This can be seen in Table ref:tab:estimated_coefficients in the appendix. If countries have policies to subsidize healthcare for poor families, the effects of country wide =OOP= on these families is small as they actually pay a lower fraction of their treatments' costs oop. 
 
 Summarizing, we can identify in our data the effect that an oop increase, raises the number of people with unmet medical needs due to financial constraints and hence increases mortality. This was the main objective of this paper.
 
-A follow up question is: how big is this effect? In order to interpret the size of the oop effect, Table ref:tab:causes_death presents the number of people dying from a particular cause per 1000 dead.[fn::We use the icd-10 classification here.] If we would consider all causes and add them up, the sum would equal 1000. The table focuses on causes of death with relatively small numbers involved. The table is based on EU wide data in 2017 for ages 35-85. 
+A follow up question is: how big is this effect? In order to interpret the size of the oop effect, Table ref:tab:causes_death presents the number of people dying from a particular cause per 1000 dead.[fn::We use the icd-10 classification here.] If we would consider all causes and add them up, the sum would equal 1000. The table focuses on causes of death with an order of magnitude comparable to the effects in Figure ref:fig:SummaryFigure. The table is based on EU wide data in 2017 for ages 35-85. 
 
-Note that the comparison of the numbers in Figure ref:fig:SummaryFigure with the numbers in the table is just to get an idea of the order of magnitude. But --strictly speaking-- the causes are not comparable. Nobody dies of an increase in oop in the way people die from influenza. Due to an increase in oop, people may have gone without treatment which can then lead to death from, say, hepatitis. Hence, one should be careful in interpreting the simulation results with the numbers in Table ref:tab:causes_death. But the table does provide some context in interpreting the size of the simulated effects.
+Note that the comparison of the numbers in the figure with the numbers in the table is just to get an idea of the order of magnitude. But --strictly speaking-- the causes are not comparable. Nobody dies of an increase in oop in the way people die from influenza. Due to an increase in oop, people may have gone without treatment which can then lead to death from, say, lung cancer. Hence, one should be careful in interpreting the simulation results with the numbers in Table ref:tab:causes_death. But the table does provide some context in interpreting the size of the simulated effects.
 
 #+caption: Number of people dying by cause (per 1000 dead) for ages 35-85 (EU average).
 #+name: tab:causes_death
-| icd-10                                                 | per 1000 |
-|--------------------------------------------------------+----------|
-| Tuberculosis                                           |     0.93 |
-| Chronic viral hepatitis B and C                        |     0.28 |
-| HIV                                                    |     0.72 |
-| Malignant melanoma of skin                             |     4.20 |
-| Malignant neoplasm of thyroid gland                    |     0.96 |
-| Malignant neoplasm of ovary                            |     8.06 |
-| Malignant neoplasm of stomach                          |    14.03 |
-| Diseases of the blood and blood-forming organs         |     2.69 |
-| Leukaemia                                              |    10.15 |
-| Mental and behavioural disorders due to use of alcohol |     4.90 |
-| Influenza (including swine flu)                        |     1.18 |
-| Asthma and status asthmaticus                          |     1.22 |
-| Rheumatoid arthritis and arthrosis                     |     1.06 |
-| Alzheimer disease                                      |    13.08 |
-| Drug dependence, toxicomania                           |     0.38 |
-| Accidental drowning and submersion                     |     1.28 |
-| Intentional self-harm                                  |    12.82 |
-| Assault                                                |     0.67 |
+| icd10                                            | per 1000 |
+|--------------------------------------------------+----------|
+| Malignant neoplasm of pancreas                   |    23.58 |
+| Malignant neoplasm of trachea, bronchus and lung |    76.74 |
+| Malignant neoplasm of breast                     |    23.66 |
+| Malignant neoplasm of prostate                   |    16.16 |
+| Diabetes mellitus                                |    22.59 |
+| Mental and behavioural disorders                 |    26.85 |
+| Acute myocardial infarction                      |    47.56 |
+| Diseases of the respiratory system               |    76.07 |
+| Pneumonia                                        |    19.74 |
+| External causes of mortality                     |    47.86 |
 
-The average mortality effect due to a 500 euro increase in oop in Greece is approximately 1.5 (per 1000 dead). This exceeds the effect due to accidental drowning. The effects in Bulgaria and Romania are around 0.5 which places them between deaths due to drug dependence and due to HIV.
 
-However, these are effects aggregated at the regional level. If we are willing to assume that the incidence of the increase in mortality due to increase of oop by 500 euro falls in the group of people that indicate that they postponed or did without a treatment because it was too expensive, we can divide the mortality effect that we have by the size of this group. To get a rough idea of the size of the effect in this case, consider again Table ref:tab:region_per_country. For the countries where we find sizable effects --Greece, Romania, Bulgaria-- the fraction of people indicating they found treatment too expensive equals approximately 0.1 (or less) which we use to facilitate the back-of-the-envelop calculations here.
+The average mortality effect due to a 500 euro increase in oop in Romania is approximately 90 (per 1000 dead). This exceeds deaths due to each of the causes in the table. The effects in Bulgaria and Greece are around 25 which places them between deaths due to diabetes and due to mental disorders (including death due to dementia and alcohol abuse). In Hungary the order of magnitude is comparable to deaths due to prostate cancer.
 
-Hence, roughly speaking, in the NUTS 2 regions (which are worst affected in terms of deprivation per country), to find the mean overall effects on mortality as indicated in the figure, the incidence within the group too expensive would vary between $0.5/0.1=5$ and almost $1.5/0.1=15$.
+However, these are effects aggregated at the regional level (of the regions with highest poverty levels). Suppose we are willing to assume that the incidence of the increase in mortality due to the 500 euro increase in oop falls mainly in the group of people who indicate that they postponed treatment because of financial constraints. Then to get these effects at the region level, the effects among this specific group is an order of magnitude bigger.
 
-Then within the group of people indicating they sometimes postpone or forgo treatment because it is too expensive, the increase in deaths due to an increase in oop is of an order comparable to deaths due to Leukaemia or Alzheimer disease.
+Finally, there is also the following dynamic effect. As oop increases, people postpone treatments thereby lowering their health status. Part of this reduced health, leads to higher mortality among 35 year olds but some of these people survive this year. But next year, they start with lower than average health which can then raise mortality among 36 year olds. These dynamic feedback effects are captured by the parameter $\gamma$ in Lemma ref:prop:1. As shown in Table ref:tab:estimated_coefficients in the appendix, the estimated value for $\gamma$ is approximately 0.5 (coefficient =beta_lagged_log_mortality=). As effects accumulate across age and time, the effect for 85 year olds almost doubles ($1+\gamma+...+\gamma^{50} \approx 2$).
 
-In countries where poverty is high, a 500 euro increase in oop does not lead to a big increase in mortality. But the order of magnitude of deaths among 1000 dead are comparable to a number of well known conditions varying from HIV (at the regional level) to Leukaemia and Alzheimer disease if we assume the incidence is among the group of people indicating they forgo treatment because of financial reasons.
-
+In countries where poverty is high, a 500 euro increase in oop leads to an increase in mortality (per 1000 dead) that is comparable to causes varying from breast cancer to diseases of the respiratory system (including influenza, pneumonia and asthma).
 
 ** model fit and size of the effects :code:
 
@@ -1007,11 +1061,13 @@ my_predictions_mort = np.mean(idata_baseline.posterior_predictive.\
                               obs,axis=(0,1))
 my_predictions_too  = np.mean((idata_baseline.posterior.\
                           mu_too_exp_lo.values),axis=(0,1))
-my_predictions_too_25  = np.percentile((idata_baseline.posterior.\
-                          mu_too_exp_lo.values),2.5,axis=(0,1))
-my_predictions_too_975  = np.percentile((idata_baseline.posterior.\
-                          mu_too_exp_lo.values),97.5,axis=(0,1))
+# my_predictions_too_25  = np.percentile((idata_baseline.posterior.\
+#                           mu_too_exp_lo.values),2.5,axis=(0,1))
+# my_predictions_too_975  = np.percentile((idata_baseline.posterior.\
+#                           mu_too_exp_lo.values),97.5,axis=(0,1))
 #+end_src
+
+#+RESULTS:
 
 
 #+begin_src jupyter-python :file ./figures/fit_baseline_model.png
@@ -1023,10 +1079,10 @@ ax1.set_xlabel('observed number of deaths')
 ax1.set_ylabel('predicted number of deaths')
 ax1.set_title(\
   'Number of deaths across\nNUTS 2 regions, years, ages, genders')
-ax2.plot([-5,-1.5],[-5,-1.5],'k')
+ax2.plot([-9,-1.5],[-9,-1.5],'k')
 ax2.scatter((too_exp_lo),(my_predictions_too))
-ax2.vlines(too_exp_lo,my_predictions_too_25,my_predictions_too_975,
-           colors='k',linewidth=1)
+# ax2.vlines(too_exp_lo,my_predictions_too_25,my_predictions_too_975,
+#            colors='k',linewidth=1)
 ax2.set_xlabel('observed too expensive (log odds)')
 ax2.set_ylabel('predicted too expensive (log odds)')
 ax2.set_title(\
@@ -1040,14 +1096,12 @@ ax2.set_title(\
 
 The following code presents the baseline age profile =h= and the average mortality rate predicted by the model and the average in our data.
 
+
 #+begin_src jupyter-python :file ./figures/age_profile_baseline.png
 beta_age = idata_baseline.posterior.beta_age.values
-def my_sigmoid(x):
-    return 1/(np.exp(-x)+1)
-h = my_sigmoid(beta_age)
+h = at.sigmoid(beta_age).eval()
 plt.style.use('Solarize_Light2')
-fig, (ax1,ax2) = plt.subplots(1,2, dpi=280,figsize=(12,6),\
-                              sharey=True)
+fig, (ax1,ax2) = plt.subplots(1,2, dpi=280,figsize=(12,6))
 ax1.plot(plot_age,np.mean(h[:,:,:,0],axis=(0,1))*100000,\
          label='female')
 ax1.plot(plot_age,np.mean(h[:,:,:,1],axis=(0,1))*100000,\
@@ -1093,7 +1147,8 @@ This section provides the python code that illustrates the size of the effect of
 
 #+begin_src jupyter-python
 variables = ['beta_unmet','beta_lagged_log_mortality',\
-             'beta_poverty','b_oop', 'b_interaction']
+             'beta_poverty','b_oop', 'b_interaction',\
+             'sd_prior_b','sd_prior_beta']
 #+end_src
 
 #+RESULTS:
@@ -1109,58 +1164,69 @@ az.plot_trace(idata_baseline,var_names=variables,\
 #+RESULTS:
 [[file:./figures/trace_plot_baseline.png]]
 
+
+
+
+
 #+begin_src jupyter-python :display plain
-headers = ['mean', 'sd', 'hdi_3%', 'hdi_97%', 'mcse_mean',\
-           'mcse_sd', 'ess_bulk', 'ess_tail', 'r_hat']
-print(tabulate(az.summary(idata_baseline,var_names=variables),\
+headers = ['mean', 'sd', 'hdi_3%', 'hdi_97%',\
+           'ess_bulk', 'r_hat']
+
+df_summary = az.summary(idata_baseline,var_names=variables)[headers]
+print(tabulate(df_summary,\
                headers,tablefmt='orgtbl',floatfmt=".2f"))
 #+end_src
 
-|                            |   mean |   sd |   hdi_3% |   hdi_97% |   mcse_mean |   mcse_sd |   ess_bulk |   ess_tail |   r_hat |
-|----------------------------+--------+------+----------+-----------+-------------+-----------+------------+------------+---------|
-| beta_unmet                 |   0.07 | 0.02 |     0.04 |      0.11 |        0.00 |      0.00 |    1773.00 |    1509.00 |    1.00 |
-| beta_lagged_log_mortality  |   0.55 | 0.00 |     0.55 |      0.56 |        0.00 |      0.00 |    1815.00 |    2371.00 |    1.00 |
-| beta_poverty               |   0.01 | 0.01 |     0.00 |      0.02 |        0.00 |      0.00 |     922.00 |     583.00 |    1.00 |
-| b_oop[Bulgaria]            |   0.20 | 0.18 |     0.00 |      0.53 |        0.00 |      0.00 |    2458.00 |    1623.00 |    1.00 |
-| b_oop[Croatia]             |   0.36 | 0.28 |     0.00 |      0.86 |        0.01 |      0.00 |    2715.00 |    1883.00 |    1.00 |
-| b_oop[Denmark]             |   0.12 | 0.12 |     0.00 |      0.34 |        0.00 |      0.00 |    1755.00 |    2156.00 |    1.00 |
-| b_oop[Finland]             |   0.20 | 0.17 |     0.00 |      0.53 |        0.00 |      0.00 |    1594.00 |    1612.00 |    1.00 |
-| b_oop[Greece]              |   1.60 | 0.44 |     0.81 |      2.45 |        0.01 |      0.01 |    1737.00 |    1789.00 |    1.00 |
-| b_oop[Hungary]             |   0.18 | 0.17 |     0.00 |      0.50 |        0.00 |      0.00 |    2719.00 |    2001.00 |    1.00 |
-| b_oop[Ireland]             |   0.24 | 0.20 |     0.00 |      0.61 |        0.00 |      0.00 |    2227.00 |    1906.00 |    1.00 |
-| b_oop[Lithuania]           |   0.30 | 0.25 |     0.00 |      0.76 |        0.00 |      0.00 |    2645.00 |    1668.00 |    1.00 |
-| b_oop[Norway]              |   0.05 | 0.05 |     0.00 |      0.15 |        0.00 |      0.00 |    2644.00 |    2025.00 |    1.00 |
-| b_oop[Romania]             |   0.26 | 0.21 |     0.00 |      0.63 |        0.00 |      0.00 |    2982.00 |    1874.00 |    1.00 |
-| b_oop[Slovakia]            |   0.26 | 0.22 |     0.00 |      0.67 |        0.00 |      0.00 |    2158.00 |    2069.00 |    1.00 |
-| b_oop[Slovenia]            |   0.33 | 0.27 |     0.00 |      0.82 |        0.00 |      0.00 |    3299.00 |    2024.00 |    1.00 |
-| b_oop[Sweden]              |   0.09 | 0.08 |     0.00 |      0.24 |        0.00 |      0.00 |    1549.00 |    1977.00 |    1.00 |
-| b_oop[Switzerland]         |   0.03 | 0.03 |     0.00 |      0.09 |        0.00 |      0.00 |    1848.00 |    1989.00 |    1.00 |
-| b_interaction[Bulgaria]    |   0.57 | 0.38 |     0.00 |      1.23 |        0.01 |      0.01 |    2575.00 |    1530.00 |    1.00 |
-| b_interaction[Croatia]     |   0.40 | 0.29 |     0.00 |      0.92 |        0.01 |      0.00 |    3113.00 |    2065.00 |    1.00 |
-| b_interaction[Denmark]     |   0.39 | 0.29 |     0.00 |      0.91 |        0.00 |      0.00 |    2655.00 |    1413.00 |    1.00 |
-| b_interaction[Finland]     |   0.39 | 0.29 |     0.00 |      0.91 |        0.00 |      0.00 |    3291.00 |    2078.00 |    1.00 |
-| b_interaction[Greece]      |   0.52 | 0.35 |     0.00 |      1.15 |        0.01 |      0.00 |    2936.00 |    1703.00 |    1.00 |
-| b_interaction[Hungary]     |   0.44 | 0.32 |     0.00 |      1.00 |        0.01 |      0.00 |    2706.00 |    1661.00 |    1.00 |
-| b_interaction[Ireland]     |   0.39 | 0.30 |     0.00 |      0.91 |        0.01 |      0.00 |    2733.00 |    1560.00 |    1.00 |
-| b_interaction[Lithuania]   |   0.39 | 0.29 |     0.00 |      0.91 |        0.01 |      0.00 |    2526.00 |    1576.00 |    1.00 |
-| b_interaction[Norway]      |   0.38 | 0.29 |     0.00 |      0.93 |        0.00 |      0.00 |    2961.00 |    1458.00 |    1.00 |
-| b_interaction[Romania]     |   0.44 | 0.31 |     0.00 |      0.99 |        0.01 |      0.00 |    2758.00 |    1995.00 |    1.00 |
-| b_interaction[Slovakia]    |   0.38 | 0.29 |     0.00 |      0.90 |        0.01 |      0.00 |    2650.00 |    1262.00 |    1.00 |
-| b_interaction[Slovenia]    |   0.40 | 0.30 |     0.00 |      0.93 |        0.00 |      0.00 |    3301.00 |    1929.00 |    1.00 |
-| b_interaction[Sweden]      |   0.38 | 0.29 |     0.00 |      0.90 |        0.01 |      0.00 |    2216.00 |    1055.00 |    1.00 |
-| b_interaction[Switzerland] |   0.39 | 0.29 |     0.00 |      0.92 |        0.00 |      0.00 |    2928.00 |    1803.00 |    1.00 |
+#+RESULTS:
+#+begin_example
+|                            |   mean |   sd |   hdi_3% |   hdi_97% |   ess_bulk |   r_hat |
+|----------------------------+--------+------+----------+-----------+------------+---------|
+| beta_unmet                 |   0.09 | 0.02 |     0.06 |      0.13 |    4161.00 |    1.00 |
+| beta_lagged_log_mortality  |   0.54 | 0.00 |     0.53 |      0.54 |    5209.00 |    1.00 |
+| beta_poverty               |   0.01 | 0.01 |     0.00 |      0.01 |    3671.00 |    1.00 |
+| b_oop[Bulgaria]            |   0.56 | 0.49 |     0.00 |      1.47 |    3073.00 |    1.00 |
+| b_oop[Croatia]             |   3.75 | 2.73 |     0.00 |      8.65 |    2329.00 |    1.00 |
+| b_oop[Denmark]             |   0.20 | 0.18 |     0.00 |      0.54 |    2406.00 |    1.00 |
+| b_oop[Finland]             |   0.04 | 0.04 |     0.00 |      0.12 |    3420.00 |    1.00 |
+| b_oop[Greece]              |  21.92 | 0.94 |    20.00 |     23.47 |    2557.00 |    1.00 |
+| b_oop[Hungary]             |   0.14 | 0.14 |     0.00 |      0.38 |    3683.00 |    1.00 |
+| b_oop[Ireland]             |   8.50 | 0.93 |     6.72 |     10.23 |    2736.00 |    1.00 |
+| b_oop[Lithuania]           |   6.45 | 1.89 |     2.54 |      9.64 |    2923.00 |    1.00 |
+| b_oop[Norway]              |   0.02 | 0.02 |     0.00 |      0.07 |    3846.00 |    1.00 |
+| b_oop[Romania]             |  16.44 | 2.08 |    12.46 |     20.25 |    3290.00 |    1.00 |
+| b_oop[Slovakia]            |   6.25 | 1.47 |     3.52 |      8.90 |    2270.00 |    1.00 |
+| b_oop[Slovenia]            |   0.42 | 0.41 |     0.00 |      1.18 |    3211.00 |    1.00 |
+| b_oop[Sweden]              |   1.55 | 0.31 |     1.01 |      2.16 |    2176.00 |    1.00 |
+| b_oop[Switzerland]         |   0.02 | 0.02 |     0.00 |      0.06 |    3479.00 |    1.00 |
+| b_interaction[Bulgaria]    |  52.38 | 2.64 |    47.45 |     57.35 |    2675.00 |    1.00 |
+| b_interaction[Croatia]     |   9.06 | 6.09 |     0.01 |     19.91 |    3513.00 |    1.00 |
+| b_interaction[Denmark]     | 135.36 | 5.50 |   125.49 |    146.26 |    3971.00 |    1.00 |
+| b_interaction[Finland]     |   0.87 | 0.86 |     0.00 |      2.48 |    3419.00 |    1.00 |
+| b_interaction[Greece]      |   6.53 | 4.63 |     0.00 |     14.82 |    2677.00 |    1.00 |
+| b_interaction[Hungary]     | 111.87 | 3.07 |   106.22 |    117.77 |    2840.00 |    1.00 |
+| b_interaction[Ireland]     |  12.33 | 6.86 |     0.00 |     23.66 |    2925.00 |    1.00 |
+| b_interaction[Lithuania]   |   9.23 | 6.24 |     0.01 |     20.10 |    3308.00 |    1.00 |
+| b_interaction[Norway]      |  97.15 | 5.38 |    87.75 |    107.56 |    3476.00 |    1.00 |
+| b_interaction[Romania]     | 108.02 | 7.25 |    95.46 |    122.86 |    3595.00 |    1.00 |
+| b_interaction[Slovakia]    |   1.78 | 1.69 |     0.00 |      4.87 |    3920.00 |    1.00 |
+| b_interaction[Slovenia]    |   5.46 | 4.24 |     0.00 |     12.89 |    2869.00 |    1.00 |
+| b_interaction[Sweden]      |  45.55 | 5.41 |    35.01 |     55.16 |    4525.00 |    1.00 |
+| b_interaction[Switzerland] |  29.29 | 1.99 |    25.75 |     33.15 |    3964.00 |    1.00 |
+| sd_prior_b                 |   8.48 | 0.19 |     8.12 |      8.83 |    4296.00 |    1.00 |
+| sd_prior_beta              |   0.34 | 0.12 |     0.17 |      0.57 |    4552.00 |    1.00 |
+#+end_example
 
-
-The function =Delta_log_mortality= is the python code for equation eqref:eq:effect_per_1000. To use this function at the NUTS 2 level where =deprivation= is highest per country, we define a new dataframe at the NUTS 2 level using =groupby=. To be able to multiply the coefficients and the data using broadcasting, we introduce 5 dimensions for each variable. The order of the dimensions is: chain, samples, countries, nuts2, observations.
+The function =Delta_log_mortality= is the python code for equation eqref:eq:change_mortality. To use this function at the NUTS 2 level where =deprivation= is highest per country, we define a new dataframe at the NUTS 2 level using =groupby=. To be able to multiply the coefficients and the data using broadcasting, we introduce 5 dimensions for each variable. The order of the dimensions is: chain, samples, countries, nuts2, observations.
 
 #+begin_src jupyter-python :display plain
 df_nuts2 = df[['nuts2','country','poverty','deprivation',\
-            'unmet','TOOEXP','health expenditure per capita']].\
+            'unmet','TOOEXP','health expenditure per capita','HF3_PC_CHE']].\
             groupby(['nuts2','country']).mean().reset_index()
 df_nuts2['poverty_s'] = df_nuts2['poverty']/100
 df_nuts2['deprivation_s'] = df_nuts2['deprivation']/100
 df_nuts2['unmet_s'] = (df_nuts2.unmet)/100.0
 df_nuts2['too_exp_s'] = df_nuts2.TOOEXP/100
+df_nuts2['oop_s'] = df_nuts2['HF3_PC_CHE']/100
 
 poverty_nuts2_s = df_nuts2['poverty_s'].\
     to_numpy()[None,None,None,:,None]
@@ -1185,7 +1251,7 @@ def Delta_log_mortality(p_too_exp,Delta_OOP,alpha):
 
 #+RESULTS:
 
-The groupby =df_nuts2= takes the average across time (and age/sex) for each NUTS 2 region. To aggregate this to the country level, we focus on the Nuts 2 region with highest deprivation fraction. For this region (with highest deprivation per country), we calculate $Delta \ln(m)$ due to a 500 euro increase in oop.
+The groupby =df_nuts2= takes the average across time (and age/sex) for each NUTS 2 region. To aggregate this to the country level, we focus on the Nuts 2 region with highest deprivation fraction. For this region (with highest deprivation per country), we calculate $\Delta \ln(m)$ due to a 500 euro increase in oop.
 
 #+begin_src jupyter-python :display plain
 idx = df_nuts2.groupby(['country'])['deprivation_s'].\
@@ -1209,27 +1275,32 @@ The regions per country that have the highest rate of deprivation are given in t
 #+begin_src jupyter-python :display plain
 from tabulate import tabulate
 print(tabulate(df_country[['nuts2','country','deprivation_s',\
-    'too_exp_s']],headers=['region','country','deprivation',\
-                           'too expensive'],
+    'too_exp_s','oop_s']],headers=['region','country','deprivation',\
+                           'too expensive','OOP'],
                tablefmt="orgtbl",floatfmt=".2f"))
 #+end_src
 
-| region | country     | deprivation | too expensive |
-|--------+-------------+-------------+---------------|
-| BG33   | Bulgaria    |        0.40 |          0.08 |
-| HR04   | Croatia     |        0.13 |          0.01 |
-| DK02   | Denmark     |        0.04 |          0.00 |
-| FI1C   | Finland     |        0.03 |          0.00 |
-| EL63   | Greece      |        0.28 |          0.07 |
-| HU31   | Hungary     |        0.32 |          0.02 |
-| IE06   | Ireland     |        0.07 |          0.02 |
-| LT02   | Lithuania   |        0.12 |          0.01 |
-| NO01   | Norway      |        0.02 |          0.00 |
-| RO22   | Romania     |        0.32 |          0.11 |
-| SK04   | Slovakia    |        0.11 |          0.01 |
-| SI03   | Slovenia    |        0.05 |          0.00 |
-| SE22   | Sweden      |        0.02 |          0.00 |
-| CH01   | Switzerland |        0.02 |          0.02 |
+
+
+
+
+| region | country     | deprivation | too expensive |  OOP |
+|--------+-------------+-------------+---------------+------|
+| BG33   | Bulgaria    |        0.40 |          0.08 | 0.43 |
+| HR04   | Croatia     |        0.13 |          0.01 | 0.11 |
+| DK02   | Denmark     |        0.04 |          0.00 | 0.14 |
+| FI1C   | Finland     |        0.03 |          0.00 | 0.18 |
+| EL63   | Greece      |        0.28 |          0.07 | 0.37 |
+| HU31   | Hungary     |        0.32 |          0.02 | 0.28 |
+| IE06   | Ireland     |        0.07 |          0.02 | 0.12 |
+| LT02   | Lithuania   |        0.12 |          0.01 | 0.32 |
+| NO01   | Norway      |        0.02 |          0.00 | 0.14 |
+| RO22   | Romania     |        0.32 |          0.11 | 0.21 |
+| SK04   | Slovakia    |        0.11 |          0.01 | 0.20 |
+| SI03   | Slovenia    |        0.05 |          0.00 | 0.12 |
+| SE22   | Sweden      |        0.02 |          0.00 | 0.15 |
+| CH01   | Switzerland |        0.02 |          0.02 | 0.26 |
+
 
 
 
@@ -1237,7 +1308,7 @@ We plot the average mortality increase per 1000 dead due to the 500 euro oop inc
 
 
 #+begin_src jupyter-python :file ./figures/change_mortality_countries_baseline.png
-benchmark = 0.05
+benchmark = 20 # per 1000 dead
 prob_delta_m_positive =\
     (Delta_log_mortality(too_exp_country,\
                          delta_oop/std_expenditure,\
@@ -1256,7 +1327,7 @@ fig.suptitle('Effect of {} Euro oop increase on mortality'.\
 ax1.barh(y_pos,Delta_log_m.flatten()*1000,\
          xerr = np.abs(xerr)*1000, \
          align='center',label='average effect')
-ax1.scatter(prob_delta_m_positive,\
+ax1.scatter(prob_delta_m_positive*100,\
             y_pos,label='probability effect exceeds {} per 1000 dead'.\
             format(benchmark))
 ax1.set_yticks(y_pos, labels=country_list)
@@ -1278,11 +1349,8 @@ ax1.set_xlabel('$\Delta$ mortality per 1000 dead');
 :END:
 
 To get an idea of the magnitude of the mortality effect of the increase of oop, we compare it to the number of deaths (per 1000 dead) due to other causes that have a similar order of magnitude. For this we use EU data on causes of death for different age-classes. We focus on the class from age 35 till 85 and take the average across the EU for the calendar year 2017.
+The [[https://ec.europa.eu/eurostat/databrowser/view/hlth_cd_aro/default/table?lang=en][Eurostat]] website contains the names for the icd-10 codes that we use. We focus on causes with less than 15 deaths per 1000 dead. In the main text we use the table below for a subset of causes.
 
-The website contains the names for the icd-10 codes that we use. We focus on causes with less than 15 deaths per 1000 dead. In the main text we use the table below for a subset of causes.
-
-
-https://ec.europa.eu/eurostat/databrowser/view/hlth_cd_aro/default/table?lang=en
 
 #+begin_src jupyter-python :display plain
 from country_codes import eurostat_dictionary
@@ -1306,70 +1374,49 @@ groupby_eu['per 1000'] = groupby_eu[2017]/total_mortality*1000
 
 #+RESULTS:
 
+#+begin_src jupyter-python
+rename_dict = {
+ "C25" : "Malignant neoplasm of pancreas",
+ "C33_C34" : "Malignant neoplasm of trachea, bronchus and lung",
+ "C50" : "Malignant neoplasm of breast",
+ "C61" : "Malignant neoplasm of prostate",
+ "E10-E14" : "Diabetes mellitus",
+ "F" : "Mental and behavioural disorders",
+ "I21_I22" : "Acute myocardial infarction",
+ "J" : "Diseases of the respiratory system",
+ "J12-J18" : "Pneumonia",
+ "V01-Y89" : "External causes of mortality"}
+
+#+end_src
+
+#+RESULTS:
 
 
 #+begin_src jupyter-python
 from tabulate import tabulate
-print(tabulate(groupby_eu[groupby_eu['per 1000'] <= 15.0]\
+print(tabulate(groupby_eu[(groupby_eu['per 1000'] < 90.0) &\
+                          (groupby_eu['per 1000'] > 15) &\
+                          (groupby_eu['icd10'].isin(list(rename_dict.keys())))]\
+               .replace(rename_dict)\
         [['icd10','per 1000']],tablefmt="orgtbl",\
         headers=['icd10','per 1000'],floatfmt=".2f"))
 #+end_src
 
-| icd10        | per 1000 |
-|--------------+----------|
-| A15-A19_B90  |     0.93 |
-| ACC_OTH      |    10.08 |
-| A_B_OTH      |    11.96 |
-| B15-B19_B942 |     1.52 |
-| B180-B182    |     0.28 |
-| B20-B24      |     0.72 |
-| C00-C14      |     8.85 |
-| C15          |     8.54 |
-| C16          |    14.03 |
-| C22          |    14.42 |
-| C32          |     3.41 |
-| C43          |     4.20 |
-| C53          |     2.97 |
-| C54_C55      |     4.98 |
-| C56          |     8.06 |
-| C64          |     7.62 |
-| C67          |     9.72 |
-| C70-C72      |    10.07 |
-| C73          |     0.96 |
-| C81-C86      |     9.06 |
-| C88_C90_C96  |     6.13 |
-| C91-C95      |    10.15 |
-| D00-D48      |     9.65 |
-| D50-D89      |     2.69 |
-| E_OTH        |     6.87 |
-| F10          |     4.90 |
-| F_OTH        |     2.22 |
-| G20          |     9.17 |
-| G30          |    13.08 |
-| J09-J11      |     1.18 |
-| J45_J46      |     1.22 |
-| K25-K28      |     3.05 |
-| K72-K75      |     4.09 |
-| L            |     1.68 |
-| M            |     4.69 |
-| M_OTH        |     3.63 |
-| N00-N29      |    10.69 |
-| N_OTH        |     4.35 |
-| O            |     0.03 |
-| P            |     0.04 |
-| Q            |     1.76 |
-| R95          |     0.00 |
-| RHEUM_ARTHRO |     1.06 |
-| R_OTH        |     8.62 |
-| TOXICO       |     0.38 |
-| V01-Y89_OTH  |     1.91 |
-| V_Y85        |     5.90 |
-| W00-W19      |     9.38 |
-| W65-W74      |     1.28 |
-| X40-X49      |     3.48 |
-| X60-X84_Y870 |    12.82 |
-| X85-Y09_Y871 |     0.67 |
-| Y10-Y34_Y872 |     2.34 |
+#+RESULTS:
+#+begin_example
+|    | icd10                                            |   per 1000 |
+|----+--------------------------------------------------+------------|
+| 16 | Malignant neoplasm of pancreas                   |      23.58 |
+| 18 | Malignant neoplasm of trachea, bronchus and lung |      76.74 |
+| 20 | Malignant neoplasm of breast                     |      23.66 |
+| 24 | Malignant neoplasm of prostate                   |      16.16 |
+| 36 | Diabetes mellitus                                |      22.59 |
+| 38 | Mental and behavioural disorders                 |      26.85 |
+| 49 | Acute myocardial infarction                      |      47.56 |
+| 53 | Diseases of the respiratory system               |      76.07 |
+| 55 | Pneumonia                                        |      19.74 |
+| 80 | External causes of mortality                     |      47.86 |
+#+end_example
 
 
 
@@ -1384,7 +1431,7 @@ print(tabulate(groupby_eu[groupby_eu['per 1000'] <= 15.0]\
 
 * Discussion and policy implications
 
-The Introduction discusses a recent literature using individual level data analyzing whether demand side cost sharing reduces expenditure on low value treatments (usually referred to as moral hazard) or whether it leads patients to postpone or forgo valuable treatments thereby negatively affecting their health. This literature is focused on US data and argues that it is hard to find negative health effects of cost sharing in aggregate data. We use European data at the (NUTS 2) regional level to show that a high share of out-of-pocket expenditures (in total healthcare expenditures) has a clear effect on mortality in regions where the fraction of low income households is high. 
+The Introduction discusses a recent literature using individual level data analyzing whether demand side cost sharing reduces expenditure on low value treatments (usually referred to as moral hazard) or whether it leads patients to postpone or forgo valuable treatments thereby negatively affecting their health. This literature is focused on US individual level data and argues that it is hard to find negative health effects of cost sharing in aggregate data. We use European data at the (NUTS 2) regional level to show that a high share of out-of-pocket expenditures (in total healthcare expenditures) has a clear effect on mortality in regions where the fraction of low income households is high. 
 
 Healthcare costs keep increasing in most, if not all, developed countries. Demand side cost sharing is a well known instrument to curb the growth in expenditure. This paper shows that there is a upper bound on oop beyond which regions with high poverty levels start to show increased mortality rates. To avoid this mortality effect, policy makers need to search for alternative instruments.
 
@@ -1399,30 +1446,29 @@ bibliography:../references.bib
 * Proof of results
 
 *Proof of Lemma ref:prop:1*
-First, we show that the probability of treatment, $1-G(\sigma_0/\sigma_i u(y^j)/u(y^j-oop))$, is increasing in $y^j$ and decreasing in $oop$. Taking the derivative
+First, we show that the probability of treatment, $\delta_i^j = 1-G(\sigma_0/\sigma_i u(y^j)/u(y^j-oop_{i}))$, is increasing in $y^j$ and decreasing in $oop_{i}$. Taking the derivative
 #+name: eq:treatment_y
 \begin{equation}
-\frac{d \left( \frac{u(y^{j})}{u(y^{j}-oop)} \right)}{dy^j} = \frac{u'(y^{j})u(y^j-oop) - u(y^{j})u'(y^{j}-oop)}{u(y^j-oop)^2} < 0
+\frac{d \left( \frac{u(y^{j})}{u(y^{j}-oop_{i})} \right)}{dy^j} = \frac{u'(y^{j})u(y^j-oop_{i}) - u(y^{j})u'(y^{j}-oop_{i})}{u(y^j-oop_{i})^2} < 0
 \end{equation}
-because $u$ is positive and increasing in $y$, $u'>0$ is decreasing in $y$ and $oop >0$. Hence, the probability of treatment is increasing in $y^j$. Similarly, the treatment probability falls with $oop$.
+because $u$ is positive and increasing in $y$, $u'>0$ is decreasing in $y$ and $oop_{i} >0$. Hence, the probability of treatment is increasing in income $y$. Similarly, the treatment probability falls with $oop$.
 
 The expression for mortality follows from equation eqref:eq:health which we can write as:
 \begin{equation}
-\ln(m_{agt}) = \ln(\tilde{\eta}_{ag}) + \gamma \ln \left( \frac{h_{a-1,g,t-1}}{\bar g_{a-1,g}}\right)- (1-\pi^h)-\pi^h \sum_{i \in I} \zeta_i + \alpha (\pi^l-\pi^h)(1-\sum_{i \in I} \zeta_i) \sigma_0
+\ln(m_{agt}) = \ln({\eta}_{ag}) + \gamma \ln \left( \frac{h_{a-1,g,t-1}}{\bar g_{a-1,g}}\right)- (1-\pi^h)-\pi^h \sum_{i \in I} \zeta_i + \alpha (\pi^l-\pi^h)(1-\sum_{i \in I} \zeta_i) \sigma_0
  \end{equation}
 \begin{equation*}
 + \sum_{i \in I} \zeta_i (\sigma_i-\sigma_0) (\alpha \pi^l (1-\delta_i^l) + (1-\alpha) \pi^h (1-\delta_i^h))
 \end{equation*}
-We capture $\tilde{\eta}_{ag}$ with a sigmoid of age and gender fixed effects, $\beta_{ag}$. The NUTS 2 fixed effects capture $(1-\pi^h)+\pi^h \sum_{i \in I} \zeta_i $. As $\alpha$ denotes poverty, we have
+We capture ${\eta}_{ag}$ with a sigmoid of age and gender fixed effects, $\beta_{ag}$. The NUTS 2 fixed effects capture $(1-\pi^h)+\pi^h \sum_{i \in I} \zeta_i$. As $\alpha$ denotes poverty, we have
 \begin{equation}
 \beta_{poverty} = (\pi^l-\pi^h)(1-\sum_{i \in I} \zeta_i) \sigma_0 > 0
 \end{equation}
-With expression for =Unmet= in equation eqref:eq:Unmet, we find that
+With the expression for =Unmet= in equation eqref:eq:Unmet, we find that
 \begin{equation}
 \beta_{unmet} = \frac{\sum_{i \in I} \zeta_i (\sigma_i-\sigma_0) (\alpha \pi^l (1-\delta_i^l) + (1-\alpha) \pi^h (1-\delta_i^h))}{\sum_{i \in I} \zeta_i (\alpha \pi^l (1-\delta_i^l) + (1-\alpha) \pi^h (1-\delta_i^h))}
 \end{equation}
-which is a weighted average of the $\sigma_i-\sigma_0>0$ terms. Hence, $\beta_{unmet} = E(\sigma_i-\sigma_0)>0$.
-
+which is a weighted average of the $\sigma_i-\sigma_0>0$ terms: if the medical needs were met, health would equal $\sigma_i$ but for this group it is $\sigma_0$. Hence, $\beta_{unmet} = E(\sigma_i-\sigma_0)>0$.
 
 Finally, we derive how the fraction of people that forgo treatment because it is too expensive depends on =OOP=. We first derive this for an increase in $D$. We start from
 #+name: eq:TooExp_OOP
@@ -1430,7 +1476,7 @@ Finally, we derive how the fraction of people that forgo treatment because it is
 \frac{d \text{TooExp}}{d \text{OOP}} = \frac{d \text{TooExp}}{dD} \left( \frac{d \text{OOP}}{d D}
   \right)^{-1} = \frac{d \text{TooExp}}{dD} \frac{\sum_{i \in I} \zeta_i x_i}{\sum_{i \in I_{\xi}} \zeta_i \xi x_i + \sum_{i \in I_D} \zeta_i D}
 \end{equation}
-where we use that in Europe oop payments are small relative to yearly income and hence we use the approximation that $\delta^j_i$ is constant across $i \in I$, $\delta^{j}_i \approx \delta_{i}$:
+where we use that in Europe oop payments tend to be small relative to yearly income and hence we use the approximation that $\delta^j_i$ is constant across $j$, $\delta^{j}_i \approx \delta_{i}$:
 #+name: eq:OOP2_app
 \begin{equation}
 \text{OOP} = \frac{\sum_{i \in I_{\xi}} \zeta_i \xi x_i \delta_i+ \sum_{i \in I_D} \zeta_i D \delta_i}{\sum_{i \in I} \zeta_i x_i \delta_i}
@@ -1442,7 +1488,7 @@ Further, equation eqref:eq:TooExp implies we can approximate the slope of =TooEx
 \frac{d \text{TooExp}}{d D} = \sum_{i \in I_D} \zeta_i \left( \alpha \pi^l g^l_i \frac{\sigma_{0}}{\sigma_{i}} \frac{u'(y^{l})}{u(y^{l})} + (1-\alpha) \pi^h g_i^h \frac{\sigma_{0}}{\sigma_{i}} \frac{u'(y^{h})}{u(y^h)}
 \right)
 \end{equation}
-where we use notation $g_{i}^j = g(\sigma_0/\sigma_i * u(y^j)/u(y^j-D))$ for $i \in I_{D}$. Further, for $y^{j}$ big compared to $D$, we have that $g_i^l=g_i^h=g_i$:
+where we use notation $g_{i}^j = g(\sigma_0/\sigma_i * u(y^j)/u(y^j-D))$ for $i \in I_{D}$. Again using the approximation that $y^{j}$ is big compared to $D$, we have that $g_i^j=g_i$:
 \begin{equation}
 \frac{d \text{TooExp}}{d D} = \sum_{i \in I_D} \zeta_i g_i \frac{\sigma_0}{\sigma_i} \left[ \pi^h \frac{u'(y^{h})}{u(y^h)} + \alpha \left( \pi^l \frac{u'(y^{l})}{u(y^l)}- \pi^h \frac{u'(y^{h})}{u(y^h)}  \right)
 \right]
@@ -1475,7 +1521,7 @@ where $\kappa > 0$ denotes the parameter of the Pareto distribution:
 \begin{equation}
 1-G(\nu) = \left( \underline \nu/{\nu} \right)^{\kappa}
 \end{equation}
-if $\nu \geq \underline \nu$ and 1 other wise. With this distribution we have $g(\nu)\nu/(1-G(\nu)) = \kappa$ for each $\nu > \underline \nu$. It is routine to verify that we get the same expression for the expansion with respect to $\xi$: a weighted average of the parameter $\kappa$.
+if $\nu \geq \underline \nu$ and 1 other wise. With this distribution we have $g(\nu)\nu/(1-G(\nu)) = \kappa$ for each $\nu > \underline \nu$. It is routine to verify that we get the same expression for the expansion with respect to $\xi$.
 
 Hence, irrespective of whether we expand with respect to $D$ or $\xi$, we find that
 \begin{equation}
@@ -1496,7 +1542,7 @@ and
 \begin{equation}
 b_{interaction,c} = \kappa \left( \pi^l \frac{u'(y^{l})}{u(y^l)}- \pi^h \frac{u'(y^{h})}{u(y^h)}  \right) > 0
 \end{equation}
-As it is hard to know what determines the intercept for this linear expansion, we allow it to vary with NUTS 2 region and calendar year: $b_0 = b_{0,2} + b_{0,t}$. Finally, to facilitate the estimation of this equation we assume that =TooExp= has a logit-normal distribution. That is, the log-odd of =TooExp= is normally distributed with the mean given by equation eqref:eq:linearizationTooExp. This ensures that =TooExp= in the estimation always lies between 0 and 1.
+As it is hard to know what determines the intercept for this linear expansion, we allow it to vary with NUTS 2 region and calendar year: $b_0 = b_{0,2} + b_{0,t}$. Finally, to facilitate the estimation of this equation we assume that =TooExp= has a logit-normal distribution. That is, the log-odds of =TooExp= is normally distributed with the mean given by equation eqref:eq:linearizationTooExp. This ensures that =TooExp= in the estimation always lies between 0 and 1.
 
 @@html: <p style="text-align:right">∎</p> @@
 @@latex: \qed@@
@@ -1509,17 +1555,17 @@ The data on population and deaths come from Eurostat's regional demographic stat
 
 #+caption: Variables and the dimensions over which they vary.
 #+name: tab:VariablesDimensions
-| variable               | country | NUTS 2 | time | age | sex | missing | reference |
-|------------------------+---------+--------+------+-----+-----+---------+-----------|
-| population             |         | x      | x    | x   | x   |         | [[https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_D2JAN/default/table?lang=en&category=demo.demopreg][link]]      |
-| deaths                 |         | x      | x    | x   | x   |         | [[https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_MAGEC/default/table?lang=en&category=demo.demomreg][link]]      |
-| at-risk-of-poverty     |         | x      | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en][link]]      |
-| material deprivation   |         | x      | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en][link]]      |
-| fraction too expensive |         | x      | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en][link]]      |
-| unmet                  |         | x      | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en][link]]      |
-| out-of-pocket          | x       |        | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en][link]]      |
-| voluntary              | x       |        | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en][link]]      |
-| expenditure per head   | x       |        | x    |     |     | x       | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en][link]]      |
+| variable               | country | NUTS 2 | time | age | sex | reference |
+|------------------------+---------+--------+------+-----+-----+-----------|
+| population             |         | x      | x    | x   | x   | [[https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_D2JAN/default/table?lang=en&category=demo.demopreg][link]]      |
+| deaths                 |         | x      | x    | x   | x   | [[https://ec.europa.eu/eurostat/databrowser/view/DEMO_R_MAGEC/default/table?lang=en&category=demo.demomreg][link]]      |
+| at-risk-of-poverty     |         | x      | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en][link]]      |
+| material deprivation   |         | x      | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en][link]]      |
+| fraction too expensive |         | x      | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en][link]]      |
+| unmet                  |         | x      | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en][link]]      |
+| out-of-pocket          | x       |        | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en][link]]      |
+| voluntary              | x       |        | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en][link]]      |
+| expenditure per head   | x       |        | x    |     |     | [[https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en][link]]      |
 
 
 
@@ -1541,6 +1587,10 @@ This section presents the trace plots for the baseline model, the table with the
 
 ** trace plots
 
+Figure ref:fig:Trace gives the trace plots for the parameters that we are interested in. That is, we leave out the traces for the age, calendar year and region fixed effects.
+
+As explained in the main text, we are interested in three features in the plots on the right. First, the plots are stationary; second, condensed zig-zagging and third the four chains cover the same regions of the parameter space.
+
 #+caption: Trace plots of the coefficients of interest
 #+attr_latex: scale=0.75
 #+name: fig:Trace
@@ -1549,41 +1599,49 @@ This section presents the trace plots for the baseline model, the table with the
 
 ** table of coefficients baseline model
 
+Table ref:tab:estimated_coefficients provides summary statistics for the posteriors of the coefficients we are interested in. For some countries the =hdi_3%= lower bound for the =b_oop= or =b_interaction= equals zero. This is compatible with the =OOP= effect on mortality being bounded away from zero as the coefficients can be correlated: say, low =b_oop= going together with high =b_interaction= leading to an overall strictly positive effect.
+
+Hence, to understand the mortality effects of an increase in oop, we use equation eqref:eq:change_mortality with the posterior distributions substituted in for all the parameters. This gives us Figure ref:fig:SummaryFigure.
+
+
+
 #+caption: Summary statictics for estimated coefficients
 #+name: tab:estimated_coefficients
-|                            | mean |   sd | hdi_3% | hdi_97% | ess_bulk | r_hat |
-|----------------------------+------+------+--------+---------+----------+-------|
-| beta_unmet                 | 0.07 | 0.02 |   0.04 |    0.11 |  1773.00 |  1.00 |
-| beta_lagged_log_mortality  | 0.55 | 0.00 |   0.55 |    0.56 |  1815.00 |  1.00 |
-| beta_poverty               | 0.01 | 0.01 |   0.00 |    0.02 |   922.00 |  1.00 |
-| b_oop[Bulgaria]            | 0.20 | 0.18 |   0.00 |    0.53 |  2458.00 |  1.00 |
-| b_oop[Croatia]             | 0.36 | 0.28 |   0.00 |    0.86 |  2715.00 |  1.00 |
-| b_oop[Denmark]             | 0.12 | 0.12 |   0.00 |    0.34 |  1755.00 |  1.00 |
-| b_oop[Finland]             | 0.20 | 0.17 |   0.00 |    0.53 |  1594.00 |  1.00 |
-| b_oop[Greece]              | 1.60 | 0.44 |   0.81 |    2.45 |  1737.00 |  1.00 |
-| b_oop[Hungary]             | 0.18 | 0.17 |   0.00 |    0.50 |  2719.00 |  1.00 |
-| b_oop[Ireland]             | 0.24 | 0.20 |   0.00 |    0.61 |  2227.00 |  1.00 |
-| b_oop[Lithuania]           | 0.30 | 0.25 |   0.00 |    0.76 |  2645.00 |  1.00 |
-| b_oop[Norway]              | 0.05 | 0.05 |   0.00 |    0.15 |  2644.00 |  1.00 |
-| b_oop[Romania]             | 0.26 | 0.21 |   0.00 |    0.63 |  2982.00 |  1.00 |
-| b_oop[Slovakia]            | 0.26 | 0.22 |   0.00 |    0.67 |  2158.00 |  1.00 |
-| b_oop[Slovenia]            | 0.33 | 0.27 |   0.00 |    0.82 |  3299.00 |  1.00 |
-| b_oop[Sweden]              | 0.09 | 0.08 |   0.00 |    0.24 |  1549.00 |  1.00 |
-| b_oop[Switzerland]         | 0.03 | 0.03 |   0.00 |    0.09 |  1848.00 |  1.00 |
-| b_interaction[Bulgaria]    | 0.57 | 0.38 |   0.00 |    1.23 |  2575.00 |  1.00 |
-| b_interaction[Croatia]     | 0.40 | 0.29 |   0.00 |    0.92 |  3113.00 |  1.00 |
-| b_interaction[Denmark]     | 0.39 | 0.29 |   0.00 |    0.91 |  2655.00 |  1.00 |
-| b_interaction[Finland]     | 0.39 | 0.29 |   0.00 |    0.91 |  3291.00 |  1.00 |
-| b_interaction[Greece]      | 0.52 | 0.35 |   0.00 |    1.15 |  2936.00 |  1.00 |
-| b_interaction[Hungary]     | 0.44 | 0.32 |   0.00 |    1.00 |  2706.00 |  1.00 |
-| b_interaction[Ireland]     | 0.39 | 0.30 |   0.00 |    0.91 |  2733.00 |  1.00 |
-| b_interaction[Lithuania]   | 0.39 | 0.29 |   0.00 |    0.91 |  2526.00 |  1.00 |
-| b_interaction[Norway]      | 0.38 | 0.29 |   0.00 |    0.93 |  2961.00 |  1.00 |
-| b_interaction[Romania]     | 0.44 | 0.31 |   0.00 |    0.99 |  2758.00 |  1.00 |
-| b_interaction[Slovakia]    | 0.38 | 0.29 |   0.00 |    0.90 |  2650.00 |  1.00 |
-| b_interaction[Slovenia]    | 0.40 | 0.30 |   0.00 |    0.93 |  3301.00 |  1.00 |
-| b_interaction[Sweden]      | 0.38 | 0.29 |   0.00 |    0.90 |  2216.00 |  1.00 |
-| b_interaction[Switzerland] | 0.39 | 0.29 |   0.00 |    0.92 |  2928.00 |  1.00 |
+|                            |   mean |   sd |   hdi_3% |   hdi_97% |   ess_bulk |   r_hat |
+|----------------------------+--------+------+----------+-----------+------------+---------|
+| beta_unmet                 |   0.09 | 0.02 |     0.06 |      0.13 |    4161.00 |    1.00 |
+| beta_lagged_log_mortality  |   0.54 | 0.00 |     0.53 |      0.54 |    5209.00 |    1.00 |
+| beta_poverty               |   0.01 | 0.01 |     0.00 |      0.01 |    3671.00 |    1.00 |
+| b_oop[Bulgaria]            |   0.56 | 0.49 |     0.00 |      1.47 |    3073.00 |    1.00 |
+| b_oop[Croatia]             |   3.75 | 2.73 |     0.00 |      8.65 |    2329.00 |    1.00 |
+| b_oop[Denmark]             |   0.20 | 0.18 |     0.00 |      0.54 |    2406.00 |    1.00 |
+| b_oop[Finland]             |   0.04 | 0.04 |     0.00 |      0.12 |    3420.00 |    1.00 |
+| b_oop[Greece]              |  21.92 | 0.94 |    20.00 |     23.47 |    2557.00 |    1.00 |
+| b_oop[Hungary]             |   0.14 | 0.14 |     0.00 |      0.38 |    3683.00 |    1.00 |
+| b_oop[Ireland]             |   8.50 | 0.93 |     6.72 |     10.23 |    2736.00 |    1.00 |
+| b_oop[Lithuania]           |   6.45 | 1.89 |     2.54 |      9.64 |    2923.00 |    1.00 |
+| b_oop[Norway]              |   0.02 | 0.02 |     0.00 |      0.07 |    3846.00 |    1.00 |
+| b_oop[Romania]             |  16.44 | 2.08 |    12.46 |     20.25 |    3290.00 |    1.00 |
+| b_oop[Slovakia]            |   6.25 | 1.47 |     3.52 |      8.90 |    2270.00 |    1.00 |
+| b_oop[Slovenia]            |   0.42 | 0.41 |     0.00 |      1.18 |    3211.00 |    1.00 |
+| b_oop[Sweden]              |   1.55 | 0.31 |     1.01 |      2.16 |    2176.00 |    1.00 |
+| b_oop[Switzerland]         |   0.02 | 0.02 |     0.00 |      0.06 |    3479.00 |    1.00 |
+| b_interaction[Bulgaria]    |  52.38 | 2.64 |    47.45 |     57.35 |    2675.00 |    1.00 |
+| b_interaction[Croatia]     |   9.06 | 6.09 |     0.01 |     19.91 |    3513.00 |    1.00 |
+| b_interaction[Denmark]     | 135.36 | 5.50 |   125.49 |    146.26 |    3971.00 |    1.00 |
+| b_interaction[Finland]     |   0.87 | 0.86 |     0.00 |      2.48 |    3419.00 |    1.00 |
+| b_interaction[Greece]      |   6.53 | 4.63 |     0.00 |     14.82 |    2677.00 |    1.00 |
+| b_interaction[Hungary]     | 111.87 | 3.07 |   106.22 |    117.77 |    2840.00 |    1.00 |
+| b_interaction[Ireland]     |  12.33 | 6.86 |     0.00 |     23.66 |    2925.00 |    1.00 |
+| b_interaction[Lithuania]   |   9.23 | 6.24 |     0.01 |     20.10 |    3308.00 |    1.00 |
+| b_interaction[Norway]      |  97.15 | 5.38 |    87.75 |    107.56 |    3476.00 |    1.00 |
+| b_interaction[Romania]     | 108.02 | 7.25 |    95.46 |    122.86 |    3595.00 |    1.00 |
+| b_interaction[Slovakia]    |   1.78 | 1.69 |     0.00 |      4.87 |    3920.00 |    1.00 |
+| b_interaction[Slovenia]    |   5.46 | 4.24 |     0.00 |     12.89 |    2869.00 |    1.00 |
+| b_interaction[Sweden]      |  45.55 | 5.41 |    35.01 |     55.16 |    4525.00 |    1.00 |
+| b_interaction[Switzerland] |  29.29 | 1.99 |    25.75 |     33.15 |    3964.00 |    1.00 |
+| sd_prior_b                 |   8.48 | 0.19 |     8.12 |      8.83 |    4296.00 |    1.00 |
+| sd_prior_beta              |   0.34 | 0.12 |     0.17 |      0.57 |    4552.00 |    1.00 |
 
 
 ** derivation of the effect of oop on mortality
