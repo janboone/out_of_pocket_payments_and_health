@@ -1,0 +1,1273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Getting Eurostat data on health and mortality</title>
+<meta name="author" content="Jan Boone@@latex:\thanks{Tilburg University, Department of Economics, Tilec and CEPR, E-mail: \textit{j.boone@uvt.nl}.}@@" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="./latex-css/style.css">
+<link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+
+<script src="http://orgmode.org/org-info.js">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+// @license-end
+</script>
+
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+// @license-end
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Getting Eurostat data on health and mortality</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org3fd2bdd">1. Introduction</a></li>
+<li><a href="#org54177cd">2. Preamble code</a></li>
+<li><a href="#org002c634">3. Combining data</a>
+<ul>
+<li><a href="#orgb6d9c41">3.1. nuts2 data</a></li>
+<li><a href="#org56bdb70">3.2. country data</a></li>
+</ul>
+</li>
+<li><a href="#org1ad2e6e">4. Data</a>
+<ul>
+<li><a href="#orge9783c3">4.1. country data</a>
+<ul>
+<li><a href="#orgddef481">4.1.1. OOP per country</a></li>
+<li><a href="#org30525bf">4.1.2. healthcare expenditure</a></li>
+</ul>
+</li>
+<li><a href="#orgb0f68d9">4.2. nuts 2</a>
+<ul>
+<li><a href="#org6d80b0c">4.2.1. crude number of deaths and population by age and sex</a></li>
+<li><a href="#org963d7f9">4.2.2. mortality lagged per age</a></li>
+<li><a href="#orgf012b98">4.2.3. Poverty measures</a></li>
+<li><a href="#orgfd28082">4.2.4. unmet needs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3fd2bdd" class="outline-2">
+<h2 id="org3fd2bdd"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This file describes how we get the data for our project on <a href="./index.html">the health effects of demand side cost sharing</a>.
+</p>
+
+<p>
+In this file we explain how we get the data and from where and at the same time we generate the data. By generating the data in this way, a change in the data by Eurostat will lead to (slightly) different results.
+</p>
+
+<ul class="org-ul">
+<li>Overview of data available at the region level: <a href="https://ec.europa.eu/eurostat/web/regions/background">https://ec.europa.eu/eurostat/web/regions/background</a></li>
+<li>Link to excel file with overview: <a href="http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx">http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx</a></li>
+</ul>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org54177cd" class="outline-2">
+<h2 id="org54177cd"><span class="section-number-2">2.</span> Preamble code</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Run this code first before running the code of particular data sets. It imports the relevant libraries.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #89DDFF;">import</span> numpy <span style="color: #89DDFF;">as</span> np
+<span style="color: #89DDFF;">import</span> pandas <span style="color: #89DDFF;">as</span> pd
+<span style="color: #89DDFF;">from</span> country_codes <span style="color: #89DDFF;">import</span> oecd_dictionary, eurostat_dictionary
+<span style="color: #89DDFF;">import</span> eurostat
+<span style="color: #89DDFF;">import</span> xarray <span style="color: #89DDFF;">as</span> xr
+<span style="color: #89DDFF;">import</span> matplotlib.pyplot <span style="color: #89DDFF;">as</span> plt
+
+<span style="color: #ffcb6b;">EU_countries</span> = [<span style="color: #c3e88d;">'Belgium'</span>, <span style="color: #c3e88d;">'Bulgaria'</span>, <span style="color: #c3e88d;">'Czechia'</span>, <span style="color: #c3e88d;">'Denmark'</span>,
+<span style="color: #c3e88d;">'Germany (until 1990 former territory of the FRG)'</span>, <span style="color: #c3e88d;">'Germany'</span>,<span style="color: #c3e88d;">'Estonia'</span>,
+<span style="color: #c3e88d;">'Ireland'</span>, <span style="color: #c3e88d;">'Greece'</span>, <span style="color: #c3e88d;">'Spain'</span>, <span style="color: #c3e88d;">'France'</span>, <span style="color: #c3e88d;">'Croatia'</span>, <span style="color: #c3e88d;">'Italy'</span>,
+<span style="color: #c3e88d;">'Cyprus'</span>, <span style="color: #c3e88d;">'Latvia'</span>, <span style="color: #c3e88d;">'Lithuania'</span>, <span style="color: #c3e88d;">'Luxembourg'</span>, <span style="color: #c3e88d;">'Hungary'</span>, <span style="color: #c3e88d;">'Malta'</span>,
+<span style="color: #c3e88d;">'Netherlands'</span>, <span style="color: #c3e88d;">'Austria'</span>, <span style="color: #c3e88d;">'Poland'</span>, <span style="color: #c3e88d;">'Portugal'</span>, <span style="color: #c3e88d;">'Romania'</span>,
+<span style="color: #c3e88d;">'Slovenia'</span>, <span style="color: #c3e88d;">'Slovakia'</span>, <span style="color: #c3e88d;">'Finland'</span>, <span style="color: #c3e88d;">'Sweden'</span>, <span style="color: #c3e88d;">'United Kingdom'</span>,
+<span style="color: #c3e88d;">'Iceland'</span>, <span style="color: #c3e88d;">'Liechtenstein'</span>, <span style="color: #c3e88d;">'Norway'</span>, <span style="color: #c3e88d;">'Switzerland'</span>,
+<span style="color: #c3e88d;">'Bosnia and Herzegovina'</span>]
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org002c634" class="outline-2">
+<h2 id="org002c634"><span class="section-number-2">3.</span> Combining data</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The sections below generate the datasets per variable. The code in this section merges all these variables into one <code>.csv</code> file.
+</p>
+</div>
+
+<div id="outline-container-orgb6d9c41" class="outline-3">
+<h3 id="orgb6d9c41"><span class="section-number-3">3.1.</span> nuts2 data</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+In this subsection, we merge the data at the NUTS 2 level.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">
+<span style="color: #89DDFF;">from</span> glob <span style="color: #89DDFF;">import</span> glob
+<span style="color: #ffcb6b;">ds_2</span> = xr.merge([xr.open_dataset(f) <span style="color: #89DDFF;">for</span> f <span style="color: #89DDFF;">in</span> glob(<span style="color: #c3e88d;">'./data/*.nc'</span>)])
+ds_2
+
+</pre>
+</div>
+
+<pre class="example" id="org4141bc5">
+&lt;xarray.Dataset&gt;
+Dimensions:                          (age: 100, nuts2: 307, sex: 2, year: 31)
+Coordinates:
+  * age                              (age) float64 1.0 2.0 3.0 ... 99.0 100.0
+  * nuts2                            (nuts2) object 'AL01' 'AL02' ... 'UKN0'
+  * year                             (year) int64 1990 1991 1992 ... 2019 2020
+  * sex                              (sex) object 'F' 'M'
+Data variables:
+    population                       (nuts2, year, sex, age) float64 nan ... nan
+    at risk of poverty               (nuts2, year) float64 nan nan ... nan nan
+    lagged_mortality                 (year, age, nuts2, sex) float64 nan ... nan
+    percentage_material_deprivation  (nuts2, year) float64 nan nan ... nan nan
+    deaths                           (nuts2, year, sex, age) float64 nan ... nan
+    FEAR                             (nuts2, year) float64 nan nan ... nan nan
+    HOPING                           (nuts2, year) float64 nan nan ... nan nan
+    TOOEXP                           (nuts2, year) float64 nan nan ... nan nan
+    TOOFAR                           (nuts2, year) float64 nan nan ... nan nan
+    WAITING                          (nuts2, year) float64 nan nan ... nan nan
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = ds_2.to_dataframe()
+df.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+df.rename({<span style="color: #c3e88d;">'level_0'</span>:<span style="color: #c3e88d;">'age'</span>,<span style="color: #c3e88d;">'level_1'</span>:<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'level_3'</span>:<span style="color: #c3e88d;">'year'</span>},axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'country_code'</span>] = df[<span style="color: #c3e88d;">'nuts2'</span>].<span style="color: #82aaff;">str</span>.<span style="color: #82aaff;">slice</span>(0,2)
+df[<span style="color: #c3e88d;">'nuts1'</span>] = df[<span style="color: #c3e88d;">'nuts2'</span>].<span style="color: #82aaff;">str</span>.<span style="color: #82aaff;">slice</span>(0,3)
+df[<span style="color: #c3e88d;">'country'</span>] = df[<span style="color: #c3e88d;">'country_code'</span>].replace(eurostat_dictionary)
+df.head()
+</pre>
+</div>
+
+<pre class="example" id="org3c3380b">
+   age nuts2 sex  year  population  at risk of poverty  lagged_mortality  \
+0  1.0  AL01   F  1990         NaN                 NaN               NaN
+1  1.0  AL01   F  1991         NaN                 NaN               NaN
+2  1.0  AL01   F  1992         NaN                 NaN               NaN
+3  1.0  AL01   F  1993         NaN                 NaN               NaN
+4  1.0  AL01   F  1994         NaN                 NaN               NaN
+
+   percentage_material_deprivation  deaths  FEAR  HOPING  TOOEXP  TOOFAR  \
+0                              NaN     NaN   NaN     NaN     NaN     NaN
+1                              NaN     NaN   NaN     NaN     NaN     NaN
+2                              NaN     NaN   NaN     NaN     NaN     NaN
+3                              NaN     NaN   NaN     NaN     NaN     NaN
+4                              NaN     NaN   NaN     NaN     NaN     NaN
+
+   WAITING country_code nuts1  country
+0      NaN           AL   AL0  Albania
+1      NaN           AL   AL0  Albania
+2      NaN           AL   AL0  Albania
+3      NaN           AL   AL0  Albania
+4      NaN           AL   AL0  Albania
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org56bdb70" class="outline-3">
+<h3 id="org56bdb70"><span class="section-number-3">3.2.</span> country data</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+In this section, we add country level variables to the dataframe.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">
+<span style="color: #89DDFF;">from</span> glob <span style="color: #89DDFF;">import</span> glob
+<span style="color: #ffcb6b;">ds_c</span> = xr.merge([xr.open_dataset(f) <span style="color: #89DDFF;">for</span> f <span style="color: #89DDFF;">in</span> glob(<span style="color: #c3e88d;">'./data/country/*.nc'</span>)])
+ds_c
+
+</pre>
+</div>
+
+<pre class="example" id="org2ded782">
+&lt;xarray.Dataset&gt;
+Dimensions:                        (country: 33, country_code: 33, year: 28)
+Coordinates:
+  * year                           (year) int64 1992 1993 1994 ... 2018 2019
+  * country                        (country) object 'Austria' ... 'United Kin...
+  * country_code                   (country_code) object 'AT' 'BA' ... 'SK' 'UK'
+Data variables:
+    HF2_PC_CHE                     (country, country_code, year) float64 nan ...
+    HF2_PPS_HAB                    (country, country_code, year) float64 nan ...
+    HF3_PC_CHE                     (country, country_code, year) float64 nan ...
+    HF3_PPS_HAB                    (country, country_code, year) float64 nan ...
+    health expenditure per capita  (country, country_code, year) float64 ...
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df_country</span> = ds_c.to_dataframe()
+df_country.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+df_country.rename({<span style="color: #c3e88d;">'level_0'</span>:<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'level_1'</span>:<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'level_2'</span>:<span style="color: #c3e88d;">'year'</span>},axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df_country.head()
+</pre>
+</div>
+
+<pre class="example" id="org83e6283">
+   country country_code  year  HF2_PC_CHE  HF2_PPS_HAB  HF3_PC_CHE  \
+0  Austria           AT  1992         NaN          NaN         NaN
+1  Austria           AT  1993         NaN          NaN         NaN
+2  Austria           AT  1994         NaN          NaN         NaN
+3  Austria           AT  1995         NaN          NaN         NaN
+4  Austria           AT  1996         NaN          NaN         NaN
+
+   HF3_PPS_HAB  health expenditure per capita
+0          NaN                            NaN
+1          NaN                            NaN
+2          NaN                            NaN
+3          NaN                            NaN
+4          NaN                            NaN
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = df.merge(df_country, how = <span style="color: #c3e88d;">'left'</span>, on = [<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'country_code'</span>])
+
+df = df[(df.population &gt;= df.deaths) &amp; (df.population &gt; 0)] <span style="color: #676E95;"># </span><span style="color: #676E95;">drop rows where deaths &gt; population at Jan. 1st (e.g. because people moved in the year)</span>
+df[<span style="color: #c3e88d;">'mortality'</span>] = df.deaths/df.population
+
+df.head()
+</pre>
+</div>
+
+<pre class="example" id="org3768b30">
+     age nuts2 sex  year  population  at risk of poverty  lagged_mortality  \
+186  1.0  AT11   F  1990      1345.0                 NaN               NaN
+187  1.0  AT11   F  1991      1371.0                 NaN               NaN
+188  1.0  AT11   F  1992      1436.0                 NaN               NaN
+189  1.0  AT11   F  1993      1372.0                 NaN               NaN
+190  1.0  AT11   F  1994      1349.0                 NaN               NaN
+
+     percentage_material_deprivation  deaths  FEAR  ...  WAITING  \
+186                              NaN     0.0   NaN  ...      NaN
+187                              NaN     0.0   NaN  ...      NaN
+188                              NaN     1.0   NaN  ...      NaN
+189                              NaN     0.0   NaN  ...      NaN
+190                              NaN     1.0   NaN  ...      NaN
+
+     country_code  nuts1  country HF2_PC_CHE HF2_PPS_HAB HF3_PC_CHE  \
+186            AT    AT1  Austria        NaN         NaN        NaN
+187            AT    AT1  Austria        NaN         NaN        NaN
+188            AT    AT1  Austria        NaN         NaN        NaN
+189            AT    AT1  Austria        NaN         NaN        NaN
+190            AT    AT1  Austria        NaN         NaN        NaN
+
+     HF3_PPS_HAB  health expenditure per capita  mortality
+186          NaN                            NaN   0.000000
+187          NaN                            NaN   0.000000
+188          NaN                            NaN   0.000696
+189          NaN                            NaN   0.000000
+190          NaN                            NaN   0.000741
+
+[5 rows x 23 columns]
+</pre>
+
+<p>
+Finally, we save the merged NUTS 2 and country data into a <code>.csv</code> file.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">df.to_csv(<span style="color: #c3e88d;">'./data/data_deaths_by_age_nuts_2.csv'</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1ad2e6e" class="outline-2">
+<h2 id="org1ad2e6e"><span class="section-number-2">4.</span> Data</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+First, we fetch the variables at the country level from the Eurostat website. Then we move to the NUTS 2 regional data.
+</p>
+</div>
+
+<div id="outline-container-orge9783c3" class="outline-3">
+<h3 id="orge9783c3"><span class="section-number-3">4.1.</span> country data</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-orgddef481" class="outline-4">
+<h4 id="orgddef481"><span class="section-number-4">4.1.1.</span> OOP per country</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance).
+</p>
+
+<ul class="org-ul">
+<li>link to data: <a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en</a></li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">abbreviation</th>
+<th scope="col" class="org-left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">HF2</td>
+<td class="org-left">Voluntary health care payment schemes</td>
+</tr>
+
+<tr>
+<td class="org-left">HF3</td>
+<td class="org-left">Household out-of-pocket payment</td>
+</tr>
+
+<tr>
+<td class="org-left">PC_CHE</td>
+<td class="org-left">Percentual share of total current health expenditure (CHE)</td>
+</tr>
+
+<tr>
+<td class="org-left">PPS_HAB</td>
+<td class="org-left">Purchasing power standard (PPS) per inhabitant</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'hlth_sha11_hf'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'geo'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df[<span style="color: #c3e88d;">'country_code'</span>] = [x[:2] <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'geo'</span>]]
+df[<span style="color: #c3e88d;">'country'</span>] = df[<span style="color: #c3e88d;">'country_code'</span>].replace(eurostat_dictionary)
+df = df[df.country.isin(EU_countries)  &amp; (df.icha11_hf.isin([<span style="color: #c3e88d;">"HF2"</span>, <span style="color: #c3e88d;">"HF3"</span>])) &amp; (df.unit.isin([ <span style="color: #c3e88d;">'PC_CHE'</span>,<span style="color: #c3e88d;">'PPS_HAB'</span>]))]
+df.drop([<span style="color: #c3e88d;">"geo"</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'unit'</span>,<span style="color: #c3e88d;">'icha11_hf'</span>],
+                        value_vars=np.arange(1992,2019),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'health_expenditure'</span>)
+df.set_index([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'unit'</span>,<span style="color: #c3e88d;">'icha11_hf'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df = df.unstack()
+df.columns = df.columns.droplevel()
+df = df.unstack()
+df.columns = df.columns.droplevel()
+df.columns = [<span style="color: #c3e88d;">'HF2_PC_CHE'</span>,<span style="color: #c3e88d;">'HF2_PPS_HAB'</span>,<span style="color: #c3e88d;">'HF3_PC_CHE'</span>,<span style="color: #c3e88d;">'HF3_PPS_HAB'</span>]
+df.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+df.set_index([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'year'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df.tail()
+</pre>
+</div>
+
+<pre class="example" id="org3e4ad89">
+                                  HF2_PC_CHE  HF2_PPS_HAB  HF3_PC_CHE  \
+country        country_code year
+United Kingdom UK           2014        5.40       155.48       15.16
+                            2015        5.40       161.07       15.23
+                            2016        5.04       148.46       15.37
+                            2017        5.41       160.78       15.72
+                            2018        5.62       172.06       15.88
+
+                                  HF3_PPS_HAB
+country        country_code year
+United Kingdom UK           2014       436.73
+                            2015       454.78
+                            2016       453.16
+                            2017       467.53
+                            2018       486.25
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds</span> = df.to_xarray()
+ds.to_netcdf(<span style="color: #c3e88d;">"./data/country/out_of_pocket.nc"</span>)
+ds
+</pre>
+</div>
+
+<pre class="example" id="org034e379">
+&lt;xarray.Dataset&gt;
+Dimensions:       (country: 33, country_code: 33, year: 27)
+Coordinates:
+  * country       (country) object 'Austria' 'Belgium' ... 'United Kingdom'
+  * country_code  (country_code) object 'AT' 'BA' 'BE' 'BG' ... 'SI' 'SK' 'UK'
+  * year          (year) int64 1992 1993 1994 1995 1996 ... 2015 2016 2017 2018
+Data variables:
+    HF2_PC_CHE    (country, country_code, year) float64 nan nan ... 5.41 5.62
+    HF2_PPS_HAB   (country, country_code, year) float64 nan nan ... 160.8 172.1
+    HF3_PC_CHE    (country, country_code, year) float64 nan nan ... 15.72 15.88
+    HF3_PPS_HAB   (country, country_code, year) float64 nan nan ... 467.5 486.2
+</pre>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org30525bf" class="outline-4">
+<h4 id="org30525bf"><span class="section-number-4">4.1.2.</span> healthcare expenditure</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<ul class="org-ul">
+<li>link to date: <a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en</a></li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">abbreviation</th>
+<th scope="col" class="org-left">variable name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">TOT_HC</td>
+<td class="org-left">Current health care expenditure (CHE)</td>
+</tr>
+
+<tr>
+<td class="org-left">EUR_HAB</td>
+<td class="org-left">Euro per inhabitant</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'hlth_sha11_hc'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'geo'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df[<span style="color: #c3e88d;">'country_code'</span>] = [x[:2] <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'geo'</span>]]
+df[<span style="color: #c3e88d;">'country'</span>] = df[<span style="color: #c3e88d;">'country_code'</span>].replace(eurostat_dictionary)
+df = df[df.country.isin(EU_countries)  &amp; (df.icha11_hc.isin([<span style="color: #c3e88d;">"TOT_HC"</span>])) &amp; (df.unit.isin([<span style="color: #c3e88d;">'EUR_HAB'</span>]))]
+df.drop([<span style="color: #c3e88d;">"geo"</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'unit'</span>,<span style="color: #c3e88d;">'icha11_hc'</span>],
+                        value_vars=np.arange(1992,2020),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'health_expenditure'</span>)
+df.set_index([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'unit'</span>,<span style="color: #c3e88d;">'icha11_hc'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df = df.unstack()
+df.columns = df.columns.droplevel()
+df = df.unstack()
+df.columns = df.columns.droplevel()
+df.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+<span style="color: #676E95;"># </span><span style="color: #676E95;">df.columns = ['HF2_PC_CHE','HF2_PPS_HAB','HF3_PC_CHE','HF3_PPS_HAB']</span>
+df.rename({<span style="color: #c3e88d;">'EUR_HAB'</span>:<span style="color: #c3e88d;">'health expenditure per capita'</span>},axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+<span style="color: #676E95;"># </span><span style="color: #676E95;">df.reset_index(inplace=True)</span>
+df.set_index([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>,<span style="color: #c3e88d;">'year'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df.head()
+</pre>
+</div>
+
+<pre class="example">
+unit                       health expenditure per capita
+country country_code year
+Austria AT           1992                            NaN
+                     1993                            NaN
+                     1994                            NaN
+                     1995                            NaN
+                     1996                            NaN
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds</span> = df.to_xarray()
+ds.to_netcdf(<span style="color: #c3e88d;">"./data/country/healthcare_expenditure.nc"</span>)
+ds
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:                        (country: 33, country_code: 33, year: 28)
+Coordinates:
+  * country                        (country) object 'Austria' ... 'United Kin...
+  * country_code                   (country_code) object 'AT' 'BA' ... 'SK' 'UK'
+  * year                           (year) int64 1992 1993 1994 ... 2018 2019
+Data variables:
+    health expenditure per capita  (country, country_code, year) float64 nan ...
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgb0f68d9" class="outline-3">
+<h3 id="orgb0f68d9"><span class="section-number-3">4.2.</span> nuts 2</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>overview of regional data: <a href="https://ec.europa.eu/eurostat/web/regions/data/database">https://ec.europa.eu/eurostat/web/regions/data/database</a></li>
+</ul>
+</div>
+
+<div id="outline-container-org6d80b0c" class="outline-4">
+<h4 id="org6d80b0c"><span class="section-number-4">4.2.1.</span> crude number of deaths and population by age and sex</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<ul class="org-ul">
+<li>population: <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_d2jan/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/demo_r_d2jan/default/table?lang=en</a></li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'demo_r_d2jan'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'geo'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+age_range = [<span style="color: #c3e88d;">'Y1'</span>, <span style="color: #c3e88d;">'Y10'</span>, <span style="color: #c3e88d;">'Y11'</span>, <span style="color: #c3e88d;">'Y12'</span>, <span style="color: #c3e88d;">'Y13'</span>, <span style="color: #c3e88d;">'Y14'</span>, <span style="color: #c3e88d;">'Y15'</span>,
+       <span style="color: #c3e88d;">'Y16'</span>, <span style="color: #c3e88d;">'Y17'</span>, <span style="color: #c3e88d;">'Y18'</span>, <span style="color: #c3e88d;">'Y19'</span>, <span style="color: #c3e88d;">'Y2'</span>, <span style="color: #c3e88d;">'Y20'</span>, <span style="color: #c3e88d;">'Y21'</span>, <span style="color: #c3e88d;">'Y22'</span>, <span style="color: #c3e88d;">'Y23'</span>,
+       <span style="color: #c3e88d;">'Y24'</span>, <span style="color: #c3e88d;">'Y25'</span>, <span style="color: #c3e88d;">'Y26'</span>, <span style="color: #c3e88d;">'Y27'</span>, <span style="color: #c3e88d;">'Y28'</span>, <span style="color: #c3e88d;">'Y29'</span>, <span style="color: #c3e88d;">'Y3'</span>, <span style="color: #c3e88d;">'Y30'</span>, <span style="color: #c3e88d;">'Y31'</span>,
+       <span style="color: #c3e88d;">'Y32'</span>, <span style="color: #c3e88d;">'Y33'</span>, <span style="color: #c3e88d;">'Y34'</span>, <span style="color: #c3e88d;">'Y35'</span>, <span style="color: #c3e88d;">'Y36'</span>, <span style="color: #c3e88d;">'Y37'</span>, <span style="color: #c3e88d;">'Y38'</span>, <span style="color: #c3e88d;">'Y39'</span>, <span style="color: #c3e88d;">'Y4'</span>,
+       <span style="color: #c3e88d;">'Y40'</span>, <span style="color: #c3e88d;">'Y41'</span>, <span style="color: #c3e88d;">'Y42'</span>, <span style="color: #c3e88d;">'Y43'</span>, <span style="color: #c3e88d;">'Y44'</span>, <span style="color: #c3e88d;">'Y45'</span>, <span style="color: #c3e88d;">'Y46'</span>, <span style="color: #c3e88d;">'Y47'</span>, <span style="color: #c3e88d;">'Y48'</span>,
+       <span style="color: #c3e88d;">'Y49'</span>, <span style="color: #c3e88d;">'Y5'</span>, <span style="color: #c3e88d;">'Y50'</span>, <span style="color: #c3e88d;">'Y51'</span>, <span style="color: #c3e88d;">'Y52'</span>, <span style="color: #c3e88d;">'Y53'</span>, <span style="color: #c3e88d;">'Y54'</span>, <span style="color: #c3e88d;">'Y55'</span>, <span style="color: #c3e88d;">'Y56'</span>,
+       <span style="color: #c3e88d;">'Y57'</span>, <span style="color: #c3e88d;">'Y58'</span>, <span style="color: #c3e88d;">'Y59'</span>, <span style="color: #c3e88d;">'Y6'</span>, <span style="color: #c3e88d;">'Y60'</span>, <span style="color: #c3e88d;">'Y61'</span>, <span style="color: #c3e88d;">'Y62'</span>, <span style="color: #c3e88d;">'Y63'</span>, <span style="color: #c3e88d;">'Y64'</span>,
+       <span style="color: #c3e88d;">'Y65'</span>, <span style="color: #c3e88d;">'Y66'</span>, <span style="color: #c3e88d;">'Y67'</span>, <span style="color: #c3e88d;">'Y68'</span>, <span style="color: #c3e88d;">'Y69'</span>, <span style="color: #c3e88d;">'Y7'</span>, <span style="color: #c3e88d;">'Y70'</span>, <span style="color: #c3e88d;">'Y71'</span>, <span style="color: #c3e88d;">'Y72'</span>,
+       <span style="color: #c3e88d;">'Y73'</span>, <span style="color: #c3e88d;">'Y74'</span>, <span style="color: #c3e88d;">'Y75'</span>, <span style="color: #c3e88d;">'Y76'</span>, <span style="color: #c3e88d;">'Y77'</span>, <span style="color: #c3e88d;">'Y78'</span>, <span style="color: #c3e88d;">'Y79'</span>, <span style="color: #c3e88d;">'Y8'</span>, <span style="color: #c3e88d;">'Y80'</span>,
+       <span style="color: #c3e88d;">'Y81'</span>, <span style="color: #c3e88d;">'Y82'</span>, <span style="color: #c3e88d;">'Y83'</span>, <span style="color: #c3e88d;">'Y84'</span>, <span style="color: #c3e88d;">'Y85'</span>, <span style="color: #c3e88d;">'Y86'</span>, <span style="color: #c3e88d;">'Y87'</span>, <span style="color: #c3e88d;">'Y88'</span>, <span style="color: #c3e88d;">'Y89'</span>,
+       <span style="color: #c3e88d;">'Y9'</span>, <span style="color: #c3e88d;">'Y90'</span>, <span style="color: #c3e88d;">'Y91'</span>, <span style="color: #c3e88d;">'Y92'</span>, <span style="color: #c3e88d;">'Y93'</span>, <span style="color: #c3e88d;">'Y94'</span>, <span style="color: #c3e88d;">'Y95'</span>, <span style="color: #c3e88d;">'Y96'</span>, <span style="color: #c3e88d;">'Y97'</span>,
+       <span style="color: #c3e88d;">'Y98'</span>, <span style="color: #c3e88d;">'Y99'</span>]
+df[<span style="color: #c3e88d;">'country_code'</span>] = [x[:2] <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'geo'</span>]]
+df[<span style="color: #c3e88d;">'country'</span>] = df[<span style="color: #c3e88d;">'country_code'</span>].replace(eurostat_dictionary)
+df = df[df.country.isin(EU_countries) &amp; (df.sex.isin([<span style="color: #c3e88d;">"M"</span>,<span style="color: #c3e88d;">"F"</span>])) &amp; (df.age.isin(age_range))]
+df.drop([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'geo'</span>,<span style="color: #c3e88d;">'sex'</span>,<span style="color: #c3e88d;">'age'</span>],
+                        value_vars=np.arange(1990,2021),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'population'</span>)
+df[<span style="color: #c3e88d;">'nuts'</span>] = [<span style="color: #82aaff;">len</span>(x)-2 <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df.geo]
+df = df.query(<span style="color: #c3e88d;">'nuts == 2'</span>)
+df.drop(<span style="color: #c3e88d;">'nuts'</span>,inplace=<span style="color: #f78c6c;">True</span>, axis=1)
+df.rename({<span style="color: #c3e88d;">'geo'</span>:<span style="color: #c3e88d;">'nuts2'</span>, <span style="color: #c3e88d;">'age'</span>:<span style="color: #c3e88d;">'age string'</span>},axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'age'</span>] = [<span style="color: #82aaff;">float</span>(x.replace(<span style="color: #c3e88d;">'Y'</span>,<span style="color: #c3e88d;">''</span>)) <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'age string'</span>]]
+df.drop(<span style="color: #c3e88d;">'age string'</span>,inplace=<span style="color: #f78c6c;">True</span>, axis=1)
+
+df.set_index([<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'sex'</span>,<span style="color: #c3e88d;">'age'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+
+df.head()
+</pre>
+</div>
+
+<pre class="example" id="org29ee484">
+     unit sex age   geo     2020     2019     2018     2017     2016     2015  \
+1021   NR   F  Y1    AT  42255.0  42850.0  43340.0  41498.0  40860.0  39284.0
+1022   NR   F  Y1   AT1  18442.0  18677.0  19094.0  18108.0  17897.0  17148.0
+1023   NR   F  Y1  AT11   1172.0   1158.0   1163.0   1142.0   1106.0   1096.0
+1024   NR   F  Y1  AT12   7587.0   7623.0   7752.0   7367.0   7402.0   7148.0
+1025   NR   F  Y1  AT13   9683.0   9896.0  10179.0   9599.0   9389.0   8904.0
+
+      ...     1999     1998     1997     1996     1995     1994     1993  \
+1021  ...  41388.0  43312.0  43299.0  45079.0  46320.0  46324.0  46573.0
+1022  ...  16281.0  16937.0  17000.0  17574.0  18228.0  18038.0  18327.0
+1023  ...   1219.0   1275.0   1311.0   1325.0   1422.0   1349.0   1372.0
+1024  ...   7703.0   8088.0   8107.0   8459.0   8775.0   8556.0   8883.0
+1025  ...   7359.0   7574.0   7582.0   7790.0   8031.0   8133.0   8072.0
+
+         1992     1991     1990
+1021  45035.0  43825.0  43094.0
+1022  17499.0  17038.0  16623.0
+1023   1436.0   1371.0   1345.0
+1024   8412.0   8234.0   8038.0
+1025   7651.0   7433.0   7240.0
+
+[5 rows x 35 columns]
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds</span> = df.to_xarray()
+ds.to_netcdf(<span style="color: #c3e88d;">"./data/population_nuts_2.nc"</span>)
+ds
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:     (age: 99, nuts2: 299, sex: 2, year: 31)
+Coordinates:
+  * nuts2       (nuts2) object 'AT11' 'AT12' 'AT13' ... 'UKM8' 'UKM9' 'UKN0'
+  * year        (year) int64 1990 1991 1992 1993 1994 ... 2017 2018 2019 2020
+  * sex         (sex) object 'F' 'M'
+  * age         (age) float64 1.0 2.0 3.0 4.0 5.0 ... 95.0 96.0 97.0 98.0 99.0
+Data variables:
+    population  (nuts2, year, sex, age) float64 1.345e+03 1.349e+03 ... nan nan
+</pre>
+
+
+
+
+<ul class="org-ul">
+<li>deaths: <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en</a></li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'demo_r_magec'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'geo'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+age_range = [<span style="color: #c3e88d;">'Y1'</span>, <span style="color: #c3e88d;">'Y10'</span>, <span style="color: #c3e88d;">'Y11'</span>, <span style="color: #c3e88d;">'Y12'</span>, <span style="color: #c3e88d;">'Y13'</span>, <span style="color: #c3e88d;">'Y14'</span>, <span style="color: #c3e88d;">'Y15'</span>,
+       <span style="color: #c3e88d;">'Y16'</span>, <span style="color: #c3e88d;">'Y17'</span>, <span style="color: #c3e88d;">'Y18'</span>, <span style="color: #c3e88d;">'Y19'</span>, <span style="color: #c3e88d;">'Y2'</span>, <span style="color: #c3e88d;">'Y20'</span>, <span style="color: #c3e88d;">'Y21'</span>, <span style="color: #c3e88d;">'Y22'</span>, <span style="color: #c3e88d;">'Y23'</span>,
+       <span style="color: #c3e88d;">'Y24'</span>, <span style="color: #c3e88d;">'Y25'</span>, <span style="color: #c3e88d;">'Y26'</span>, <span style="color: #c3e88d;">'Y27'</span>, <span style="color: #c3e88d;">'Y28'</span>, <span style="color: #c3e88d;">'Y29'</span>, <span style="color: #c3e88d;">'Y3'</span>, <span style="color: #c3e88d;">'Y30'</span>, <span style="color: #c3e88d;">'Y31'</span>,
+       <span style="color: #c3e88d;">'Y32'</span>, <span style="color: #c3e88d;">'Y33'</span>, <span style="color: #c3e88d;">'Y34'</span>, <span style="color: #c3e88d;">'Y35'</span>, <span style="color: #c3e88d;">'Y36'</span>, <span style="color: #c3e88d;">'Y37'</span>, <span style="color: #c3e88d;">'Y38'</span>, <span style="color: #c3e88d;">'Y39'</span>, <span style="color: #c3e88d;">'Y4'</span>,
+       <span style="color: #c3e88d;">'Y40'</span>, <span style="color: #c3e88d;">'Y41'</span>, <span style="color: #c3e88d;">'Y42'</span>, <span style="color: #c3e88d;">'Y43'</span>, <span style="color: #c3e88d;">'Y44'</span>, <span style="color: #c3e88d;">'Y45'</span>, <span style="color: #c3e88d;">'Y46'</span>, <span style="color: #c3e88d;">'Y47'</span>, <span style="color: #c3e88d;">'Y48'</span>,
+       <span style="color: #c3e88d;">'Y49'</span>, <span style="color: #c3e88d;">'Y5'</span>, <span style="color: #c3e88d;">'Y50'</span>, <span style="color: #c3e88d;">'Y51'</span>, <span style="color: #c3e88d;">'Y52'</span>, <span style="color: #c3e88d;">'Y53'</span>, <span style="color: #c3e88d;">'Y54'</span>, <span style="color: #c3e88d;">'Y55'</span>, <span style="color: #c3e88d;">'Y56'</span>,
+       <span style="color: #c3e88d;">'Y57'</span>, <span style="color: #c3e88d;">'Y58'</span>, <span style="color: #c3e88d;">'Y59'</span>, <span style="color: #c3e88d;">'Y6'</span>, <span style="color: #c3e88d;">'Y60'</span>, <span style="color: #c3e88d;">'Y61'</span>, <span style="color: #c3e88d;">'Y62'</span>, <span style="color: #c3e88d;">'Y63'</span>, <span style="color: #c3e88d;">'Y64'</span>,
+       <span style="color: #c3e88d;">'Y65'</span>, <span style="color: #c3e88d;">'Y66'</span>, <span style="color: #c3e88d;">'Y67'</span>, <span style="color: #c3e88d;">'Y68'</span>, <span style="color: #c3e88d;">'Y69'</span>, <span style="color: #c3e88d;">'Y7'</span>, <span style="color: #c3e88d;">'Y70'</span>, <span style="color: #c3e88d;">'Y71'</span>, <span style="color: #c3e88d;">'Y72'</span>,
+       <span style="color: #c3e88d;">'Y73'</span>, <span style="color: #c3e88d;">'Y74'</span>, <span style="color: #c3e88d;">'Y75'</span>, <span style="color: #c3e88d;">'Y76'</span>, <span style="color: #c3e88d;">'Y77'</span>, <span style="color: #c3e88d;">'Y78'</span>, <span style="color: #c3e88d;">'Y79'</span>, <span style="color: #c3e88d;">'Y8'</span>, <span style="color: #c3e88d;">'Y80'</span>,
+       <span style="color: #c3e88d;">'Y81'</span>, <span style="color: #c3e88d;">'Y82'</span>, <span style="color: #c3e88d;">'Y83'</span>, <span style="color: #c3e88d;">'Y84'</span>, <span style="color: #c3e88d;">'Y85'</span>, <span style="color: #c3e88d;">'Y86'</span>, <span style="color: #c3e88d;">'Y87'</span>, <span style="color: #c3e88d;">'Y88'</span>, <span style="color: #c3e88d;">'Y89'</span>,
+       <span style="color: #c3e88d;">'Y9'</span>, <span style="color: #c3e88d;">'Y90'</span>, <span style="color: #c3e88d;">'Y91'</span>, <span style="color: #c3e88d;">'Y92'</span>, <span style="color: #c3e88d;">'Y93'</span>, <span style="color: #c3e88d;">'Y94'</span>, <span style="color: #c3e88d;">'Y95'</span>, <span style="color: #c3e88d;">'Y96'</span>, <span style="color: #c3e88d;">'Y97'</span>,
+       <span style="color: #c3e88d;">'Y98'</span>, <span style="color: #c3e88d;">'Y99'</span>]
+df[<span style="color: #c3e88d;">'country_code'</span>] = [x[:2] <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'geo'</span>]]
+df[<span style="color: #c3e88d;">'country'</span>] = df[<span style="color: #c3e88d;">'country_code'</span>].replace(eurostat_dictionary)
+df = df[df.country.isin(EU_countries) &amp; (df.sex.isin([<span style="color: #c3e88d;">"M"</span>,<span style="color: #c3e88d;">"F"</span>])) &amp; (df.age.isin(age_range))]
+df.drop([<span style="color: #c3e88d;">'country'</span>,<span style="color: #c3e88d;">'country_code'</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'geo'</span>,<span style="color: #c3e88d;">'sex'</span>,<span style="color: #c3e88d;">'age'</span>],
+                        value_vars=np.arange(1990,2020),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'deaths'</span>)
+df[<span style="color: #c3e88d;">'nuts'</span>] = [<span style="color: #82aaff;">len</span>(x)-2 <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df.geo]
+df = df.query(<span style="color: #c3e88d;">'nuts == 2'</span>)
+df.drop(<span style="color: #c3e88d;">'nuts'</span>,inplace=<span style="color: #f78c6c;">True</span>, axis=1)
+df.rename({<span style="color: #c3e88d;">'geo'</span>:<span style="color: #c3e88d;">'nuts2'</span>, <span style="color: #c3e88d;">'age'</span>:<span style="color: #c3e88d;">'age string'</span>},axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'age'</span>] = [<span style="color: #82aaff;">float</span>(x.replace(<span style="color: #c3e88d;">'Y'</span>,<span style="color: #c3e88d;">''</span>)) <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df[<span style="color: #c3e88d;">'age string'</span>]]
+df.drop(<span style="color: #c3e88d;">'age string'</span>,inplace=<span style="color: #f78c6c;">True</span>, axis=1)
+
+df.set_index([<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'sex'</span>,<span style="color: #c3e88d;">'age'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+
+df.head()
+</pre>
+</div>
+
+<pre class="example" id="org9adbcbd">
+     unit sex age   geo  2019  2018  2017  2016  2015  2014  ...  1999  1998  \
+1021   NR   F  Y1    AT  11.0   9.0   7.0  11.0   7.0   6.0  ...  14.0  16.0
+1022   NR   F  Y1   AT1   2.0   6.0   2.0   3.0   4.0   4.0  ...   3.0   8.0
+1023   NR   F  Y1  AT11   0.0   2.0   0.0   0.0   0.0   0.0  ...   0.0   0.0
+1024   NR   F  Y1  AT12   2.0   1.0   1.0   1.0   1.0   2.0  ...   2.0   5.0
+1025   NR   F  Y1  AT13   0.0   3.0   1.0   2.0   3.0   2.0  ...   1.0   3.0
+
+      1997  1996  1995  1994  1993  1992  1991  1990
+1021  17.0  15.0  16.0  23.0  30.0  26.0  23.0  29.0
+1022   4.0   4.0   NaN  13.0  12.0  11.0   7.0  11.0
+1023   0.0   0.0   NaN   1.0   0.0   1.0   0.0   0.0
+1024   3.0   1.0   NaN   5.0   3.0   5.0   1.0   7.0
+1025   1.0   3.0   NaN   7.0   9.0   5.0   6.0   4.0
+
+[5 rows x 34 columns]
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds</span> = df.to_xarray()
+ds.to_netcdf(<span style="color: #c3e88d;">"./data/deaths_nuts_2.nc"</span>)
+ds
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:  (age: 99, nuts2: 299, sex: 2, year: 30)
+Coordinates:
+  * nuts2    (nuts2) object 'AT11' 'AT12' 'AT13' 'AT21' ... 'UKM8' 'UKM9' 'UKN0'
+  * year     (year) int64 1990 1991 1992 1993 1994 ... 2015 2016 2017 2018 2019
+  * sex      (sex) object 'F' 'M'
+  * age      (age) float64 1.0 2.0 3.0 4.0 5.0 6.0 ... 95.0 96.0 97.0 98.0 99.0
+Data variables:
+    deaths   (nuts2, year, sex, age) float64 0.0 0.0 1.0 1.0 ... nan nan nan nan
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org963d7f9" class="outline-4">
+<h4 id="org963d7f9"><span class="section-number-4">4.2.2.</span> mortality lagged per age</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<ul class="org-ul">
+<li>useful link to lag variables in a pandas dataframe: <a href="https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps">https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python">
+<span style="color: #ffcb6b;">ds_population</span> = xr.open_dataset(<span style="color: #c3e88d;">'./data/population_nuts_2.nc'</span>)
+<span style="color: #ffcb6b;">ds_deaths</span> =  xr.open_dataset(<span style="color: #c3e88d;">'./data/deaths_nuts_2.nc'</span>)
+
+<span style="color: #ffcb6b;">ds_mortality</span> = xr.merge([ds_population, ds_deaths])
+ds_mortality
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:     (age: 99, nuts2: 299, sex: 2, year: 31)
+Coordinates:
+  * year        (year) int64 1990 1991 1992 1993 1994 ... 2017 2018 2019 2020
+  * nuts2       (nuts2) object 'AT11' 'AT12' 'AT13' ... 'UKM8' 'UKM9' 'UKN0'
+  * sex         (sex) object 'F' 'M'
+  * age         (age) float64 1.0 2.0 3.0 4.0 5.0 ... 95.0 96.0 97.0 98.0 99.0
+Data variables:
+    population  (nuts2, year, sex, age) float64 ...
+    deaths      (nuts2, year, sex, age) float64 0.0 0.0 1.0 1.0 ... nan nan nan
+</pre>
+
+
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df_mortality</span> = ds_mortality.to_dataframe()
+<span style="color: #ffcb6b;">df_mortality</span> = df_mortality[(df_mortality.population &gt;= df_mortality.deaths) &amp; (df_mortality.population &gt; 0)] <span style="color: #676E95;"># </span><span style="color: #676E95;">drop rows where deaths &gt; population at Jan. 1st (e.g. because people moved in the year)</span>
+<span style="color: #ffcb6b;">df_mortality</span>[<span style="color: #c3e88d;">'mortality'</span>] = df_mortality[<span style="color: #c3e88d;">'deaths'</span>]/df_mortality[<span style="color: #c3e88d;">'population'</span>]
+df_mortality.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+df_mortality.rename({<span style="color: #c3e88d;">'level_3'</span>:<span style="color: #c3e88d;">'year'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df_mortality[<span style="color: #c3e88d;">'year'</span>] = pd.to_datetime(df_mortality[<span style="color: #c3e88d;">'year'</span>],<span style="color: #82aaff;">format</span>=<span style="color: #c3e88d;">'%Y'</span>)
+df_mortality.head()
+</pre>
+</div>
+
+<pre class="example">
+   age nuts2 sex       year  population  deaths  mortality
+0  1.0  AT11   F 1990-01-01      1345.0     0.0   0.000000
+1  1.0  AT11   F 1991-01-01      1371.0     0.0   0.000000
+2  1.0  AT11   F 1992-01-01      1436.0     1.0   0.000696
+3  1.0  AT11   F 1993-01-01      1372.0     0.0   0.000000
+4  1.0  AT11   F 1994-01-01      1349.0     1.0   0.000741
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">new_column</span> = (df_mortality.set_index([<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'age'</span>,<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'sex'</span>]).groupby([<span style="color: #c3e88d;">'age'</span>,<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'sex'</span>])[<span style="color: #c3e88d;">'mortality'</span>]
+                .shift(1)).to_frame()
+new_column.reset_index(inplace=<span style="color: #f78c6c;">True</span>)
+new_column.age += 1
+new_column[<span style="color: #c3e88d;">'year'</span>] = new_column[<span style="color: #c3e88d;">'year'</span>].dt.year
+new_column.rename({<span style="color: #c3e88d;">'mortality'</span>:<span style="color: #c3e88d;">'lagged_mortality'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+<span style="color: #676E95;">##</span><span style="color: #676E95;">log_odds???</span>
+new_column.set_index([<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'age'</span>,<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'sex'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+new_column.head()
+</pre>
+</div>
+
+<pre class="example">
+                    lagged_mortality
+year age nuts2 sex
+1990 2.0 AT11  F                 NaN
+1991 2.0 AT11  F            0.000000
+1992 2.0 AT11  F            0.000000
+1993 2.0 AT11  F            0.000696
+1994 2.0 AT11  F            0.000000
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds</span> = new_column.to_xarray()
+ds.to_netcdf(<span style="color: #c3e88d;">"./data/lagged_mortality_nuts_2.nc"</span>)
+ds
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:           (age: 99, nuts2: 297, sex: 2, year: 30)
+Coordinates:
+  * year              (year) int64 1990 1991 1992 1993 ... 2016 2017 2018 2019
+  * age               (age) float64 2.0 3.0 4.0 5.0 6.0 ... 97.0 98.0 99.0 100.0
+  * nuts2             (nuts2) object 'AT11' 'AT12' 'AT13' ... 'UKM9' 'UKN0'
+  * sex               (sex) object 'F' 'M'
+Data variables:
+    lagged_mortality  (year, age, nuts2, sex) float64 nan nan nan ... nan nan
+</pre>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgf012b98" class="outline-4">
+<h4 id="orgf012b98"><span class="section-number-4">4.2.3.</span> Poverty measures</h4>
+<div class="outline-text-4" id="text-4-2-3">
+</div>
+<ol class="org-ol">
+<li><a id="org0f4c451"></a>Severe material deprivation rate by NUTS 2 regions [TGS00104]<br />
+<div class="outline-text-5" id="text-4-2-3-1">
+<ul class="org-ul">
+<li>link to the data: <a href="https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'tgs00104'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'nuts2'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df = df[(df.unit == <span style="color: #c3e88d;">"PC"</span>)]
+df.drop([<span style="color: #c3e88d;">"unit"</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'nuts'</span>] = [<span style="color: #82aaff;">len</span>(x)-2 <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df.nuts2]
+df = df[df.nuts == 2]
+df.drop(<span style="color: #c3e88d;">'nuts'</span>,axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'nuts2'</span>],
+                        value_vars=np.arange(2009,2021),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'percentage_material_deprivation'</span>)
+df.set_index([<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'year'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df.head()
+
+</pre>
+</div>
+
+<pre class="example" id="org14fe0a7">
+  nuts2  2009  2010  2011  2012  2013  2014  2015  2016  2017  2018  2019  \
+0  AL01   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  46.5  38.6  38.5
+1  AL02   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  41.0  40.4  37.7
+2  AL03   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  36.4  35.3  34.9
+3  AT11   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+4  AT12   NaN   NaN   NaN   NaN   NaN   2.7   2.1   2.2   1.9   2.1   NaN
+
+   2020
+0   NaN
+1   NaN
+2   NaN
+3   NaN
+4   NaN
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds_material_deprivation</span> = df.to_xarray()
+ds_material_deprivation.to_netcdf(<span style="color: #c3e88d;">"./data/material_deprivation_nuts_2.nc"</span>)
+ds_material_deprivation
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:                          (nuts2: 179, year: 12)
+Coordinates:
+  * nuts2                            (nuts2) object 'AL01' 'AL02' ... 'SK04'
+  * year                             (year) int64 2009 2010 2011 ... 2019 2020
+Data variables:
+    percentage_material_deprivation  (nuts2, year) float64 nan nan ... 9.6 8.3
+</pre>
+</div>
+</li>
+
+<li><a id="orgeee84bb"></a>At-risk-of-poverty rate by NUTS 2 regions [TGS00103]<br />
+<div class="outline-text-5" id="text-4-2-3-2">
+<ul class="org-ul">
+<li>link to the data: <a href="https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en</a></li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'tgs00103'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'nuts2'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df = df[(df.unit == <span style="color: #c3e88d;">"PC_POP"</span>)]
+df.drop([<span style="color: #c3e88d;">"unit"</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'nuts'</span>] = [<span style="color: #82aaff;">len</span>(x)-2 <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df.nuts2]
+df = df[df.nuts == 2]
+df.drop(<span style="color: #c3e88d;">'nuts'</span>,axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'nuts2'</span>],
+                        value_vars=np.arange(2009,2021),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'at risk of poverty'</span>)
+df.set_index([<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'year'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+df.head()
+
+</pre>
+</div>
+
+<pre class="example" id="orgdc0da66">
+  nuts2  2009  2010  2011  2012  2013  2014  2015  2016  2017  2018  2019  \
+0  AL01   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  25.6  25.1  25.9
+1  AL02   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  20.8  23.6  22.7
+2  AL03   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  25.6  21.6  20.8
+3  BG31  32.9  30.5  31.4  29.4  27.4  27.0  30.4  32.1  32.8  35.1  31.7
+4  BG32  27.8  28.8  28.0  23.6  17.9  21.2  19.3  24.0  24.0  20.8  23.7
+
+   2020
+0   NaN
+1   NaN
+2   NaN
+3  34.9
+4  24.0
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds_at_risk_of_poverty</span> = df.to_xarray()
+ds_at_risk_of_poverty.to_netcdf(<span style="color: #c3e88d;">"./data/at_risk_of_poverty_nuts_2.nc"</span>)
+ds_at_risk_of_poverty
+</pre>
+</div>
+
+<pre class="example">
+&lt;xarray.Dataset&gt;
+Dimensions:             (nuts2: 170, year: 12)
+Coordinates:
+  * nuts2               (nuts2) object 'AL01' 'AL02' 'AL03' ... 'SK03' 'SK04'
+  * year                (year) int64 2009 2010 2011 2012 ... 2017 2018 2019 2020
+Data variables:
+    at risk of poverty  (nuts2, year) float64 nan nan nan nan ... 17.1 17.0 16.5
+</pre>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orgfd28082" class="outline-4">
+<h4 id="orgfd28082"><span class="section-number-4">4.2.4.</span> unmet needs</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+Self-reported unmet needs for medical examination by main reason declared and NUTS 2 regions
+</p>
+
+<ul class="org-ul">
+<li>link to the data: <a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en</a></li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">value</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">TOOEXP</td>
+<td class="org-left">Too expensive</td>
+</tr>
+
+<tr>
+<td class="org-left">TOOFAR</td>
+<td class="org-left">Too far to travel</td>
+</tr>
+
+<tr>
+<td class="org-left">TOOEFW</td>
+<td class="org-left">Too expensive or too far to travel or waiting list</td>
+</tr>
+
+<tr>
+<td class="org-left">NOTIME</td>
+<td class="org-left">No time</td>
+</tr>
+
+<tr>
+<td class="org-left">NO_UNMET</td>
+<td class="org-left">No unmet needs to declare</td>
+</tr>
+
+<tr>
+<td class="org-left">NOKNOW</td>
+<td class="org-left">Didn't know any good doctor or specialist</td>
+</tr>
+
+<tr>
+<td class="org-left">WAITING</td>
+<td class="org-left">Waiting list</td>
+</tr>
+
+<tr>
+<td class="org-left">FEAR</td>
+<td class="org-left">Fear of doctor, hospital, examination or treatment</td>
+</tr>
+
+<tr>
+<td class="org-left">HOPING</td>
+<td class="org-left">Wanted to wait and see if problem got better on its own</td>
+</tr>
+
+<tr>
+<td class="org-left">OTH</td>
+<td class="org-left">Other</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">df</span> = eurostat.get_data_df(<span style="color: #c3e88d;">'hlth_silc_08_r'</span>)
+df.rename({<span style="color: #c3e88d;">'geo\\time'</span>:<span style="color: #c3e88d;">'nuts2'</span>},inplace=<span style="color: #f78c6c;">True</span>,axis=1)
+df.drop([<span style="color: #c3e88d;">"unit"</span>],axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df[<span style="color: #c3e88d;">'nuts'</span>] = [<span style="color: #82aaff;">len</span>(x)-2 <span style="color: #89DDFF;">for</span> x <span style="color: #89DDFF;">in</span> df.nuts2]
+df = df[df.nuts == 2]
+df.drop(<span style="color: #c3e88d;">'nuts'</span>,axis=1,inplace=<span style="color: #f78c6c;">True</span>)
+df=df[df.reason.isin([<span style="color: #c3e88d;">'FEAR'</span>,<span style="color: #c3e88d;">'TOOEXP'</span>,<span style="color: #c3e88d;">'TOOFAR'</span>,<span style="color: #c3e88d;">'WAITING'</span>,<span style="color: #c3e88d;">'HOPING'</span>])]
+df = pd.melt(df,id_vars=[<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'reason'</span>],
+                        value_vars=np.arange(2009,2021),
+                        var_name=<span style="color: #c3e88d;">'year'</span>,value_name=<span style="color: #c3e88d;">'unmet needs'</span>)
+df.set_index([<span style="color: #c3e88d;">'nuts2'</span>,<span style="color: #c3e88d;">'year'</span>,<span style="color: #c3e88d;">'reason'</span>],inplace=<span style="color: #f78c6c;">True</span>)
+
+df = df.unstack()
+df.columns = df.columns.droplevel()
+df.tail()
+
+</pre>
+</div>
+
+<pre class="example">
+reason      FEAR  HOPING  TOOEXP  TOOFAR  WAITING
+nuts2 year
+SK04  2016   0.5     2.4     0.5     0.2      1.8
+      2017   0.2     1.3     0.2     0.3      1.6
+      2018   0.6     1.7     0.4     0.1      1.7
+      2019   0.6     1.5     0.4     0.1      1.9
+      2020   0.8     1.2     0.2     0.1      1.8
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-jupyter-python"><span style="color: #ffcb6b;">ds_unmet_needs</span> = df.to_xarray()
+ds_unmet_needs.to_netcdf(<span style="color: #c3e88d;">"./data/unmet_needs_nuts_2.nc"</span>)
+ds_unmet_needs
+</pre>
+</div>
+
+<pre class="example" id="org889ef35">
+&lt;xarray.Dataset&gt;
+Dimensions:  (nuts2: 103, year: 12)
+Coordinates:
+  * nuts2    (nuts2) object 'AL01' 'AL02' 'AL03' 'BG31' ... 'SK02' 'SK03' 'SK04'
+  * year     (year) int64 2009 2010 2011 2012 2013 ... 2016 2017 2018 2019 2020
+Data variables:
+    FEAR     (nuts2, year) float64 nan nan nan nan nan ... 0.5 0.2 0.6 0.6 0.8
+    HOPING   (nuts2, year) float64 nan nan nan nan nan ... 2.4 1.3 1.7 1.5 1.2
+    TOOEXP   (nuts2, year) float64 nan nan nan nan nan ... 0.5 0.2 0.4 0.4 0.2
+    TOOFAR   (nuts2, year) float64 nan nan nan nan nan ... 0.2 0.3 0.1 0.1 0.1
+    WAITING  (nuts2, year) float64 nan nan nan nan nan ... 1.8 1.6 1.7 1.9 1.8
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Jan Boone</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

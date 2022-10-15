@@ -1,30 +1,46 @@
 # -**- eval: org-toggle-inline-images: 1 -**-
-#+Title: Getting Eurostat and OECD data on health and healthcare systems
-#+Author: Jan Boone
-#+SETUPFILE: ./org-html-themes/org/theme-readtheorg.setup
+#+Title: Getting Eurostat data on health and mortality
+#+Author: Jan Boone@@latex:\thanks{Tilburg University, Department of Economics, Tilec and CEPR, E-mail: \textit{j.boone@uvt.nl}.}@@
 #+PROPERTY: header-args  :session geopandas :kernel python3 :async yes
 # kernel can be geo_env or python3
-#+LANGUAGE: en
-#+INFOJS_OPT: view:showall toc:t ltoc:t mouse:underline path:http://orgmode.org/org-info.js
-#+LaTeX_CLASS: article-nodefaults
 
+#+LANGUAGE: en
+#+INFOJS_OPT: toc:1 ltoc:1 mouse:underline path:http://orgmode.org/org-info.js
+#+LaTeX_CLASS: article-12
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
-#+OPTIONS: toc:2 timestamp:nil \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
-#+STARTUP: showall
-#+LaTeX: \maketitle
-#+HTML_HEAD:  <link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
+#+OPTIONS: toc:nil timestamp:nil \n:nil @:t ::t |:t ^:{} _:{} *:t TeX:t LaTeX:t
+#+HTML_HEAD: <link rel="stylesheet" href="./latex-css/style.css">
+#+HTML_HEAD: <link rel="stylesheet" href="https://latex.now.sh/prism/prism.css">
 #+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
 
 
+# this file must exist be a path or exist in `org-cite-csl-styles-dir': # apa-5th-edition.csl
+#+csl-style: chicago-author-date-16th-edition.csl
+
+# this must be a locales file in `org-cite-csl-locales-dir'. Defaults to en-US
+#+csl-locale: en-US
+
+* code to export to html :noexport:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(setq org-export-with-broken-links t)
+
+(require 'org-ref-refproc)
+(let ((org-export-before-parsing-hook '(;;org-ref-cite-natmove ;; do this first
+                    org-ref-csl-preprocess-buffer
+                    org-ref-refproc)))
+  (org-open-file (org-html-export-to-html)))
+#+END_SRC
+
 * Introduction
 
-This file describes how we get the data for our project on [[./index.org][European Healthcare Systems]].
+This file describes how we get the data for our project on [[./index.org][the health effects of demand side cost sharing]].
 
-In this file we explain how we get the data and from where and at the same time we generate the data. If the data is generated in this way, a change in the data by either the OECD or Eurostat will lead to (slightly) different results.
+In this file we explain how we get the data and from where and at the same time we generate the data. By generating the data in this way, a change in the data by Eurostat will lead to (slightly) different results.
 
 - Overview of data available at the region level: https://ec.europa.eu/eurostat/web/regions/background
-  + link to excel file with overview: http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx
+- Link to excel file with overview: http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx
 
 
 
@@ -57,7 +73,11 @@ EU_countries = ['Belgium', 'Bulgaria', 'Czechia', 'Denmark',
 
 * Combining data
 
+The sections below generate the datasets per variable. The code in this section merges all these variables into one =.csv= file.
+
 ** nuts2 data
+
+In this subsection, we merge the data at the NUTS 2 level.
 
 #+begin_src jupyter-python :display plain
 
@@ -70,7 +90,7 @@ ds_2
 #+RESULTS:
 #+begin_example
 <xarray.Dataset>
-Dimensions:                          (age: 100, nuts2: 347, sex: 2, year: 31)
+Dimensions:                          (age: 100, nuts2: 307, sex: 2, year: 31)
 Coordinates:
   ,* age                              (age) float64 1.0 2.0 3.0 ... 99.0 100.0
   ,* nuts2                            (nuts2) object 'AL01' 'AL02' ... 'UKN0'
@@ -81,7 +101,6 @@ Data variables:
     at risk of poverty               (nuts2, year) float64 nan nan ... nan nan
     lagged_mortality                 (year, age, nuts2, sex) float64 nan ... nan
     percentage_material_deprivation  (nuts2, year) float64 nan nan ... nan nan
-    ED0-2                            (nuts2, year, sex) float64 nan nan ... nan
     deaths                           (nuts2, year, sex, age) float64 nan ... nan
     FEAR                             (nuts2, year) float64 nan nan ... nan nan
     HOPING                           (nuts2, year) float64 nan nan ... nan nan
@@ -90,7 +109,7 @@ Data variables:
     WAITING                          (nuts2, year) float64 nan nan ... nan nan
 #+end_example
 
-#+begin_src jupyter-python
+#+begin_src jupyter-python :display plain
 df = ds_2.to_dataframe()
 df.reset_index(inplace=True)
 df.rename({'level_0':'age','level_1':'nuts2','level_3':'year'},axis=1,inplace=True)
@@ -103,28 +122,30 @@ df.head()
 #+RESULTS:
 #+begin_example
    age nuts2 sex  year  population  at risk of poverty  lagged_mortality  \
-0  1.0  AL01   F  1990         NaN                 NaN               NaN
-1  1.0  AL01   F  1991         NaN                 NaN               NaN
-2  1.0  AL01   F  1992         NaN                 NaN               NaN
-3  1.0  AL01   F  1993         NaN                 NaN               NaN
-4  1.0  AL01   F  1994         NaN                 NaN               NaN
+0  1.0  AL01   F  1990         NaN                 NaN               NaN   
+1  1.0  AL01   F  1991         NaN                 NaN               NaN   
+2  1.0  AL01   F  1992         NaN                 NaN               NaN   
+3  1.0  AL01   F  1993         NaN                 NaN               NaN   
+4  1.0  AL01   F  1994         NaN                 NaN               NaN   
 
-   percentage_material_deprivation  ED0-2  deaths  FEAR  HOPING  TOOEXP  \
-0                              NaN    NaN     NaN   NaN     NaN     NaN
-1                              NaN    NaN     NaN   NaN     NaN     NaN
-2                              NaN    NaN     NaN   NaN     NaN     NaN
-3                              NaN    NaN     NaN   NaN     NaN     NaN
-4                              NaN    NaN     NaN   NaN     NaN     NaN
+   percentage_material_deprivation  deaths  FEAR  HOPING  TOOEXP  TOOFAR  \
+0                              NaN     NaN   NaN     NaN     NaN     NaN   
+1                              NaN     NaN   NaN     NaN     NaN     NaN   
+2                              NaN     NaN   NaN     NaN     NaN     NaN   
+3                              NaN     NaN   NaN     NaN     NaN     NaN   
+4                              NaN     NaN   NaN     NaN     NaN     NaN   
 
-   TOOFAR  WAITING country_code nuts1  country
-0     NaN      NaN           AL   AL0  Albania
-1     NaN      NaN           AL   AL0  Albania
-2     NaN      NaN           AL   AL0  Albania
-3     NaN      NaN           AL   AL0  Albania
-4     NaN      NaN           AL   AL0  Albania
+   WAITING country_code nuts1  country  
+0      NaN           AL   AL0  Albania  
+1      NaN           AL   AL0  Albania  
+2      NaN           AL   AL0  Albania  
+3      NaN           AL   AL0  Albania  
+4      NaN           AL   AL0  Albania  
 #+end_example
 
 ** country data
+
+In this section, we add country level variables to the dataframe.
 
 #+begin_src jupyter-python :display plain
 
@@ -137,18 +158,17 @@ ds_c
 #+RESULTS:
 #+begin_example
 <xarray.Dataset>
-Dimensions:                        (country: 33, country_code: 33, year: 29)
+Dimensions:                        (country: 33, country_code: 33, year: 28)
 Coordinates:
+  ,* year                           (year) int64 1992 1993 1994 ... 2018 2019
   ,* country                        (country) object 'Austria' ... 'United Kin...
   ,* country_code                   (country_code) object 'AT' 'BA' ... 'SK' 'UK'
-  ,* year                           (year) int64 1992 1993 1994 ... 2019 2020
 Data variables:
     HF2_PC_CHE                     (country, country_code, year) float64 nan ...
     HF2_PPS_HAB                    (country, country_code, year) float64 nan ...
     HF3_PC_CHE                     (country, country_code, year) float64 nan ...
     HF3_PPS_HAB                    (country, country_code, year) float64 nan ...
-    unmet_c                        (country, country_code, year) float64 nan ...
-    health expenditure per capita  (country, country_code, year) float64 nan ...
+    health expenditure per capita  (country, country_code, year) float64 ...
 #+end_example
 
 #+begin_src jupyter-python :display plain
@@ -161,22 +181,22 @@ df_country.head()
 #+RESULTS:
 #+begin_example
    country country_code  year  HF2_PC_CHE  HF2_PPS_HAB  HF3_PC_CHE  \
-0  Austria           AT  1992         NaN          NaN         NaN
-1  Austria           AT  1993         NaN          NaN         NaN
-2  Austria           AT  1994         NaN          NaN         NaN
-3  Austria           AT  1995         NaN          NaN         NaN
-4  Austria           AT  1996         NaN          NaN         NaN
+0  Austria           AT  1992         NaN          NaN         NaN   
+1  Austria           AT  1993         NaN          NaN         NaN   
+2  Austria           AT  1994         NaN          NaN         NaN   
+3  Austria           AT  1995         NaN          NaN         NaN   
+4  Austria           AT  1996         NaN          NaN         NaN   
 
-   HF3_PPS_HAB  unmet_c  health expenditure per capita
-0          NaN      NaN                            NaN
-1          NaN      NaN                            NaN
-2          NaN      NaN                            NaN
-3          NaN      NaN                            NaN
-4          NaN      NaN                            NaN
+   HF3_PPS_HAB  health expenditure per capita  
+0          NaN                            NaN  
+1          NaN                            NaN  
+2          NaN                            NaN  
+3          NaN                            NaN  
+4          NaN                            NaN  
 #+end_example
 
 
-#+begin_src jupyter-python
+#+begin_src jupyter-python :display plain
 df = df.merge(df_country, how = 'left', on = ['country','year','country_code'])
 
 df = df[(df.population >= df.deaths) & (df.population > 0)] # drop rows where deaths > population at Jan. 1st (e.g. because people moved in the year)
@@ -188,36 +208,37 @@ df.head()
 #+RESULTS:
 #+begin_example
      age nuts2 sex  year  population  at risk of poverty  lagged_mortality  \
-186  1.0  AT11   F  1990      1345.0                 NaN               NaN
-187  1.0  AT11   F  1991      1371.0                 NaN               NaN
-188  1.0  AT11   F  1992      1436.0                 NaN               NaN
-189  1.0  AT11   F  1993      1372.0                 NaN               NaN
-190  1.0  AT11   F  1994      1349.0                 NaN               NaN
+186  1.0  AT11   F  1990      1345.0                 NaN               NaN   
+187  1.0  AT11   F  1991      1371.0                 NaN               NaN   
+188  1.0  AT11   F  1992      1436.0                 NaN               NaN   
+189  1.0  AT11   F  1993      1372.0                 NaN               NaN   
+190  1.0  AT11   F  1994      1349.0                 NaN               NaN   
 
-     percentage_material_deprivation  ED0-2  deaths  ...  country_code  nuts1  \
-186                              NaN    NaN     0.0  ...            AT    AT1
-187                              NaN    NaN     0.0  ...            AT    AT1
-188                              NaN    NaN     1.0  ...            AT    AT1
-189                              NaN    NaN     0.0  ...            AT    AT1
-190                              NaN    NaN     1.0  ...            AT    AT1
+     percentage_material_deprivation  deaths  FEAR  ...  WAITING  \
+186                              NaN     0.0   NaN  ...      NaN   
+187                              NaN     0.0   NaN  ...      NaN   
+188                              NaN     1.0   NaN  ...      NaN   
+189                              NaN     0.0   NaN  ...      NaN   
+190                              NaN     1.0   NaN  ...      NaN   
 
-     country  HF2_PC_CHE  HF2_PPS_HAB HF3_PC_CHE HF3_PPS_HAB unmet_c  \
-186  Austria         NaN          NaN        NaN         NaN     NaN
-187  Austria         NaN          NaN        NaN         NaN     NaN
-188  Austria         NaN          NaN        NaN         NaN     NaN
-189  Austria         NaN          NaN        NaN         NaN     NaN
-190  Austria         NaN          NaN        NaN         NaN     NaN
+     country_code  nuts1  country HF2_PC_CHE HF2_PPS_HAB HF3_PC_CHE  \
+186            AT    AT1  Austria        NaN         NaN        NaN   
+187            AT    AT1  Austria        NaN         NaN        NaN   
+188            AT    AT1  Austria        NaN         NaN        NaN   
+189            AT    AT1  Austria        NaN         NaN        NaN   
+190            AT    AT1  Austria        NaN         NaN        NaN   
 
-     health expenditure per capita  mortality
-186                            NaN   0.000000
-187                            NaN   0.000000
-188                            NaN   0.000696
-189                            NaN   0.000000
-190                            NaN   0.000741
+     HF3_PPS_HAB  health expenditure per capita  mortality  
+186          NaN                            NaN   0.000000  
+187          NaN                            NaN   0.000000  
+188          NaN                            NaN   0.000696  
+189          NaN                            NaN   0.000000  
+190          NaN                            NaN   0.000741  
 
-[5 rows x 25 columns]
+[5 rows x 23 columns]
 #+end_example
 
+Finally, we save the merged NUTS 2 and country data into a =.csv= file.
 
 #+begin_src jupyter-python :display plain
 df.to_csv('./data/data_deaths_by_age_nuts_2.csv')
@@ -227,23 +248,22 @@ df.to_csv('./data/data_deaths_by_age_nuts_2.csv')
 
 * Data
 
+First, we fetch the variables at the country level from the Eurostat website. Then we move to the NUTS 2 regional data.
+
 ** country data
 
 *** OOP per country
 
-We want a measure of "how generous" a healthcare system is in terms of oop-payments. These feature of the healthcare system tend to be defined at the country level and are recorded at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance).
+We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance).
 
-- https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en
+- link to data: https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en
 
- [HF2] Voluntary health care payment schemes
- [HF3] Household out-of-pocket payment
-
- unit
-
-  [PC_CHE] Percentual share of total current health expenditure (CHE)
-  [PPS_HAB] Purchasing power standard (PPS) per inhabitant
-
-- 6-12-2021: years in columns: 1992-2019
+| abbreviation | name                                                       |
+|--------------+------------------------------------------------------------|
+| HF2          | Voluntary health care payment schemes                      |
+| HF3          | Household out-of-pocket payment                            |
+| PC_CHE       | Percentual share of total current health expenditure (CHE) |
+| PPS_HAB      | Purchasing power standard (PPS) per inhabitant             |
 
 
 #+begin_src jupyter-python :display plain
@@ -309,84 +329,17 @@ Data variables:
 #+end_example
 
 
-*** TODO check the use of country and country_code as index
-- causes no problems because of final merge on country and country_code
-
-#+begin_src jupyter-python :display text
-  ds = xr.open_dataset("./data/country/out_of_pocket.nc")
-  df = ds.to_dataframe()
-  df.reset_index(inplace=True)
-  df_NL = df[(df.country=='Netherlands') & (df.country_code=='NL') ]
-  df_NL
-#+end_src
-
-#+RESULTS:
-#+begin_example
-             country country_code  year  HF2_PC_CHE  HF2_PPS_HAB  HF3_PC_CHE  \
-  20250  Netherlands           NL  1992         NaN          NaN         NaN
-  20251  Netherlands           NL  1993         NaN          NaN         NaN
-  20252  Netherlands           NL  1994         NaN          NaN         NaN
-  20253  Netherlands           NL  1995         NaN          NaN         NaN
-  20254  Netherlands           NL  1996         NaN          NaN         NaN
-  20255  Netherlands           NL  1997         NaN          NaN         NaN
-  20256  Netherlands           NL  1998       19.58       376.11       11.17
-  20257  Netherlands           NL  1999       20.34       419.37       11.11
-  20258  Netherlands           NL  2000       19.93       445.91       11.03
-  20259  Netherlands           NL  2001       19.90       479.92       10.47
-  20260  Netherlands           NL  2002       20.21       538.70        9.81
-  20261  Netherlands           NL  2003       20.23       544.51        9.60
-  20262  Netherlands           NL  2004       21.44       606.80        9.96
-  20263  Netherlands           NL  2005       21.69       647.15        9.88
-  20264  Netherlands           NL  2006        7.92       251.51        8.33
-  20265  Netherlands           NL  2007        8.04       270.98        7.89
-  20266  Netherlands           NL  2008        7.40       259.18        9.92
-  20267  Netherlands           NL  2009        7.75       269.80        9.07
-  20268  Netherlands           NL  2010        7.53       261.85        9.10
-  20269  Netherlands           NL  2011        7.85       277.94        9.48
-  20270  Netherlands           NL  2012        7.80       287.91       10.09
-  20271  Netherlands           NL  2013        7.32       272.18       11.53
-  20272  Netherlands           NL  2014        7.33       275.91       11.59
-  20273  Netherlands           NL  2015        7.33       281.46       11.29
-  20274  Netherlands           NL  2016        7.54       283.59       11.28
-  20275  Netherlands           NL  2017        7.26       277.12       11.05
-  20276  Netherlands           NL  2018        7.10       280.66       10.80
-
-         HF3_PPS_HAB
-  20250          NaN
-  20251          NaN
-  20252          NaN
-  20253          NaN
-  20254          NaN
-  20255          NaN
-  20256       214.63
-  20257       228.99
-  20258       246.86
-  20259       252.38
-  20260       261.61
-  20261       258.49
-  20262       281.89
-  20263       294.88
-  20264       264.27
-  20265       266.02
-  20266       347.50
-  20267       315.70
-  20268       316.35
-  20269       335.53
-  20270       372.55
-  20271       428.99
-  20272       435.96
-  20273       433.26
-  20274       424.33
-  20275       421.59
-  20276       427.02
-#+end_example
 
 
 *** healthcare expenditure
 
-https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en
+- link to date: https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en
 
- [TOT_HC] Current health care expenditure (CHE)
+| abbreviation | variable name                         |
+|--------------+---------------------------------------|
+| TOT_HC       | Current health care expenditure (CHE) |
+| EUR_HAB      | Euro per inhabitant                   |
+
 
 #+begin_src jupyter-python :display plain
 df = eurostat.get_data_df('hlth_sha11_hc')
@@ -439,226 +392,17 @@ ds
 :     health expenditure per capita  (country, country_code, year) float64 nan ...
 
 
-*** unmet needs at country level
-
-https://ec.europa.eu/eurostat/databrowser/view/HLTH_SILC_08/default/table?lang=en&category=hlth.hlth_care.hlth_unm
-
- [PC] Percentage
-[PC_POP] Percentage of total population (???I guess in contrast to percentage of age/sex group???)
-
- [TOOEFW] Too expensive or too far to travel or waiting list
-  [NOTIME] No time
-[NOKNOW] Didn't know any good doctor or specialist
-[FEAR] Fear of doctor, hospital, examination or treatment
-[HOPING] Wanted to wait and see if problem got better on its own
-
-
-#+begin_src jupyter-python :display plain
-df = eurostat.get_data_df('hlth_silc_08')
-df.rename({'geo\\time':'geo'},inplace=True,axis=1)
-reasons = ['TOOEFW','NOTIME','NOKNOW','FEAR','HOPING']
-df['country_code'] = [x[:2] for x in df['geo']]
-df['country'] = df['country_code'].replace(eurostat_dictionary)
-df = df[df.country.isin(EU_countries)  & (df.age.isin(["Y_GE16"]))&(df.unit.isin(['PC'])) & (df['quantile'].isin(['TOTAL'])) & (df.sex.isin(['T'])) & (df.reason.isin(reasons))]
-df.drop(["geo","age","unit","quantile","sex"],axis=1,inplace=True)
-
-df = pd.melt(df,id_vars=['country','country_code','reason'],
-                        value_vars=np.arange(2008,2021),
-                        var_name='year',value_name='unmet_needs')
-df.set_index(['country','country_code','year','reason'],inplace=True)
-df = df.unstack()
-df.columns = df.columns.droplevel()
-df.reset_index(inplace=True)
-df['unmet_c'] = np.sum(df[reasons],axis=1)
-df.drop(reasons,axis=1,inplace=True)
-df.columns.name=''
-# df.reset_index(inplace=True)
-df.set_index(['country','country_code','year'],inplace=True)
-df.tail()
-#+end_src
-
-#+RESULTS:
-:                                   unmet_c
-: country        country_code year
-: United Kingdom UK           2016      1.3
-:                             2017      3.8
-:                             2018      5.3
-:                             2019      0.0
-:                             2020      0.0
-
-
-#+begin_src jupyter-python :display plain
-ds = df.to_xarray()
-ds.to_netcdf("./data/country/unmet_needs_coutry.nc")
-ds
-#+end_src
-
-#+RESULTS:
-: <xarray.Dataset>
-: Dimensions:       (country: 31, country_code: 31, year: 13)
-: Coordinates:
-:   * country       (country) object 'Austria' 'Belgium' ... 'United Kingdom'
-:   * country_code  (country_code) object 'AT' 'BE' 'BG' 'CH' ... 'SI' 'SK' 'UK'
-:   * year          (year) int64 2008 2009 2010 2011 2012 ... 2017 2018 2019 2020
-: Data variables:
-:     unmet_c       (country, country_code, year) float64 2.0 1.5 1.3 ... 0.0 0.0
-
-*** causes of death at country and EU level
-https://ec.europa.eu/eurostat/databrowser/view/hlth_cd_aro/default/table?lang=en
-
-#+begin_src jupyter-python :display plain
-from country_codes import oecd_dictionary, eurostat_dictionary
-import eurostat
-df = eurostat.get_data_df('hlth_cd_aro')
-df.rename({'geo\\time':'geo'},inplace=True,axis=1)
-df['country'] = df['geo'].replace(eurostat_dictionary)
-df = df[ (df.age.isin(["TOTAL"]))&(df.unit.isin(['NR'])) & (df['resid'].isin(['TOT_IN'])) & (df.sex.isin(['T']))]
-# df.drop(["geo","age","unit","quantile","sex"],axis=1,inplace=True)
-
-# df = pd.melt(df,id_vars=['country','country_code','reason'],
-#                         value_vars=np.arange(2008,2021),
-#                         var_name='year',value_name='unmet_needs')
-# df.set_index(['country','country_code','year','reason'],inplace=True)
-# df = df.unstack()
-# df.columns = df.columns.droplevel()
-# df.reset_index(inplace=True)
-# df['unmet_c'] = np.sum(df[reasons],axis=1)
-# df.drop(reasons,axis=1,inplace=True)
-# df.columns.name=''
-# # df.reset_index(inplace=True)
-# df.set_index(['country','country_code','year'],inplace=True)
-# df[df.geo=='NL']
-#+end_src
-
-#+RESULTS:
-
-#+begin_src jupyter-python :display plain
-df_eu = df[(df.geo=='EU28')][['icd10',2017]]
-total_mortality = df_eu[(df.icd10=='A-R_V-Y')][2017].values
-df_eu['per 1000'] = df_eu[2017]/total_mortality*1000
-df_eu[df_eu['per 1000'] <= 4.0]
-#+end_src
-
-#+RESULTS:
-:RESULTS:
-: <ipython-input-3-117e59b3b176>:2: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-:   total_mortality = df_eu[(df.icd10=='A-R_V-Y')][2017].values
-#+begin_example
-               icd10     2017  per 1000
-365709   A15-A19_B90   3903.0  0.740588
-366074  B15-B19_B942   6065.0  1.150824
-366147     B180-B182   1020.0  0.193543
-366220       B20-B24   2599.0  0.493156
-366877           C32  12026.0  2.281915
-367023           C43  16712.0  3.171076
-367169           C53  10672.0  2.024996
-367242       C54_C55  19897.0  3.775425
-367680           C73   3845.0  0.729583
-368118       D50-D89  16711.0  3.170887
-368556           F10  16259.0  3.085120
-368629         F_OTH  11244.0  2.133532
-369578       J09-J11   8807.0  1.671115
-369870       J45_J46   7220.0  1.369984
-370089       K25-K28  14499.0  2.751163
-370235       K72-K75  14092.0  2.673935
-370381             L  11169.0  2.119301
-370819             O    221.0  0.041934
-370892             P  10169.0  1.929552
-370965             Q  12394.0  2.351742
-371111           R95    626.0  0.118783
-371257  RHEUM_ARTHRO   6173.0  1.171317
-371403        TOXICO   1522.0  0.288797
-371581   V01-Y89_OTH   8338.0  1.582123
-371800       W65-W74   5570.0  1.056899
-371873       X40-X49  14735.0  2.795944
-372019  X85-Y09_Y871   3194.0  0.606057
-372092  Y10-Y34_Y872  10398.0  1.973004
-#+end_example
-:END:
-
-[A-R_V-Y] All causes of death (A00-Y89) excluding S00-T98
-[A15-A19_B90] Tuberculosis
-[B15-B19_B942] Viral hepatitis and sequelae of viral hepatitis
-[B180-B182] Chronic viral hepatitis B and C
-[B20-B24] Human immunodeficiency virus [HIV] disease
-[C32] Malignant neoplasm of larynx
-[C43] Malignant melanoma of skin
-[C53] Malignant neoplasm of cervix uteri
-[C54_C55] Malignant neoplasm of other parts of uterus
-[C73] Malignant neoplasm of thyroid gland
-[D50-D89] Diseases of the blood and blood-forming organs
-[F10] Mental and behavioural disorders due to use of alcohol 
-[J09-J11] Influenza (including swine flu)
-[J45_J46] Asthma and status asthmaticus
-[K25-K28] Ulcer of stomach, duodenum and jejunum
-[K72-K75] Chronic liver disease (excluding alcoholic and toxic liver disease)
-[L] Diseases of the skin and subcutaneous tissue (L00-L99)
-[O] Pregnancy, childbirth and the puerperium (O00-O99)
-[P] Certain conditions originating in the perinatal period (P00-P96)
-[Q] Congenital malformations, deformations and chromosomal abnormalities (Q00-Q99)
-[R95] Sudden infant death syndrome
-[RHEUM_ARTHRO] Rheumatoid arthritis and arthrosis (M05-M06,M15-M19)
-[TOXICO] Drug dependence, toxicomania (F11-F16, F18-F19)
-[V01-Y89_OTH] Other external causes of morbidity and mortality (remainder of V01-Y89)
-[W65-W74] Accidental drowning and submersion
-[X40-X49] Accidental poisoning by and exposure to noxious substances
-[X85-Y09_Y871] Assault
-[Y10-Y34_Y872] Event of undetermined intent
-
-
-
-| icd10                                                  | per 1000 |
-|--------------------------------------------------------+----------|
-| Tuberculosis                                           | 0.740588 |
-| B15-B19_B942                                           | 1.150824 |
-| Chronic viral hepatitis B and C                        | 0.193543 |
-| HIV                                                    | 0.493156 |
-| C32                                                    | 2.281915 |
-| Malignant melanoma of skin                             | 3.171076 |
-| Malignant neoplasm of cervix uteri                     | 2.024996 |
-| C54_C55                                                | 3.775425 |
-| C73                                                    | 0.729583 |
-| Diseases of the blood and blood-forming organs         | 3.170887 |
-| Mental and behavioural disorders due to use of alcohol | 3.085120 |
-| F_OTH                                                  | 2.133532 |
-| Influenza (including swine flu)                        | 1.671115 |
-| Asthma and status asthmaticus                          | 1.369984 |
-| K25-K28                                                | 2.751163 |
-| K72-K75                                                | 2.673935 |
-| L                                                      | 2.119301 |
-| O                                                      | 0.041934 |
-| P                                                      | 1.929552 |
-| Q                                                      | 2.351742 |
-| R95                                                    | 0.118783 |
-| RHEUM_ARTHRO                                           | 1.171317 |
-| Drug dependence, toxicomania                           | 0.288797 |
-| V01-Y89_OTH                                            | 1.582123 |
-| Accidental drowning and submersion                     | 1.056899 |
-| X40-X49                                                | 2.795944 |
-| Assault                                                | 0.606057 |
-| Y10-Y34_Y872                                           | 1.973004 |
-
-
-
-
-
 
 ** nuts 2
 
 
-https://ec.europa.eu/eurostat/web/regions/data/database
-
-API explained: https://dev.socrata.com/foundry/cohesiondata.ec.europa.eu/if3f-yweu
-
+- overview of regional data: https://ec.europa.eu/eurostat/web/regions/data/database
 
 *** crude number of deaths and population by age and sex
 
 
 - population: https://ec.europa.eu/eurostat/databrowser/view/demo_r_d2jan/default/table?lang=en
 
-https://ec.europa.eu/eurostat/databrowser/explore/all/general?lang=en&subtheme=reg.reg_dem&display=list&sort=category&extractionId=DEMO_R_D2JAN
-
-- 6-12-2021: years in columns: 1990-2020
 
 #+begin_src jupyter-python :display plain
 df = eurostat.get_data_df('demo_r_d2jan')
@@ -743,7 +487,6 @@ ds
 
 - deaths: https://ec.europa.eu/eurostat/databrowser/view/demo_r_magec/default/table?lang=en
 
-- 6-12-2021: years in columns: 1990-2020
 
 #+begin_src jupyter-python :display plain
 df = eurostat.get_data_df('demo_r_magec')
@@ -820,7 +563,7 @@ ds
 
 *** mortality lagged per age
 
-https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps
+- useful link to lag variables in a pandas dataframe: https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps
 
 #+begin_src jupyter-python :display plain
 
@@ -903,268 +646,13 @@ ds
 :     lagged_mortality  (year, age, nuts2, sex) float64 nan nan nan ... nan nan
 
 
-*** death by causes
-
-[[https://ec.europa.eu/eurostat/statistics-explained/index.php?title=File:Major_causes_of_death,_EU,_2016_(standardised_death_rates_per_100_000_inhabitants)_Health20.png][major causes of death in the EU in 2016]]:
-- Ischaemic heart diseases
-- Cerebrovascular diseases
-- Diseases of the respiratory system
-- Lung cancer
-
-[A-R_V-Y] All causes of death (A00-Y89) excluding S00-T98
-[A_B] Certain infectious and parasitic diseases (A00-B99)
-[A15-A19_B90] Tuberculosis
-[B15-B19_B942] Viral hepatitis and sequelae of viral hepatitis
-[B180-B182] Chronic viral hepatitis B and C
-[B20-B24] Human immunodeficiency virus [HIV] disease
-[A_B_OTH] Other infectious and parasitic diseases (remainder of A00-B99)
-[C00-D48] Neoplasms
-[C] Malignant neoplasms (C00-C97)
-[C00-C14] Malignant neoplasm of lip, oral cavity, pharynx
-[C15] Malignant neoplasm of oesophagus
-[C16] Malignant neoplasm of stomach
-[C18-C21] Malignant neoplasm of colon, rectosigmoid junction, rectum, anus and anal canal
-[C22] Malignant neoplasm of liver and intrahepatic bile ducts
-[C25] Malignant neoplasm of pancreas
-[C32] Malignant neoplasm of larynx
-[C33_C34] Malignant neoplasm of trachea, bronchus and lung
-[C43] Malignant melanoma of skin
-[C50] Malignant neoplasm of breast
-[C53] Malignant neoplasm of cervix uteri
-[C54_C55] Malignant neoplasm of other parts of uterus
-[C56] Malignant neoplasm of ovary
-[C61] Malignant neoplasm of prostate
-[C64] Malignant neoplasm of kidney, except renal pelvis
-[C67] Malignant neoplasm of bladder
-[C70-C72] Malignant neoplasm of brain and central nervous system
-[C73] Malignant neoplasm of thyroid gland
-[C81-C86] Hodgkin disease and lymphomas
-[C88_C90_C96] Other malignant neoplasm of lymphoid, haematopoietic and related tissue
-[C91-C95] Leukaemia
-[C_OTH] Other malignant neoplasms (remainder of C00-C97)
-[D00-D48] Non-malignant neoplasms (benign and uncertain)
-[D50-D89] Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism
-[E] Endocrine, nutritional and metabolic diseases (E00-E90)
-[E10-E14] Diabetes mellitus
-[E_OTH] Other endocrine, nutritional and metabolic diseases (remainder of E00-E90)
-[F] Mental and behavioural disorders (F00-F99)
-[F01_F03] Dementia
-[F10] Mental and behavioural disorders due to use of alcohol
-[TOXICO] Drug dependence, toxicomania (F11-F16, F18-F19)
-[F_OTH] Other mental and behavioural disorders (remainder of F00-F99)
-[G_H] Diseases of the nervous system and the sense organs (G00-H95)
-[G20] Parkinson disease
-[G30] Alzheimer disease
-[G_H_OTH] Other diseases of the nervous system and the sense organs (remainder of G00-H95)
-[I] Diseases of the circulatory system (I00-I99)
-[I20-I25] Ischaemic heart diseases
-[I21_I22] Acute myocardial infarction including subsequent myocardial infarction
-[I20_I23-I25] Other ischaemic heart diseases
-[I30-I51] Other heart diseases
-[I60-I69] Cerebrovascular diseases
-[I_OTH] Other diseases of the circulatory system (remainder of I00-I99)
-[J] Diseases of the respiratory system (J00-J99)
-[J09-J11] Influenza (including swine flu)
-[J12-J18] Pneumonia
-[J40-J47] Chronic lower respiratory diseases
-[J45_J46] Asthma and status asthmaticus
-[J40-J44_J47] Other lower respiratory diseases
-[J_OTH] Other diseases of the respiratory system (remainder of J00-J99)
-[K] Diseases of the digestive system (K00-K93)
-[K25-K28] Ulcer of stomach, duodenum and jejunum
-[K70_K73_K74] Chronic liver disease
-[K72-K75] Chronic liver disease (excluding alcoholic and toxic liver disease)
-[K_OTH] Other diseases of the digestive system (remainder of K00-K93)
-[L] Diseases of the skin and subcutaneous tissue (L00-L99)
-[M] Diseases of the musculoskeletal system and connective tissue (M00-M99)
-[RHEUM_ARTHRO] Rheumatoid arthritis and arthrosis (M05-M06,M15-M19)
-[M_OTH] Other diseases of the musculoskeletal system and connective tissue (remainder of M00-M99)
-[N] Diseases of the genitourinary system (N00-N99)
-[N00-N29] Diseases of kidney and ureter
-[N_OTH] Other diseases of the genitourinary system (remainder of N00-N99)
-[O] Pregnancy, childbirth and the puerperium (O00-O99)
-[P] Certain conditions originating in the perinatal period (P00-P96)
-[Q] Congenital malformations, deformations and chromosomal abnormalities (Q00-Q99)
-[R] Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified (R00-R99)
-[R95] Sudden infant death syndrome
-[R96-R99] Ill-defined and unknown causes of mortality
-[R_OTH] Other symptoms, signs and abnormal clinical and laboratory findings (remainder of R00-R99)
-[V01-Y89] External causes of morbidity and mortality (V01-Y89)
-[ACC] Accidents (V01-X59, Y85, Y86)
-[V_Y85] Transport accidents (V01-V99, Y85)
-[ACC_OTH] Other accidents (W20-W64, W75-X39, X50-X59, Y86)
-[W00-W19] Falls
-[W65-W74] Accidental drowning and submersion
-[X60-X84_Y870] Intentional self-harm
-[X40-X49] Accidental poisoning by and exposure to noxious substances
-[X85-Y09_Y871] Assault
-
-**** Causes of death for three common
-
-https://ec.europa.eu/eurostat/databrowser/view/hlth_cd_asdr2/default/table?lang=en: has only 3 age classes
-
-https://ec.europa.eu/eurostat/databrowser/view/hlth_cd_aro/default/table?lang=en
-- has 28 age classes
-- 37 countries: we only need EU as a whole
-- we also need number of inhabitants per age class for the EU.
-
-#+begin_src jupyter-python
-df = eurostat.get_data_df('hlth_cd_aro')
-age_groups = ['Y40-44', 'Y45-49', 'Y50-54', 'Y55-59',
-       'Y60-64', 'Y65-69', 'Y70-74', 'Y75-79', 'Y80-84']
-disease_groups = ['C33_C34','I20-I25','J']
-df = df[(df.age.isin(age_groups))&(df['geo\\time']=='EU28')&(df.icd10.isin(disease_groups))&(df.sex=='T')&(df.resid=='TOT_IN')]
-# df.rename({'geo\\time':'nuts2'},inplace=True,axis=1)
-# df = df[(df.unit == "NR")]
-df.drop(["unit","sex","resid","geo\\time"],axis=1,inplace=True)
-
-df = pd.melt(df,id_vars=['age','icd10'],
-                        value_vars=np.arange(2011,2021),
-                        var_name='year',value_name='mortality')
-df = df[df.year==2017]
-df.drop(['year'],axis=1,inplace=True)
-df.set_index(['age','icd10'],inplace=True)
-
-df = df.unstack()
-df.columns = df.columns.droplevel()
-df.rename({'C33_C34':'lung cancer','I20-I25':'isscaemic heart disease','J':'diseases of the respiratory system'},inplace=True,axis=1)
-df.head()
-#+end_src
-
-#+RESULTS:
-#+begin_example
-icd10   lung cancer  isscaemic heart disease  \
-age
-Y40-44       1542.0                   2922.0
-Y45-49       4605.0                   6673.0
-Y50-54      10793.0                  12378.0
-Y55-59      22103.0                  20846.0
-Y60-64      35298.0                  31832.0
-
-icd10   diseases of the respiratory system
-age
-Y40-44                              1523.0
-Y45-49                              2906.0
-Y50-54                              5177.0
-Y55-59                              9662.0
-Y60-64                             17284.0
-#+end_example
-
-
-population size by age group: https://ec.europa.eu/eurostat/databrowser/view/demo_pjangroup/default/table?lang=en
-DEMO_PJANGROUP
-
-
-#+begin_src jupyter-python
-df_p = eurostat.get_data_df('demo_pjangroup')
-df_p = df_p[(df_p.age.isin(age_groups))&(df_p['geo\\time']=='EU28')&(df_p.sex=='T')]
-df_p.drop(["unit","sex","geo\\time"],axis=1,inplace=True)
-
-df_p = pd.melt(df_p,id_vars=['age'],
-                        value_vars=np.arange(1960,2022),
-                        var_name='year',value_name='population')
-df_p = df_p[df_p.year==2017]
-df_p.drop(['year'],axis=1,inplace=True)
-df_p.set_index(['age'],inplace=True)
-# df.rename({'geo\\time':'nuts2'},inplace=True,axis=1)
-# df = df[(df.unit == "NR")]
-# df.drop(["unit"],axis=1,inplace=True)
-df_p.head()
-#+end_src
-
-#+RESULTS:
-:         population
-: age
-: Y40-44  35619375.0
-: Y45-49  37385713.0
-: Y50-54  37070851.0
-: Y55-59  34678245.0
-: Y60-64  31663319.0
-
-#+begin_src jupyter-python
-df = df.merge(df_p,left_index=True,right_index=True)
-df.head()
-#+end_src
-
-#+RESULTS:
-#+begin_example
-        lung cancer  isscaemic heart disease  \
-age
-Y40-44       1542.0                   2922.0
-Y45-49       4605.0                   6673.0
-Y50-54      10793.0                  12378.0
-Y55-59      22103.0                  20846.0
-Y60-64      35298.0                  31832.0
-
-        diseases of the respiratory system  population
-age
-Y40-44                              1523.0  35619375.0
-Y45-49                              2906.0  37385713.0
-Y50-54                              5177.0  37070851.0
-Y55-59                              9662.0  34678245.0
-Y60-64                             17284.0  31663319.0
-#+end_example
-
-#+begin_src jupyter-python
-df['lung cancer per 100k'] = (df['lung cancer']/df['population'])*100000
-df['heart disease per 100k'] = (df['isscaemic heart disease']/df['population'])*100000
-df['resp. system per 100k'] = (df['diseases of the respiratory system']/df['population'])*100000
-df
-#+end_src
-
-#+RESULTS:
-#+begin_example
-        lung cancer  isscaemic heart disease  \
-age
-Y40-44       1542.0                   2922.0
-Y45-49       4605.0                   6673.0
-Y50-54      10793.0                  12378.0
-Y55-59      22103.0                  20846.0
-Y60-64      35298.0                  31832.0
-Y65-69      45152.0                  44804.0
-Y70-74      45277.0                  54188.0
-Y75-79      42912.0                  80137.0
-Y80-84      34378.0                 111494.0
-
-        diseases of the respiratory system  population  lung cancer per 100k  \
-age
-Y40-44                              1523.0  35619375.0              4.329105
-Y45-49                              2906.0  37385713.0             12.317540
-Y50-54                              5177.0  37070851.0             29.114519
-Y55-59                              9662.0  34678245.0             63.737366
-Y60-64                             17284.0  31663319.0            111.479154
-Y65-69                             27202.0  29134493.0            154.977813
-Y70-74                             37796.0  22675337.0            199.675092
-Y75-79                             56829.0  19603049.0            218.904722
-Y80-84                             81164.0  14539255.0            236.449529
-
-        heart disease per 100k  resp. system per 100k
-age
-Y40-44                8.203401               4.275763
-Y45-49               17.849064               7.773023
-Y50-54               33.390116              13.965150
-Y55-59               60.112615              27.861848
-Y60-64              100.532733              54.586823
-Y65-69              153.783352              93.366993
-Y70-74              238.973295             166.683300
-Y75-79              408.798652             289.898781
-Y80-84              766.848095             558.240433
-#+end_example
-
-#+begin_src jupyter-python
-df.to_csv('./data/mortality_causes_EU.csv')
-#+end_src
-
-#+RESULTS:
 
 *** Poverty measures
 
 
 **** Severe material deprivation rate by NUTS 2 regions [TGS00104]
 
-- https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en
-
-- 6-12-2021: years in columns: 2009-2020
+- link to the data: https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en
 
 #+begin_src jupyter-python :display plain
 df = eurostat.get_data_df('tgs00104')
@@ -1218,11 +706,7 @@ ds_material_deprivation
 
 **** At-risk-of-poverty rate by NUTS 2 regions [TGS00103]
 
-- https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en
-
-
-
-- 6-12-2021: years in columns: 2009-2020
+- link to the data: https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en
 
 
 #+begin_src jupyter-python :display plain
@@ -1277,8 +761,9 @@ ds_at_risk_of_poverty
 
 *** unmet needs
 
-- Self-reported unmet needs for medical examination by main reason declared and NUTS 2 regions
-- https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en
+Self-reported unmet needs for medical examination by main reason declared and NUTS 2 regions
+
+- link to the data: https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_08_r/default/table?lang=en
 
 | value    |                                                         |
 |----------+---------------------------------------------------------|
@@ -1300,7 +785,7 @@ df.drop(["unit"],axis=1,inplace=True)
 df['nuts'] = [len(x)-2 for x in df.nuts2]
 df = df[df.nuts == 2]
 df.drop('nuts',axis=1,inplace=True)
-df=df[df.reason.isin(['FEAR','TOOEXP','TOOFAR','WAITING','HOPING'])]
+df=df[df.reason.isin(['FEAR','TOOEXP','TOOFAR','WAITING','HOPING', 'NOTIME', 'NO_UNMET','NOKNOW', 'OTH'])]
 df = pd.melt(df,id_vars=['nuts2','reason'],
                         value_vars=np.arange(2009,2021),
                         var_name='year',value_name='unmet needs')
@@ -1313,13 +798,23 @@ df.tail()
 #+end_src
 
 #+RESULTS:
-: reason      FEAR  HOPING  TOOEXP  TOOFAR  WAITING
-: nuts2 year
-: SK04  2016   0.5     2.4     0.5     0.2      1.8
-:       2017   0.2     1.3     0.2     0.3      1.6
-:       2018   0.6     1.7     0.4     0.1      1.7
-:       2019   0.6     1.5     0.4     0.1      1.9
-:       2020   0.8     1.2     0.2     0.1      1.8
+#+begin_example
+reason      FEAR  HOPING  NOKNOW  NOTIME  NO_UNMET  OTH  TOOEXP  TOOFAR  \
+nuts2 year                                                                
+SK04  2016   0.5     2.4     0.4     1.6      91.9  0.7     0.5     0.2   
+      2017   0.2     1.3     0.5     1.4      94.1  0.4     0.2     0.3   
+      2018   0.6     1.7     0.5     1.2      93.7  0.3     0.4     0.1   
+      2019   0.6     1.5     0.4     1.7      93.1  0.3     0.4     0.1   
+      2020   0.8     1.2     0.7     1.2      92.4  1.5     0.2     0.1   
+
+reason      WAITING  
+nuts2 year           
+SK04  2016      1.8  
+      2017      1.6  
+      2018      1.7  
+      2019      1.9  
+      2020      1.8  
+#+end_example
 
 
 #+begin_src jupyter-python
@@ -1344,158 +839,3 @@ Data variables:
 #+end_example
 
 
-*** educational attainment
-
-- educational attainment: https://ec.europa.eu/eurostat/databrowser/view/edat_lfse_04/default/table?lang=en
-
- [Y25-64] From 25 to 64 years
-
-[ED0-2] Less than primary, primary and lower secondary education (levels 0-2)
-[ED3-8] Upper secondary, post-secondary non-tertiary and tertiary education (levels 3-8)
-[ED3_4] Upper secondary and post-secondary non-tertiary education (levels 3 and 4)
-[ED3_4GEN] Upper secondary and post-secondary non-tertiary education (levels 3 and 4) - general
-[ED3_4VOC] Upper secondary and post-secondary non-tertiary education (levels 3 and 4) - vocational
-[ED5-8] Tertiary education (levels 5-8)
-
-
-
-#+begin_src jupyter-python :display plain
-df = eurostat.get_data_df('edat_lfse_04')
-df.rename({'geo\\time':'nuts2'},inplace=True,axis=1)
-df.drop(["unit"],axis=1,inplace=True)
-df['nuts'] = [len(x)-2 for x in df.nuts2]
-df = df[df.nuts == 2]
-df = df[df.sex.isin(['F','M']) & (df.age.isin(['Y25-64'])) & (df.isced11.isin(['ED0-2']))]
-df.drop(['nuts','age','isced11'],axis=1,inplace=True)
-
-df = pd.melt(df,id_vars=['nuts2','sex'],
-                        value_vars=np.arange(2000,2021),
-                        var_name='year',value_name='ED0-2')
-df.set_index(['nuts2','year','sex'],inplace=True)
-df.tail()
-
-#+end_src
-
-#+RESULTS:
-:                 ED0-2
-: nuts2 year sex
-: UKM6  2020 M      NaN
-: UKM7  2020 M      NaN
-: UKM8  2020 M      NaN
-: UKM9  2020 M      NaN
-: UKN0  2020 M      NaN
-
-
-#+begin_src jupyter-python
-ds_education = df.to_xarray()
-ds_education.to_netcdf("./data/education_nuts_2.nc")
-ds_education
-#+end_src
-
-#+RESULTS:
-: <xarray.Dataset>
-: Dimensions:  (nuts2: 340, sex: 2, year: 21)
-: Coordinates:
-:   * nuts2    (nuts2) object 'AT11' 'AT12' 'AT13' 'AT21' ... 'UKM8' 'UKM9' 'UKN0'
-:   * year     (year) int64 2000 2001 2002 2003 2004 ... 2016 2017 2018 2019 2020
-:   * sex      (sex) object 'F' 'M'
-: Data variables:
-:     ED0-2    (nuts2, year, sex) float64 42.2 21.0 39.8 19.9 ... 25.9 nan nan
-
-
-
-* geopandas
-:properties:
-:header-args: :session geopandas :kernel geo_env :async yes
-:END:
-
-** how to do this :noexport:
-
-Geopandas tends to cause conflicts when trying to install.
-
-Hence, install it in a new environment: https://geopandas.org/getting_started/install.html
-
-conda create -n geo_env
-conda activate geo_env
-conda config --env --add channels conda-forge
-conda config --env --set channel_priority strict
-conda install python=3 geopandas
-
-Then use parts of this: https://martinralbrecht.wordpress.com/2020/08/23/conda-jupyter-and-emacs/
-
-- in the environment "geo_env", install jupyter:
-  - conda install jupyter
-- create a kernel for the new environment "geo_env":
-  - python -m ipykernel install --user --name=$CONDA_DEFAULT_ENV
-- new environment can be found at:  ~/.local/share/jupyter/kernels/geo_env/
-- restart emacs/the terminal from which emacs is started
-- for jupyter-python blocks specify the kernel as "geo_env"
-
-
-*** GeoPandas Documentation
-
-- https://geopandas.org/docs/user_guide/data_structures.html
-- https://github.com/geopandas/scipy2018-geospatial-data
-- https://www.youtube.com/watch?v=kJXUUO5M4ok
-
-
-** Plotting map
-
-
-#+begin_src jupyter-python
-import numpy as np
-import geopandas as gpd
-import matplotlib.pyplot as plt
-import pandas as pd
-# import altair as alt
-#+end_src
-
-#+RESULTS:
-
-#+begin_src jupyter-python
-
-# read the NUTS shapefile and extract the polygons for a individual countries
-nuts=gpd.read_file('./SHP/NUTS_RG_60M_2021_4326_LEVL_2.shp')
-
-age_min = 1
-age_max = 85
-df = pd.read_csv('./data/data_deaths_by_age_nuts_2.csv')
-# df.dropna(subset=['deaths','population','percentage risk of poverty','HF2_PC_CHE','HF3_PC_CHE'], axis=0, how ='any',inplace=True) #,'gdp_per_head'
-df = df[(df.population >= df.deaths) & (df.age >= age_min) & (df.age <= age_max)] # drop rows where deaths > population at Jan. 1st (e.g. because people moved in the year)
-df['mortality'] = df.deaths/df.population
-df = df[(df.year==2017) & (df.age==40)]
-
-
-nuts = nuts.to_crs(epsg=3035)
-nuts['centroids'] = nuts.centroid
-nuts = nuts.merge(df, how='right', left_on = 'NUTS_ID', right_on = 'nuts2')
-# nuts.head()
-#+end_src
-
-#+RESULTS:
-
-
-#+begin_src jupyter-python :file ./figures/Europe_mortality_40_F.png
-nuts[nuts.sex=='F'].plot(column='mortality',
-                                legend=True,
-                                figsize=(16,16),
-                                # vmin = 71,
-                                vmax = 0.002,
-                                missing_kwds={'color': 'lightgrey'},
-                                legend_kwds={'label': "Mortality rate",
-                                             'orientation': "vertical"})
-# adjust plot domain to focus on EU region
-plt.xlim(0.25e7, 0.6e7)
-plt.ylim(1.3e6, 5.5e6)
-plt.xticks([],[])
-plt.yticks([],[])
-plt.title('Mortality 40 year old females in 2017')
-# plt.tight_layout()
-# plt.legend('right');
-#+end_src
-
-#+RESULTS:
-:RESULTS:
-: Text(0.5, 1.0, 'Mortality 40 year old females in 2017')
-[[file:./figures/Europe_mortality_40_F.png]]
-:END:
