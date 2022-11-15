@@ -392,7 +392,7 @@ This section illustrates with two figures the relation between the fraction of p
 
 As we assume that =TooExp= has a logit-normal distribution, we plot the log-odds of =TooExp= both for Romania and for our simulated data.
 
-We plot these log-odds on the vertical axis and the interaction term =OOP*Poverty= on the vertical axis.
+We plot these log-odds on the vertical axis and the interaction term =OOP*Poverty= on the horizontal axis.
 
 #+begin_src jupyter-python :display plain
   df_RO = df[df.country=='Romania']
@@ -667,7 +667,7 @@ df_fig.dropna(subset=['deaths','population', 'TOOEXP',\
 df_fig = df_fig[(df_fig.population > df_fig.deaths) & (df_fig.age >= age_min_fig) & \
         (df_fig.age <= age_max) & (df_fig.year <= last_year) &\
         (df_fig.year >= first_year)]
-df_fig['mortality'] = df_fig.deaths/df_fig.population*100 
+df_fig['mortality'] = df_fig.deaths/df_fig.population*100
 df_groupby = df_fig[['country','age','sex','mortality']].\
     groupby(['age','sex']).mean().reset_index()
 #+end_src
@@ -1058,7 +1058,7 @@ idata_baseline = az.from_netcdf("./traces/baseline_model.nc")
 
 *** model fit
 
-This section presents the code generating the figures that we use as a check on the fit of the model. As explained in the main text: for the mortality equation we check the fit using the posterior predictive. For =TooExp= we only have predictions for each NUTS 2/calendar year combination (not for every row in our dataframe). Hence, for the latter we plot the parameter =mu_too_exp_lo= and the 95% probability interval.
+This section presents the code generating the figures that we use as a check on the fit of the model. As explained in the main text: for the mortality equation we check the fit using the posterior predictive. For =TooExp= we only have predictions for each NUTS 2/calendar year combination (not for every row in our dataframe). Hence, for the latter we plot the parameter =mu_too_exp_lo=.
 
 #+begin_src jupyter-python :display plain
 my_predictions_mort = np.mean(idata_baseline.posterior_predictive.\
@@ -1326,6 +1326,8 @@ ax1.set_xlabel('$\Delta$ mortality per 1000 dead');
 #+RESULTS:
 [[file:./figures/change_mortality_countries_baseline.png]]
 
+Finally, to give an idea of how mortality varies across regions where deprivation is lower, we plot the distribution of effects for all Romanian regions in our data. On the horizontal axis we have the $\Delta$ mortality effect per 1000 dead (of a 500 euro increase in oop) and the vertical axis gives the probability that the true effect equals $\Delta$ or bigger. That is, if $H(\Delta)$ would indicate the cumulative distribution function of the effect, the vertical axis plots $1-H(\Delta)$.
+
 
 #+begin_src jupyter-python :display plain
 def Delta_log_mortality_RO(p_too_exp,Delta_OOP,alpha):
@@ -1442,7 +1444,7 @@ print(tabulate(groupby_eu[(groupby_eu['per 1000'] < 90.0) &\
 
 * Robustness checks
 
-In this section we discuss four different robustness checks. We explain each robustness check and discuss the results. The details of these checks can be found in [[https://janboone.github.io/out_of_pocket_payments_and_health/index.html#org5ed5f60][the online appendix]].
+In this section we discuss four different robustness checks. We explain each robustness check and discuss the results. The details of these checks can be found in [[https://janboone.github.io/out_of_pocket_payments_and_health/index.html][the online appendix]].
 
 First, we use the at-risk-of-poverty variable, instead of deprivation as our variable capturing the fraction of people on low income. Second, we extend our definition of oop costs with expenditures on voluntary health insurance. Third, instead of focusing on the coefficient $\beta_{unmet}$ in the mortality equation, we work with =TooExp= in this equation. The idea here is that other reasons for unmet needs (than too expensive) may have bigger effects on mortality. If this would be the case, the baseline model overestimates the effect of too expensive (and hence of oop) on mortality. Finally, we allow for missing observations in our data for the variables =deprivation= and =TooExp=. This means that we have almost 70k observations for the other variables, as shown in Table ref:tab:summary_extended_data.
 
@@ -1498,7 +1500,7 @@ In this section we explain how we generate the posterior samples for each of the
 
 **** poverty instead of deprivation
 
-For this robustness check, the main change is in how we call the model =model_poverty = build_model(poverty_s,oop_s)= where we use =poverty= instead of =deprivation= as variable capturing low income. A second change is needed to accommodate that poverty has missing values compared to deprivation. As we want to keep the sample unchanged, we add =Poverty= as a variable that we need to predict when there is missing value for some observations. We know that poverty is positive and hence we choose a half-normal distribution with a small value of sigma (to avoid drawing values exceeding one).
+For this robustness check, the main change is in how we call the model =model_poverty = build_model(poverty_s,oop_s)= where we use =poverty= instead of =deprivation= as variable capturing low income. A second change is needed to accommodate that poverty has missing values compared to deprivation. As we want to keep the sample unchanged, we add =Poverty= as a variable that we need to predict when there is a missing value for some observations. We know that poverty is positive and hence we choose a half-normal distribution with a small value of sigma (to avoid drawing values exceeding one).
 
 Apart from these two adjustments, sampling the posterior is the same as in the baseline specification of the model.
 
@@ -1616,6 +1618,8 @@ The acceptance probability does not match the target. It is 0.5954, but should b
 #+end_src
 
 
+We have some more divergences than in the baseline model, but 237 out of 4000 samples is small enough not to worry about this.
+
 #+begin_src jupyter-python
 idata_poverty.to_netcdf("./traces/model_poverty.nc")
 #+end_src
@@ -1637,8 +1641,6 @@ with model_voluntary:
 Output of the NUTS sampler:
 
 #+begin_src
-
-
 Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (4 chains in 4 jobs)
@@ -1655,14 +1657,14 @@ There were 2 divergences after tuning. Increase `target_accept` or reparameteriz
 #+end_src
 
 
+Number of divergences is small enough not to worry about this.
+
 #+begin_src jupyter-python
 idata_voluntary.to_netcdf("./traces/model_voluntary.nc")
 #+end_src
 
 #+RESULTS:
 : ./traces/model_voluntary.nc
-
-
 
 
 
@@ -1780,6 +1782,8 @@ There were 8 divergences after tuning. Increase `target_accept` or reparameteriz
 #+end_src
 
 
+Number of divergences is comparable to what we have in the base model.
+
 #+begin_src jupyter-python
 idata_separate.to_netcdf("./traces/model_separate.nc")
 #+end_src
@@ -1788,16 +1792,13 @@ idata_separate.to_netcdf("./traces/model_separate.nc")
 : ./traces/model_separate.nc
 
 
-
-
-
 **** include observations with missing values
 
 The biggest change in code compared to the baseline model is the extension of our data with 20k new observations. This first means that we need to read in the data again with a different selection criterion for the =dropna= method. In particular, the baseline model drops observations where there are missing values for =TOOEXP= which is the most stringent criterion. We drop this criterion in the code below.
 
 But we do want to make sure that all observations have values for the mortality variables (as before) and for expenditure per head, unmet medical needs and oop. As these variables are important for identifying the causal mechanism that we have in mind, we prefer to keep complete cases for these variables in our dataframe.
 
-Using this selection criterion allows Poland into the dataset, although there are not observations at all for some of these variables for Poland. Hence, we exclude Poland explicitly in the code below.
+Using this selection criterion allows Poland into the dataset, although there are no observations at all for some of these variables for Poland. Hence, we exclude Poland explicitly in the code below.
 
 In this way, we have the same sample of countries as in the baseline analysis, but now for some region-year combinations we have missing values for deprivation and too expensive. As we show below, we draw from distributions for these missing observations where the distributions are estimated using observations of different years for these regions.
 
