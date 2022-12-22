@@ -43,7 +43,7 @@ In this file we explain how we get the data and from where and at the same time 
 - Link to excel file with overview: http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx
 
 
-
+The dataset itself is too big for github and can be found on [[https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AABEBD][DataverseNL]].
 
 
 * Preamble code
@@ -69,7 +69,8 @@ EU_countries = ['Belgium', 'Bulgaria', 'Czechia', 'Denmark',
 
 #+end_src
 
-#+RESULTS:
+
+We first describe how we get the data for each variable. Each of these variables is saved in a separate dataset. The final section contains the code that merges the data for these variables into one (big) dataset.
 
 * Data
 
@@ -79,7 +80,7 @@ First, we fetch the variables at the country level from the Eurostat website. Th
 
 *** OOP per country
 
-We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance).
+We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance). The paper uses mainly =PC_CHE= as unit of measurement.
 
 - link to data: https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hf/default/table?lang=en
 

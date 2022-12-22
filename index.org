@@ -33,6 +33,10 @@ The rationale for demand side cost sharing in health insurance is to deter patie
 *Keywords:* out-of-pocket payments, mortality, health insurance, poverty, unmet medical needs
 
 
+@@html:<p class="author">Author: Jan Boone</p>@@
+
+
+
 
 #+LATEX: \newpage
 
@@ -67,9 +71,9 @@ For the export to html we use [[https://github.com/vincentdoerig/latex-css][LaTe
 
 We use [[https://www.python.org/][Python]] to program the model and [[https://docs.pymc.io/][PyMC]] for the Bayesian analysis. All these resources are open source and freely available. If you want to install Python, [[https://www.anaconda.com/products/individual][Anaconda]] is a good place to start.
 
-There is a separate [[./getting_data.org][file]] which describes how we get the data from Eurostat.
+There is a separate [[./getting_data.org][file]] which describes how we get the data from Eurostat. The dataset itself is too big for github and can be found on [[https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AABEBD][DataverseNL]].
 
-The repository itself can be found [[https://github.com/janboone/out_of_pocket_payments_and_health][here]].
+The repository for the paper can be found [[https://github.com/janboone/out_of_pocket_payments_and_health][here]].
 
 * preamble :code:
 :PROPERTIES:
@@ -101,7 +105,6 @@ We read in the data. We drop rows (combination of calendar year, NUTS 2 region, 
 
 We select ages between =age_min= and =age_max= and calendar years between =first_year= and =last_year=. We drop rows where the number of deaths during a year exceeds the population at January 1st in that age-gender-year-region category.
 
-The file [[file:getting_data.org][file:./getting_data.org]] in this repository provides the code for downloading the relevant data from the Eurostat website.
 
 #+begin_src jupyter-python
 age_min = 35
@@ -197,7 +200,7 @@ Summarizing, compared to papers using individual level data our approach is more
 
 Although results based on aggregate data are less precise than those based on individual level data, our approach is more robust in the sense that it applies across a number of countries instead of a particular sub-population (like 65 year old Medicare users in the US). Although we do interpret our results using the size of the effect, our main goal is to establish that an increase in =OOP= in a poor region increases mortality. In particular, we quantify how sure we are that this effect is positive.
 
-The next section presents a model explaining the relationship between the variables mortality, poverty, =OOP= and the fraction of people forgoing treatment because it is too expensive. Then we describe the Eurostat data that we use. We explain the empirical model that we estimate. Estimation results are presented for the baseline model and we show that these are robust with respect to a number of our modeling choices. We conclude with a discussion of the policy implications. The appendix contains the proofs of our results and more details on our data and estimation results. The [[https://janboone.github.io/out_of_pocket_payments_and_health/index.html][online appendix]] is the html version of this paper which includes --per section-- the python code that is used in each section's analysis.[fn::See the github repository: [[https://github.com/janboone/out_of_pocket_payments_and_health]].] This is a final advantage of using data at the regional level. The repository contains the python code that gets the data from Eurostat so that each step of this analysis can be replicated. Most individual level data sets cannot be freely shared.
+The next section presents a model explaining the relationship between the variables mortality, poverty, =OOP= and the fraction of people forgoing treatment because it is too expensive. Then we describe the Eurostat data that we use. We explain the empirical model that we estimate. Estimation results are presented for the baseline model and we show that these are robust with respect to a number of our modeling choices. We conclude with a discussion of the policy implications. The appendix contains the proofs of our results and more details on our data and estimation results. The [[https://janboone.github.io/out_of_pocket_payments_and_health/index.html][online appendix]] is the html version of this paper which includes --per section-- the python code that is used in each section's analysis.[fn::See the github repository: [[https://github.com/janboone/out_of_pocket_payments_and_health]].] This is a final advantage of using data at the regional level. The repository contains the python code that gets the data from Eurostat so that each step of this analysis can be replicated. The data can be downloaded from [[https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AABEBD][DataverseNL]] [[citep:&boone-2022-replic-data]]. Most individual level data sets cannot be freely shared.
 
 ** Map :code:
 :properties:
@@ -288,9 +291,9 @@ If a patient receives treatment $i \in I$, we denote her (expected) health $\sig
 \begin{equation}
 \nu \sigma_i u(y^j-oop_i) > \sigma_0 u(y^j)
 \end{equation}
-where utility $u(.)$ is determined by how much money can be spent on other goods: income $y^j$ minus oop in case of treatment and $y^j$ if no treatment is chosen. The utility function $u(.)$ is increasing and concave in consumption: $u(.), u'(.) >0$ and $u''(.) < 0$. Further, parameter $\nu$ captures other factors than pure financial ones affecting a patient's treatment choice.[fn::Note that we do not model the decision to buy insurance. In Europe (almost) all citizens are covered by automatic or mandatory insurance.]
+where utility $u(.)$ is determined by how much money can be spent on other goods: income $y^j$ minus oop in case of treatment and $y^j$ if no treatment is chosen. The utility function $u(.)$ is increasing and concave in consumption: $u(.), u'(.) >0$ and $u''(.) < 0$. Further, parameter $\nu$ captures other factors than pure financial ones affecting a patient's treatment choice.[fn::Note that we do not model the decision to buy insurance. In Europe (almost) all citizens are covered by automatic or mandatory insurance.] If inequality eqref:eq:1 holds, the patient accepts treatment $i$.
 
-In our data, we have a variable "unmet medical needs" based on a number of motivations: treatment is too far away to travel to, there is a long waiting list, the patient is scared to undergo treatment etc. To make our point, it is enough to assume that such factors affect utility in a simple multiplicative way. To illustrate, if the patient has to travel far for treatment, utility is reduced by multiplying it with a value of $\nu < 1$. Agents differ in $\nu$ and the cumulative distribution function of $\nu$ is given by $G(\nu)$ and its density function by $g(\nu)$. Other factors can include waiting time till treatment, belief that the condition will resolve itself without intervention, poor decision making e.g. with a focus on the short term thereby undervaluing the benefit of treatment. If inequality eqref:eq:1 holds, the agent accepts the treatment. For some proofs in the appendix it is convenient to assume that $G$ is a Pareto distribution.
+In our data, we have a variable "unmet medical needs" based on a number of motivations: treatment is too far away to travel to, there is a long waiting list, the patient is scared to undergo treatment etc. To make our point, it is enough to assume that such factors affect utility in a simple multiplicative way. To illustrate, if the patient has to travel far for treatment, utility is reduced by multiplying it with a value of $\nu < 1$. Agents differ in $\nu$ and the cumulative distribution function of $\nu$ is given by $G(\nu)$ and its density function by $g(\nu)$. Other factors can include waiting time till treatment, belief that the condition will resolve itself without intervention, poor decision making e.g. with a focus on the short term thereby undervaluing the benefit of treatment. For some proofs in the appendix it is convenient to assume that $G$ is a Pareto distribution.
 
 The probability that a patient with income $y^{j}$ accepts treatment $i$ offered by a physician equals
 #+name: eq:2
@@ -390,7 +393,7 @@ The right panel of Figure ref:fig:Parametric illustrates this relation for regio
 
 This section illustrates with two figures the relation between the fraction of people with unmet medical needs due to financial constraints, =TooExp=, and our variable measuring how generous a health insurance system is, =OOP=. We illustrate this using data simulated from the model and for one country, Romania, in our data set.
 
-As we assume that =TooExp= has a logit-normal distribution, we plot the log-odds of =TooExp= both for Romania and for our simulated data.
+As we assume that =TooExp= has a logit-normal distribution (see below), we plot the log-odds of =TooExp= both for Romania and for our simulated data.
 
 We plot these log-odds on the vertical axis and the interaction term =OOP*Poverty= on the horizontal axis.
 
@@ -935,7 +938,7 @@ The left panel shows observed number of deaths per category on the horizontal ax
 
 The right panel shows the (log odds of the) fraction of people per region/year indicating they went without treatment (for a while) because it was too expensive. Two things are different in this panel compared to the left. First, this fraction does not vary by gender and age. Hence, we do not have a prediction for each row in our data. Second, this fraction =TooExp= is based on (EU-SILC) survey data where we do not know the number of people interviewed. Hence, we cannot model this as a binomial distribution where we predict the number of people indicating unmet medical needs because of financial constraints.
 
-Therefore, the right panel shows the observed and predicted fraction for =TooExp= per region/year. The dots indicate the average posterior prediction of this log-odds ratio. For small observed values of the =TooExp= (log-odds below $-5$ in the figure) there is a range of predicted values. Although this range seems wide in log-odds space, both the observed and predicted values are basically equal to zero.
+Therefore, the right panel shows the observed and predicted fraction for =TooExp= per region/year. The dots indicate the average posterior prediction of this log-odds ratio. For small observed values of the =TooExp= (log-odds below $-5$ in the figure) there is a range of predicted values. Although this range seems wide in log-odds space, both the observed and predicted values are basically equal to zero. To illustrate, for practical purposes it does not matter if a probability equals 0.0001 (log-odds of -9) or 0.002 (log-odds of -6). Given our log-odds specification, the model cannot predict a zero probability.
 
 A final observation is that =TooExp= equals 0 for a number of region/year combinations. To handle this numerically, we use a lower bound for the log-odds. This corresponds to a probability of 0.0001 which is close enough to zero for our purposes. The right panel shows this bunching for a number of observations slightly below $-9$.
 
@@ -964,7 +967,7 @@ Another check on the convergence of the algorithm are the r-hat values in Table 
 
 ** size of effects
 
-Table ref:tab:estimated_coefficients presents the values for each of the parameters. Here we focus on the effect we are interested in: what is the increase in mortality due to an increase in oop? As we show in the appendix, a 500 euro increase in oop leads to the following increase in mortality:
+Table ref:tab:estimated_coefficients in the appendix presents the posterior values for each of the parameters. Here we focus on the effect we are interested in: what is the increase in mortality due to an increase in oop? As we show in the appendix, a 500 euro increase in oop leads to the following increase in mortality:
 #+name: eq:change_mortality
 \begin{equation}
 \frac{dm_{ga2t}}{m_{ga2t}} = \beta_{unmet} \text{TooExp}_{2t}(1-\text{TooExp}_{2t}) 500 (b_{oop,c}+b_{interaction,c} Poverty_{2t})
@@ -995,7 +998,7 @@ As the expression for $dm/m$ varies with country, year and NUTS 2 region, Figure
 | SE22   | Sweden      |        0.02 |          0.00 | 0.15 |
 | CH01   | Switzerland |        0.02 |          0.02 | 0.26 |
 
-Substituting these values from the table into the expression for $dm/m$ we get the numbers in Figure ref:fig:SummaryFigure. As mentioned, the blue bars give the average effect of the 500 euro increase in oop on mortality. As we have the posterior distributions for each of the parameters, we also have the posterior distribution for the mortality effects per country. The black horizontal lines present the 95% intervals around the mean effect. 
+Substituting these values from the table into the expression for $dm/m$ we get the numbers in Figure ref:fig:SummaryFigure. As mentioned, the blue bars give the average effect of the 500 euro increase in oop on mortality. As we have the posterior distributions for each of the parameters, we also have the posterior distribution for the mortality effects per country (taking the uncertainty for all parameters into account). The black horizontal lines present the 95% intervals around the mean effect. 
 
 The first observation is that for Bulgaria, Greece, Hungary and Romania the 95% probability interval is bounded away from zero. For these countries we can clearly see that an increase in oop negatively affects health and increases mortality. 
 
@@ -1214,7 +1217,7 @@ print(tabulate(df_summary,\
 | sd_prior_beta              |   0.22 | 0.04 |     0.14 |      0.31 |    3505.00 |    1.00 |
 
 
-The function =Delta_log_mortality= is the python code for equation eqref:eq:change_mortality. To use this function at the NUTS 2 level where =deprivation= is highest per country, we define a new dataframe at the NUTS 2 level using =groupby=. To be able to multiply the coefficients and the data using broadcasting, we introduce 5 dimensions for each variable. The order of the dimensions is: chain, samples, countries, nuts2, observations.
+The function =Delta_log_mortality= below is the python code for equation eqref:eq:change_mortality. To use this function at the NUTS 2 level where =deprivation= is highest per country, we define a new dataframe at the NUTS 2 level using =groupby=. To be able to multiply the coefficients and the data using broadcasting, we introduce 5 dimensions for each variable. The order of the dimensions is: chain, samples, countries, nuts2, observations.
 
 #+begin_src jupyter-python :display plain
 df_nuts2 = df[['nuts2','country','poverty','deprivation',\
@@ -1249,7 +1252,7 @@ def Delta_log_mortality(p_too_exp,Delta_OOP,alpha):
 
 #+RESULTS:
 
-The groupby =df_nuts2= takes the average across time (and age/sex) for each NUTS 2 region. To aggregate this to the country level, we focus on the Nuts 2 region with highest deprivation fraction. For this region (with highest deprivation per country), we calculate $\Delta \ln(m)$ due to a 500 euro increase in oop.
+The groupby =df_nuts2= takes the average across time (and age/sex) for each NUTS 2 region. To present the results at the country level, we focus on the Nuts 2 region with highest deprivation fraction. For this region (with highest deprivation per country), we calculate $\Delta \ln(m)$ due to a 500 euro increase in oop.
 
 #+begin_src jupyter-python :display plain
 idx = df_nuts2.groupby(['country'])['deprivation_s'].\
@@ -1485,7 +1488,7 @@ Using =too expensive= in the mortality equation yields smaller effects for Hunga
 
 The differences are bigger if we use the at-risk-of-poverty rate instead of deprivation. Especially in Bulgaria and Romania, the effects are substantially smaller. As at-risk-of-poverty is relative measure, one would expect the effect of this variable on =too expensive= and hence on unmet needs to be smaller than with deprivation. This also reduces the overall effect of oop on mortality.
 
-The biggest difference can be seen when we extend our data by almost 20k observations which include a substantial number of missing observations. The effect of this change in sample for Romania is basically zero and it is relatively small for Bulgaria. But the deviations from the baseline results are big for Hungary and Greece. In fact, for Greece the effect in this robustness check is smaller than for Bulgaria thereby changing the order among countries in effect size. Quite frankly, we have no clear intuition why the differences are so big by extending the sample.
+The biggest difference can be seen when we extend our data by almost 20k observations which include a substantial number of missing observations. The effect of this change in sample for Romania is basically zero and it is relatively small for Bulgaria. But the deviations from the baseline results are big for Hungary and Greece. In fact, for Greece the effect in this robustness check is smaller than for Bulgaria thereby changing the order among countries in effect size. It is not surprising that adding 20k rows to the dataframe with missing values for a number of variables increases the variability of our outcomes.
 
 Overall the picture is that the baseline results are fairly robust to the use of different variables and different specifications. Extending the data by 20k observations, allowing for missing values for deprivation and too expensive leads to the biggest deviation compared to the baseline results. But also in this case we find that the extra deaths (per 1000 dead) due to a 500 euro oop increase lie above the deaths due to Alzheimer disease and breast cancer for the countries with the most sizable effects.
 
@@ -1670,7 +1673,7 @@ idata_voluntary.to_netcdf("./traces/model_voluntary.nc")
 
 **** =TooExp= effect in mortality equation
 
-Instead of using all reasons for unmet medical needs in the mortality equation, we just use =TooExp= in the mortality effect. Hence, the main change in the code is the line =beta_too_exp*too_exp= in the expression for =x=.
+Instead of using all reasons for unmet medical needs in the mortality equation, we just use =TooExp= in the mortality effect. Hence, the main change in the code is the line =beta_too_exp*too_exp= in the expression for =x= below.
 
 #+begin_src jupyter-python
 lagged_log_mortality = np.asarray(lagged_log_mortality)
@@ -1800,7 +1803,7 @@ But we do want to make sure that all observations have values for the mortality 
 
 Using this selection criterion allows Poland into the dataset, although there are no observations at all for some of these variables for Poland. Hence, we exclude Poland explicitly in the code below.
 
-In this way, we have the same sample of countries as in the baseline analysis, but now for some region-year combinations we have missing values for deprivation and too expensive. As we show below, we draw from distributions for these missing observations where the distributions are estimated using observations of different years for these regions.
+In this way, we have the same sample of countries as in the baseline analysis, but now for some region-year combinations we have additional rows in the dataframe with missing values for deprivation and too expensive. As we show below, we draw from distributions for these missing observations where the distributions are estimated using observations of different years for these regions.
 
 #+begin_src jupyter-python
 age_min = 35
@@ -2417,8 +2420,10 @@ effects_missing = Delta_log_m_missing.flatten()*1000
 We create a dataframe with each of the effects for the different countries. Then we save this dataframe to a =.csv= file.
 
 #+begin_src jupyter-python :display plain
-df_robustness = pd.DataFrame({'baseline':effects_baseline, 'poverty':effects_poverty,\
-                              'voluntary':effects_voluntary, 'separate':effects_separate,\
+df_robustness = pd.DataFrame({'baseline':effects_baseline,\
+                              'poverty':effects_poverty,\
+                              'voluntary':effects_voluntary,\
+                              'separate':effects_separate,\
                               'missing':effects_missing})
 df_robustness.to_csv('./data/robustness_effects.csv')
 #+end_src
@@ -2606,7 +2611,7 @@ and
 \begin{equation}
 b_{interaction,c} = \kappa \left( \pi^l \frac{u'(y^{l})}{u(y^l)}- \pi^h \frac{u'(y^{h})}{u(y^h)}  \right) > 0
 \end{equation}
-As it is hard to know what determines the intercept for this linear expansion, we allow it to vary with NUTS 2 region and calendar year: $b_0 = b_{0,2} + b_{0,t}$. Finally, to facilitate the estimation of this equation we assume that =TooExp= has a logit-normal distribution. That is, the log-odds of =TooExp= is normally distributed with the mean given by equation eqref:eq:linearizationTooExp. This ensures that =TooExp= in the estimation always lies between 0 and 1.
+As it is hard to know what determines the intercept for this linear expansion, we allow it to vary with NUTS 2 region and calendar year: $b_0 = b_{0,2} + b_{0,t}$. Finally, to facilitate the estimation of this equation we assume that =TooExp= has a logit-normal distribution. That is, the log-odds of =TooExp= are normally distributed with the mean given by equation eqref:eq:linearizationTooExp. This ensures that =TooExp= in the estimation always lies between 0 and 1.
 
 @@html: <p style="text-align:right">∎</p> @@
 @@latex: \qed@@

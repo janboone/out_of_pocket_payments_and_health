@@ -223,38 +223,38 @@ org_html_manager.setup();  // activate after the parameters are set
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgabd7bf3">1. Introduction</a></li>
-<li><a href="#orgea31da9">2. Preamble code</a></li>
-<li><a href="#org84b2ea0">3. Data</a>
+<li><a href="#orga08212b">1. Introduction</a></li>
+<li><a href="#org7e0b44c">2. Preamble code</a></li>
+<li><a href="#org8c4be75">3. Data</a>
 <ul>
-<li><a href="#org81b11ea">3.1. country data</a>
+<li><a href="#orgc930562">3.1. country data</a>
 <ul>
-<li><a href="#org23e7c19">3.1.1. OOP per country</a></li>
-<li><a href="#org82def93">3.1.2. healthcare expenditure</a></li>
+<li><a href="#org38e5993">3.1.1. OOP per country</a></li>
+<li><a href="#orgd7e7161">3.1.2. healthcare expenditure</a></li>
 </ul>
 </li>
-<li><a href="#org52b4455">3.2. nuts 2</a>
+<li><a href="#orgc1a2956">3.2. nuts 2</a>
 <ul>
-<li><a href="#org728ecef">3.2.1. crude number of deaths and population by age and sex</a></li>
-<li><a href="#orgdd95f9b">3.2.2. mortality lagged per age</a></li>
-<li><a href="#org47daaf6">3.2.3. Poverty measures</a></li>
-<li><a href="#org0af2e67">3.2.4. unmet needs</a></li>
+<li><a href="#org294543d">3.2.1. crude number of deaths and population by age and sex</a></li>
+<li><a href="#org8ca9647">3.2.2. mortality lagged per age</a></li>
+<li><a href="#org0e2fc9d">3.2.3. Poverty measures</a></li>
+<li><a href="#org9721376">3.2.4. unmet needs</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org38fded3">4. Combining data</a>
+<li><a href="#orgf970804">4. Combining data</a>
 <ul>
-<li><a href="#orga690bb1">4.1. nuts2 data</a></li>
-<li><a href="#org85f1295">4.2. country data</a></li>
+<li><a href="#orga434508">4.1. nuts2 data</a></li>
+<li><a href="#orge1b4690">4.2. country data</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgabd7bf3" class="outline-2">
-<h2 id="orgabd7bf3"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orga08212b" class="outline-2">
+<h2 id="orga08212b"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This file describes how we get the data for our project on <a href="./index.html">the health effects of demand side cost sharing</a>.
@@ -268,15 +268,17 @@ In this file we explain how we get the data and from where and at the same time 
 <li>Overview of data available at the region level: <a href="https://ec.europa.eu/eurostat/web/regions/background">https://ec.europa.eu/eurostat/web/regions/background</a></li>
 <li>Link to excel file with overview: <a href="http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx">http://ec.europa.eu/eurostat/documents/140934/4381644/Regional-statistics-overview.xlsx</a></li>
 </ul>
+
+
+<p>
+The dataset itself is too big for github and can be found on <a href="https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/AABEBD">DataverseNL</a>.
+</p>
 </div>
 </div>
 
 
-
-
-
-<div id="outline-container-orgea31da9" class="outline-2">
-<h2 id="orgea31da9"><span class="section-number-2">2.</span> Preamble code</h2>
+<div id="outline-container-org7e0b44c" class="outline-2">
+<h2 id="org7e0b44c"><span class="section-number-2">2.</span> Preamble code</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Run this code first before running the code of particular data sets. It imports the relevant libraries.
@@ -301,26 +303,31 @@ Run this code first before running the code of particular data sets. It imports 
 
 </pre>
 </div>
+
+
+<p>
+We first describe how we get the data for each variable. Each of these variables is saved in a separate dataset. The final section contains the code that merges the data for these variables into one (big) dataset.
+</p>
 </div>
 </div>
 
-<div id="outline-container-org84b2ea0" class="outline-2">
-<h2 id="org84b2ea0"><span class="section-number-2">3.</span> Data</h2>
+<div id="outline-container-org8c4be75" class="outline-2">
+<h2 id="org8c4be75"><span class="section-number-2">3.</span> Data</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 First, we fetch the variables at the country level from the Eurostat website. Then we move to the NUTS 2 regional data.
 </p>
 </div>
 
-<div id="outline-container-org81b11ea" class="outline-3">
-<h3 id="org81b11ea"><span class="section-number-3">3.1.</span> country data</h3>
+<div id="outline-container-orgc930562" class="outline-3">
+<h3 id="orgc930562"><span class="section-number-3">3.1.</span> country data</h3>
 <div class="outline-text-3" id="text-3-1">
 </div>
-<div id="outline-container-org23e7c19" class="outline-4">
-<h4 id="org23e7c19"><span class="section-number-4">3.1.1.</span> OOP per country</h4>
+<div id="outline-container-org38e5993" class="outline-4">
+<h4 id="org38e5993"><span class="section-number-4">3.1.1.</span> OOP per country</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
-We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance).
+We want a measure of "how generous" a healthcare system is in terms of oop-payments. This feature of the healthcare system tends to be defined at the country level. We use household oop payment and expenditure on voluntary payment schemes (for things that are not covered by basic or mandatory insurance). The paper uses mainly <code>PC_CHE</code> as unit of measurement.
 </p>
 
 <ul class="org-ul">
@@ -1015,8 +1022,8 @@ Data variables:
 
 
 
-<div id="outline-container-org82def93" class="outline-4">
-<h4 id="org82def93"><span class="section-number-4">3.1.2.</span> healthcare expenditure</h4>
+<div id="outline-container-orgd7e7161" class="outline-4">
+<h4 id="orgd7e7161"><span class="section-number-4">3.1.2.</span> healthcare expenditure</h4>
 <div class="outline-text-4" id="text-3-1-2">
 <ul class="org-ul">
 <li>link to data: <a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/hlth_sha11_hc/default/table?lang=en</a></li>
@@ -1557,16 +1564,16 @@ Data variables:
 
 
 
-<div id="outline-container-org52b4455" class="outline-3">
-<h3 id="org52b4455"><span class="section-number-3">3.2.</span> nuts 2</h3>
+<div id="outline-container-orgc1a2956" class="outline-3">
+<h3 id="orgc1a2956"><span class="section-number-3">3.2.</span> nuts 2</h3>
 <div class="outline-text-3" id="text-3-2">
 <ul class="org-ul">
 <li>overview of regional data: <a href="https://ec.europa.eu/eurostat/web/regions/data/database">https://ec.europa.eu/eurostat/web/regions/data/database</a></li>
 </ul>
 </div>
 
-<div id="outline-container-org728ecef" class="outline-4">
-<h4 id="org728ecef"><span class="section-number-4">3.2.1.</span> crude number of deaths and population by age and sex</h4>
+<div id="outline-container-org294543d" class="outline-4">
+<h4 id="org294543d"><span class="section-number-4">3.2.1.</span> crude number of deaths and population by age and sex</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <ul class="org-ul">
 <li>population: <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_r_d2jan/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/demo_r_d2jan/default/table?lang=en</a></li>
@@ -2637,8 +2644,8 @@ Data variables:
 </div>
 
 
-<div id="outline-container-orgdd95f9b" class="outline-4">
-<h4 id="orgdd95f9b"><span class="section-number-4">3.2.2.</span> mortality lagged per age</h4>
+<div id="outline-container-org8ca9647" class="outline-4">
+<h4 id="org8ca9647"><span class="section-number-4">3.2.2.</span> mortality lagged per age</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <ul class="org-ul">
 <li>useful link to lag variables in a pandas dataframe: <a href="https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps">https://stackoverflow.com/questions/61234837/pandas-panel-data-shifting-values-by-two-taking-into-consideration-year-gaps</a></li>
@@ -3676,12 +3683,12 @@ Data variables:
 
 
 
-<div id="outline-container-org47daaf6" class="outline-4">
-<h4 id="org47daaf6"><span class="section-number-4">3.2.3.</span> Poverty measures</h4>
+<div id="outline-container-org0e2fc9d" class="outline-4">
+<h4 id="org0e2fc9d"><span class="section-number-4">3.2.3.</span> Poverty measures</h4>
 <div class="outline-text-4" id="text-3-2-3">
 </div>
 <ol class="org-ol">
-<li><a id="org7c42124"></a>Severe material deprivation rate by NUTS 2 regions [TGS00104]<br />
+<li><a id="orgf8bfc59"></a>Severe material deprivation rate by NUTS 2 regions [TGS00104]<br />
 <div class="outline-text-5" id="text-3-2-3-1">
 <ul class="org-ul">
 <li>link to the data: <a href="https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/tgs00104/default/table?lang=en</a></li>
@@ -4157,7 +4164,7 @@ Data variables:
 </div>
 </li>
 
-<li><a id="org7574a8c"></a>At-risk-of-poverty rate by NUTS 2 regions [TGS00103]<br />
+<li><a id="orga2e87a2"></a>At-risk-of-poverty rate by NUTS 2 regions [TGS00103]<br />
 <div class="outline-text-5" id="text-3-2-3-2">
 <ul class="org-ul">
 <li>link to the data: <a href="https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en">https://ec.europa.eu/eurostat/databrowser/view/tgs00103/default/table?lang=en</a></li>
@@ -4635,8 +4642,8 @@ Data variables:
 </ol>
 </div>
 
-<div id="outline-container-org0af2e67" class="outline-4">
-<h4 id="org0af2e67"><span class="section-number-4">3.2.4.</span> unmet needs</h4>
+<div id="outline-container-org9721376" class="outline-4">
+<h4 id="org9721376"><span class="section-number-4">3.2.4.</span> unmet needs</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 Self-reported unmet needs for medical examination by main reason declared and NUTS 2 regions
@@ -5199,16 +5206,16 @@ Data variables:
 </div>
 
 
-<div id="outline-container-org38fded3" class="outline-2">
-<h2 id="org38fded3"><span class="section-number-2">4.</span> Combining data</h2>
+<div id="outline-container-orgf970804" class="outline-2">
+<h2 id="orgf970804"><span class="section-number-2">4.</span> Combining data</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The sections below generate the datasets per variable. Once these datasets are generated, the code in this section merges all these variables into one <code>.csv</code> file.
 </p>
 </div>
 
-<div id="outline-container-orga690bb1" class="outline-3">
-<h3 id="orga690bb1"><span class="section-number-3">4.1.</span> nuts2 data</h3>
+<div id="outline-container-orga434508" class="outline-3">
+<h3 id="orga434508"><span class="section-number-3">4.1.</span> nuts2 data</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 In this subsection, we merge the data at the NUTS 2 level.
@@ -5882,8 +5889,8 @@ df.head()
 </div>
 </div>
 
-<div id="outline-container-org85f1295" class="outline-3">
-<h3 id="org85f1295"><span class="section-number-3">4.2.</span> country data</h3>
+<div id="outline-container-orge1b4690" class="outline-3">
+<h3 id="orge1b4690"><span class="section-number-3">4.2.</span> country data</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 In this section, we add country level variables to the dataframe.
