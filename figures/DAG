@@ -1,0 +1,20 @@
+digraph {
+	node [color=lightgrey style=filled]
+	OOP -> TooExp
+	Poverty -> TooExp
+	node [color=lightblue2 style=filled]
+	Unmet -> health
+	"health -1" -> health
+	health -> mortality
+	TooExp -> Unmet
+	Poverty -> health
+	node [color=pink style=filled]
+	"bad health" -> TooExp [style=dotted]
+	"bad health" -> Unmet [style=dotted]
+	"bad health" -> health [style=dotted]
+	"bad health" -> Poverty [style=dotted]
+	"healthcare resources" -> Unmet [style=dotted]
+	"healthcare resources" -> OOP [style=dotted]
+	"healthcare resources" -> "healthcare quality" [style=dotted]
+	"healthcare quality" -> health [style=dotted]
+}

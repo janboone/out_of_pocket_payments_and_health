@@ -44,6 +44,7 @@ SHP/
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+*.org_archive
 
 ## Auxiliary and intermediate files from other packages:
 

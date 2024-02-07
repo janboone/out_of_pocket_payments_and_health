@@ -1,5 +1,5 @@
 # -**- eval: org-toggle-inline-images: 1 -**-
-#+Title: Getting Eurostat data on health and mortality
+#+Title: Getting Eurostat data 
 #+Author: Jan Boone@@latex:\thanks{Tilburg University, Department of Economics, Tilec and CEPR, E-mail: \textit{j.boone@uvt.nl}.}@@
 #+PROPERTY: header-args  :session geopandas :kernel python3 :async yes
 # kernel can be geo_env or python3
