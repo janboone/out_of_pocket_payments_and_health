@@ -1,0 +1,14 @@
+
+* Getting Eurostat data on health and mortality
+:PROPERTIES:
+:org-remark-file: getting_data.org
+:END:
+
+** base temperature is set to a constant value of 15°C in the HDD calculation. 
+:PROPERTIES:
+:org-remark-beg: 238066
+:org-remark-end: 238142
+:org-remark-id: 3c9cd056
+:org-remark-label: nil
+:org-remark-link: [[file:getting_data.org::5865]]
+:END:
